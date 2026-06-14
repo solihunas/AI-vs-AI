@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IPISTORE · AI Trade Battle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08070d; --bg-deep:#040308; --card:#13111c; --card2:#1a1726;
+  --line:#2a2438; --violet:#9d4dff; --violet-dim:#5e35b1;
+  --violet-glow:rgba(157,77,255,.55);
+  --txt:#e8e6f0; --txt-dim:#9893ab; --txt-faint:#5c5770;
+  --profit:#26c6a8; --loss:#ef5350;
+  --mono:'Space Mono','Courier New',monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--bg);color:var(--txt);font-family:var(--sans);overscroll-behavior:none;}
+.screen{touch-action:pan-y !important;}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(157,77,255,.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(94,53,177,.12), transparent 60%),
+    var(--bg);
+}
+input,select,textarea,button{font-family:inherit;color:inherit;}
+
+/* ---------- top bar ---------- */
+#topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px;
+  background:rgba(8,7,13,.85);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.tb-back{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  background:var(--card2);border:1px solid var(--line);
+  display:none;align-items:center;justify-content:center;cursor:pointer;
+}
+.tb-back svg{width:18px;height:18px;}
+.tb-brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.tb-mark{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(145deg,var(--violet),var(--violet-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:11px;color:#fff;
+  box-shadow:0 0 18px var(--violet-glow);letter-spacing:-.5px;
+}
+.tb-title h1{font-size:14px;font-weight:800;letter-spacing:.02em;}
+.tb-title p{font-size:9.5px;color:var(--txt-dim);letter-spacing:.14em;text-transform:uppercase;}
+
+/* ---------- screens ---------- */
+.screen{display:none;padding:16px;padding-bottom:60px;}
+.screen.active{display:block;}
+
+/* ---------- HOME menu ---------- */
+.home-hero{
+  text-align:center;padding:22px 10px 26px;
+}
+.home-hero .logo-big{
+  font-family:var(--mono);font-weight:700;font-size:30px;letter-spacing:.04em;
+  background:linear-gradient(120deg,#fff,var(--violet));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 0 30px var(--violet-glow);
+}
+.home-hero p{color:var(--txt-dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:6px;}
+
+.menu-list{display:flex;flex-direction:column;gap:14px;max-width:520px;margin:0 auto;}
+.menu-card{
+  position:relative;overflow:hidden;
+  background:linear-gradient(165deg,var(--card2),var(--card));
+  border:1px solid var(--line);border-radius:16px;
+  padding:20px 18px;cursor:pointer;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .15s,border-color .2s;
+}
+.menu-card:active{transform:scale(.98);}
+.menu-card::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(from 0deg,transparent 0deg,transparent 260deg,var(--violet-glow) 320deg,transparent 360deg);
+  animation:spin 6s linear infinite;z-index:0;opacity:.6;
+}
+.menu-card::after{content:'';position:absolute;inset:1.5px;border-radius:15px;background:linear-gradient(165deg,var(--card2),var(--card));z-index:1;}
+.menu-card>*{position:relative;z-index:2;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.menu-ico{
+  width:52px;height:52px;border-radius:13px;flex-shrink:0;
+  background:rgba(157,77,255,.12);border:1px solid var(--violet-dim);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 16px rgba(157,77,255,.25);
+}
+.menu-ico svg{width:26px;height:26px;color:var(--violet);}
+.menu-txt h2{font-size:16px;font-weight:800;margin-bottom:3px;}
+.menu-txt p{font-size:11.5px;color:var(--txt-dim);line-height:1.4;}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:11px 16px;border-radius:11px;border:1px solid var(--line);
+  background:var(--card2);color:var(--txt);font-size:12.5px;font-weight:700;
+  cursor:pointer;transition:.15s;
+}
+.btn:active{transform:scale(.96);}
+.btn svg{width:15px;height:15px;}
+.btn.primary{background:linear-gradient(145deg,var(--violet),var(--violet-dim));border-color:transparent;box-shadow:0 0 16px var(--violet-glow);}
+.btn.full{width:100%;}
+.btn.danger{background:rgba(239,83,80,.12);border-color:rgba(239,83,80,.3);color:var(--loss);}
+.btn.sm{padding:8px 11px;font-size:11px;}
+
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.section-hd h2{font-size:17px;font-weight:800;}
+.section-hd .sub{font-size:11px;color:var(--txt-dim);}
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--card2);border:1px solid var(--violet-dim);color:var(--txt);
+  font-size:12px;font-weight:600;padding:11px 18px;border-radius:11px;
+  box-shadow:0 0 22px var(--violet-glow);opacity:0;pointer-events:none;transition:.25s;z-index:300;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* modal */
+.modal-back{
+  position:fixed;inset:0;background:rgba(4,3,8,.8);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:20px;z-index:200;
+}
+.modal-back.show{display:flex;}
+.modal{
+  background:var(--card);border:1px solid var(--violet-dim);border-radius:16px;
+  padding:18px;width:100%;max-width:420px;max-height:85vh;overflow:auto;
+  box-shadow:0 0 40px var(--violet-glow);
+}
+.modal h3{font-size:15px;font-weight:800;margin-bottom:14px;}
+.field-label{display:block;font-size:10px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 5px;}
+.inp{
+  width:100%;background:var(--bg-deep);border:1px solid var(--line);border-radius:9px;
+  color:var(--txt);font-size:13px;padding:10px 11px;outline:none;
+}
+.inp:focus{border-color:var(--violet);}
+.inp.mono{font-family:var(--mono);}
+.modal-actions{display:flex;gap:8px;margin-top:16px;}
+
+/* ---------- roster ---------- */
+.roster-list{display:flex;flex-direction:column;gap:12px;max-width:560px;margin:0 auto;}
+.roster-card{position:relative;overflow:hidden;background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px;padding:14px;}
+.rc-glow{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,transparent 270deg,var(--ac) 330deg,transparent 360deg);animation:spin 7s linear infinite;opacity:.4;}
+.rc-inner{position:relative;z-index:2;display:flex;gap:13px;align-items:center;}
+.rc-avatar{width:54px;height:54px;border-radius:14px;flex-shrink:0;border:2px solid;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg-deep);}
+.rc-main{flex:1;min-width:0;}
+.rc-name{font-family:var(--mono);font-weight:700;font-size:15px;}
+.rc-status{display:flex;align-items:center;gap:5px;font-size:9.5px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.06em;margin:2px 0 6px;}
+.rc-dot{width:6px;height:6px;border-radius:50%;}
+.rc-stats{display:flex;gap:12px;flex-wrap:wrap;font-size:10.5px;color:var(--txt-dim);}
+.rc-stats b{color:var(--txt);font-family:var(--mono);}
+.rc-actions{position:relative;z-index:2;display:flex;gap:7px;margin-top:12px;}
+.rc-actions .btn{flex:1;}
+.av-prev{width:64px;height:64px;border-radius:14px;flex-shrink:0;border:2px solid var(--violet-dim);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg-deep);font-size:18px;color:var(--violet);}
+.theme-row{display:flex;gap:10px;flex-wrap:wrap;}
+.theme-opt{width:34px;height:34px;border-radius:9px;cursor:pointer;}
+
+/* ---------- journal ---------- */
+.tf-bar{display:flex;justify-content:center;margin-bottom:14px;}
+.tf-bar input{background:rgba(157,77,255,.08);border:1px solid var(--violet-dim);border-radius:999px;color:var(--violet);font-family:var(--mono);font-weight:700;font-size:13px;text-align:center;padding:9px 22px;outline:none;min-width:200px;box-shadow:0 0 16px rgba(157,77,255,.2);}
+.tf-bar input:focus{border-color:var(--violet);}
+.jgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.jcard{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line);background:linear-gradient(165deg,var(--card2),var(--card));cursor:pointer;min-height:248px;}
+.jcard:active{transform:scale(.98);}
+.jcard-glow{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,transparent 270deg,var(--ac) 330deg,transparent 360deg);animation:spin 5s linear infinite;opacity:.5;}
+.jcard-in{position:relative;z-index:2;margin:1.5px;border-radius:13px;background:linear-gradient(165deg,var(--card2),var(--card));padding:11px 9px;height:calc(100% - 3px);display:flex;flex-direction:column;}
+.jc-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.jc-name{font-family:var(--mono);font-weight:700;font-size:12px;}
+.jc-stat{display:flex;align-items:center;gap:4px;font-size:8px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.05em;}
+.jc-dot{width:5px;height:5px;border-radius:50%;}
+.jc-trades{display:flex;flex-direction:column;gap:5px;flex:1;}
+.trow{display:flex;align-items:center;justify-content:space-between;padding:5px 7px;border-radius:7px;font-size:10px;border:1px solid transparent;}
+.trow.profit{background:rgba(38,198,168,.08);border-color:rgba(38,198,168,.16);}
+.trow.loss{background:rgba(239,83,80,.08);border-color:rgba(239,83,80,.16);}
+.trow.empty{border:1px dashed var(--line);color:var(--txt-faint);justify-content:center;font-size:9px;}
+.tl{display:flex;align-items:center;gap:5px;min-width:0;}
+.tsym{font-weight:800;flex-shrink:0;}
+.ttag{font-size:8px;color:var(--txt-faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tpl{font-family:var(--mono);font-weight:700;font-size:10.5px;flex-shrink:0;}
+.tpl.profit{color:var(--profit);}.tpl.loss{color:var(--loss);}
+.jc-ft{margin-top:9px;padding-top:9px;border-top:1px solid var(--line);}
+.jc-eq{height:42px;margin-bottom:6px;}
+.jc-val{font-family:var(--mono);font-weight:700;font-size:13px;text-align:center;text-shadow:0 0 12px rgba(157,77,255,.4);}
+
+/* focus editor */
+.focus-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.back-btn{width:36px;height:36px;border-radius:10px;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.back-btn svg{width:18px;height:18px;}
+.eq-panel{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px 12px;margin-bottom:14px;}
+.eq-panel-curve{height:90px;margin-bottom:8px;}
+.eq-panel-val{font-family:var(--mono);font-weight:700;font-size:20px;text-align:center;margin-bottom:12px;}
+.tedit-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.tedit{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;}
+.te-r1{display:flex;gap:6px;margin-bottom:8px;}
+.tedit input{background:var(--bg-deep);border:1px solid var(--line);border-radius:7px;color:var(--txt);font-size:11.5px;padding:7px 8px;outline:none;}
+.tedit input:focus{border-color:var(--violet);}
+.te-sym{width:74px;font-family:var(--mono);font-weight:700;text-transform:uppercase;}
+.te-tag{flex:1;min-width:0;}
+.te-r2{display:flex;gap:6px;align-items:center;}
+.te-pl{flex:1;font-family:var(--mono);font-weight:700;}
+.te-pct{width:64px;font-family:var(--mono);}
+.ctoggle{display:flex;gap:4px;}
+.copt{width:32px;height:32px;border-radius:7px;border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+.copt.profit{color:var(--profit);}.copt.loss{color:var(--loss);}
+.copt.sel{border-color:currentColor;box-shadow:0 0 0 1px currentColor inset;}
+.te-side{margin-left:auto;}
+.copt.sideopt{width:auto;padding:0 10px;font-size:10px;font-weight:800;letter-spacing:.04em;}
+.te-del{width:32px;height:32px;border-radius:7px;flex-shrink:0;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3);color:var(--loss);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.te-del svg{width:14px;height:14px;}
+
+/* ---------- battle setup ---------- */
+.pchips{display:flex;flex-wrap:wrap;gap:8px;}
+.pchip{display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card2);font-size:12px;font-weight:700;}
+.pchip-dot{width:7px;height:7px;border-radius:50%;}
+.pchip-x{cursor:pointer;color:var(--txt-faint);font-size:11px;margin-left:2px;}
+.bcfg-list{display:flex;flex-direction:column;gap:10px;}
+.bcfg-row{background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:11px;}
+.bcfg-name{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-weight:700;font-size:13px;margin-bottom:9px;}
+.bcfg-inputs{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;}
+.bcfg-inputs label{font-size:9px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.05em;display:flex;flex-direction:column;gap:4px;}
+.bcfg-in{width:90px;padding:7px 8px;font-size:12px;}
+.bcfg-inputs input[type=radio]{width:20px;height:20px;accent-color:var(--violet);align-self:center;}
+
+/* ---------- arena ---------- */
+#arena{position:relative;background:var(--bg-deep);border:1px solid var(--line);border-radius:16px;padding:14px;overflow:hidden;}
+#arena::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(157,77,255,.14),transparent 60%);pointer-events:none;}
+.arena-grid{position:relative;display:grid;gap:12px;}
+.bpanel{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line);background:linear-gradient(165deg,var(--card2),var(--card));min-height:300px;transition:box-shadow .4s,transform .4s;}
+.bpanel.winner{box-shadow:0 0 30px var(--ac);transform:scale(1.015);border-color:var(--ac);}
+.bpanel-glow{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,transparent 265deg,var(--ac) 325deg,transparent 360deg);animation:spin 4s linear infinite;opacity:.55;}
+.bpanel-in{position:relative;z-index:2;margin:1.5px;border-radius:13px;background:linear-gradient(165deg,var(--card2),var(--card));padding:11px 9px;height:calc(100% - 3px);display:flex;flex-direction:column;}
+.bp-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.bp-av{width:34px;height:34px;border-radius:9px;flex-shrink:0;border:1.5px solid;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg-deep);font-size:12px;}
+.bp-id{flex:1;min-width:0;}
+.bp-name{font-family:var(--mono);font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bp-sub{display:flex;align-items:center;gap:4px;font-size:8px;color:var(--txt-dim);letter-spacing:.08em;}
+.bp-crown{font-size:18px;opacity:0;transform:scale(0) rotate(-30deg);transition:.5s;}
+.bp-crown.show{opacity:1;transform:scale(1) rotate(0);}
+.bp-trades{display:flex;flex-direction:column;gap:5px;flex:1;overflow:hidden;}
+.btrow{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-radius:7px;font-size:10px;border:1px solid transparent;opacity:0;transform:translateY(-8px);transition:opacity .35s,transform .35s;}
+.btrow.in{opacity:1;transform:translateY(0);}
+.btrow.profit{background:rgba(38,198,168,.1);border-color:rgba(38,198,168,.2);}
+.btrow.loss{background:rgba(239,83,80,.1);border-color:rgba(239,83,80,.2);}
+.bp-ft{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);}
+.bp-eq{height:60px;margin-bottom:6px;}
+.bp-val{font-family:var(--mono);font-weight:700;font-size:14px;text-align:center;}
+.vs-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:linear-gradient(145deg,var(--violet),var(--violet-dim));color:#fff;font-family:var(--mono);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px var(--violet-glow);z-index:5;border:2px solid #fff2;}
+
+.wm{position:relative;z-index:2;text-align:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);}
+.wm-logo{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.12em;background:linear-gradient(120deg,#fff,var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.wm-sub{font-size:9px;color:var(--txt-dim);letter-spacing:.04em;margin-top:2px;}
+
+.winner-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(4,3,8,.55);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.4s;z-index:10;}
+.winner-overlay.show{opacity:1;}
+.wo-inner{text-align:center;animation:pop .5s ease;}
+.wo-crown{font-size:46px;}
+.wo-name{font-family:var(--mono);font-weight:700;font-size:24px;background:linear-gradient(120deg,#fff,var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px var(--violet-glow);}
+.wo-label{font-size:11px;letter-spacing:.3em;color:var(--violet);margin-top:4px;}
+@keyframes pop{0%{transform:scale(.5);opacity:0;}60%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}
+
+.arena-controls{display:flex;gap:8px;margin-top:14px;}
+
+/* pair category checkboxes */
+.catchk-row{display:flex;flex-wrap:wrap;gap:8px;}
+.catchk{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:var(--card2);font-size:12px;font-weight:700;cursor:pointer;}
+.catchk.on{border-color:var(--violet);background:rgba(157,77,255,.12);color:var(--violet);box-shadow:0 0 12px rgba(157,77,255,.25);}
+.catchk input{accent-color:var(--violet);width:15px;height:15px;}
+
+/* arena topbar */
+.arena-topbar{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.arena-back{width:40px;height:40px;border-radius:11px;background:var(--card2);border:1px solid var(--line);color:var(--txt);font-size:20px;font-weight:700;cursor:pointer;flex-shrink:0;line-height:1;}
+/* ---------- drag equity curve ---------- */
+.eq-drag-wrap{position:relative;touch-action:none;user-select:none;cursor:ns-resize;}
+.eq-drag-wrap svg{pointer-events:none;}
+.eq-drag-handle{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;}
+.eq-drag-hint{font-size:9px;color:var(--txt-faint);text-align:center;margin-top:2px;letter-spacing:.04em;}
+
+/* ---------- roster play button ---------- */
+.roster-play-cfg{background:var(--card2);border:1px solid var(--violet-dim);border-radius:12px;padding:12px;margin-bottom:10px;display:none;}
+.roster-play-cfg.open{display:block;}
+.play-cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 12px;}
+.play-cfg-row{display:flex;flex-direction:column;gap:4px;}
+.play-cfg-row label{font-size:9px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.05em;}
+.play-cfg-row input{background:var(--bg-deep);border:1px solid var(--line);border-radius:7px;color:var(--txt);font-family:var(--mono);font-size:12px;padding:7px 8px;outline:none;width:100%;}
+.play-cfg-row input:focus{border-color:var(--violet);}
+
+/* ---------- leaderboard podium ---------- */
+.podium-wrap{padding:10px 0;text-align:center;}
+.podium-row{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin-bottom:14px;height:110px;}
+.podium-slot{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}
+.podium-bar{border-radius:8px 8px 0 0;width:70px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:6px;}
+.podium-bar.p1{height:90px;background:linear-gradient(180deg,rgba(255,215,0,.3),rgba(255,215,0,.08));border:1px solid rgba(255,215,0,.4);}
+.podium-bar.p2{height:68px;background:linear-gradient(180deg,rgba(180,180,180,.3),rgba(180,180,180,.08));border:1px solid rgba(180,180,180,.3);}
+.podium-bar.p3{height:50px;background:linear-gradient(180deg,rgba(205,127,50,.3),rgba(205,127,50,.08));border:1px solid rgba(205,127,50,.3);}
+.podium-emoji{font-size:20px;margin-bottom:2px;}
+.podium-name{font-family:var(--mono);font-weight:700;font-size:9px;color:var(--txt);margin-top:5px;text-align:center;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.podium-pnl{font-family:var(--mono);font-size:9px;margin-top:2px;}
+.lb-list{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+.lb-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;background:var(--bg-deep);border:1px solid var(--line);}
+.lb-rank{font-family:var(--mono);font-weight:700;font-size:11px;width:18px;text-align:center;flex-shrink:0;}
+.lb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.lb-name{font-family:var(--mono);font-weight:700;font-size:12px;flex:1;}
+.lb-pnl{font-family:var(--mono);font-weight:700;font-size:11px;}
+.lb-wr{font-size:10px;color:var(--txt-faint);}
+.arena-period{flex:1;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--violet);letter-spacing:.04em;background:rgba(157,77,255,.08);border:1px solid var(--violet-dim);border-radius:999px;padding:9px 18px;text-align:center;box-shadow:0 0 14px rgba(157,77,255,.2);}
+
+/* battle trade row: TIKER - BUY/SELL - PnL */
+.btrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;}
+.tside{font-family:var(--mono);font-weight:800;font-size:10px;letter-spacing:.05em;}
+
+/* watermark owner */
+.wm-owner{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.08em;background:linear-gradient(120deg,#fff,var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-align:center;}
+
+/* roster mini buttons + footer */
+.rc-mini{position:relative;z-index:2;display:flex;gap:7px;justify-content:flex-end;margin-top:8px;}
+.mini-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:34px;height:30px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--txt-dim);cursor:pointer;}
+.mini-btn svg{width:15px;height:15px;}
+.mini-btn:active{transform:scale(.94);}
+.mini-btn.wide{width:auto;flex:1;padding:10px;font-size:11.5px;font-weight:700;color:var(--txt);}
+.roster-foot{display:flex;gap:8px;max-width:560px;margin:14px auto 0;}
+
+/* stat sheet */
+.sheet{background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px;padding:14px;position:relative;overflow:hidden;}
+.sheet-hd{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.sheet-av{width:52px;height:52px;border-radius:13px;border:2px solid;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg-deep);flex-shrink:0;}
+.sheet-name{font-family:var(--mono);font-weight:700;font-size:17px;}
+.sheet-status{font-size:10px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.06em;}
+.sheet-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:14px;background:var(--bg-deep);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.sheet-stat{padding:10px 8px;text-align:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.sheet-stat:nth-child(3n){border-right:none;}
+.sheet-stat:nth-child(n+4){border-bottom:none;}
+.sheet-stat label{font-size:8.5px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px;}
+.sheet-stat .v{font-family:var(--mono);font-weight:700;font-size:13px;}
+.sheet-stat .v small{font-size:9px;opacity:.7;}
+.sheet-eqlabel{font-size:9px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:5px;}
+.sheet-eq{height:120px;margin-bottom:6px;}
+.sheet-eqval{font-family:var(--mono);font-weight:700;font-size:18px;text-align:center;text-shadow:0 0 14px var(--violet-glow);}
+.sheet-wm{text-align:center;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.08em;color:var(--txt-faint);margin-top:12px;padding-top:10px;border-top:1px solid var(--line);}
+#allSheets{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+#allSheets .sheet{padding:10px;}
+#allSheets .sheet-name{font-size:13px;}
+#allSheets .sheet-av{width:38px;height:38px;border-radius:10px;}
+#allSheets .sheet-grid{grid-template-columns:1fr 1fr;}
+#allSheets .sheet-stat:nth-child(3n){border-right:1px solid var(--line);}
+#allSheets .sheet-stat:nth-child(2n){border-right:none;}
+#allSheets .sheet-stat:nth-child(n+4){border-bottom:1px solid var(--line);}
+#allSheets .sheet-stat:nth-child(n+5){border-bottom:none;}
+#allSheets .sheet-stat .v{font-size:11px;}
+#allSheets .sheet-eq{height:64px;}
+#allSheets .sheet-eqval{font-size:13px;}
+/* ---------- light mode ---------- */
+body.light{
+  --bg:#f0eef8;--bg-deep:#e4e0f4;--card:#ffffff;--card2:#f5f3fe;
+  --line:#d4cef0;--txt:#1a1630;--txt-dim:#6b6480;--txt-faint:#b0a8cc;
+}
+body.light #topbar{background:rgba(240,238,248,.92);}
+
+/* ---------- dark/light toggle ---------- */
+.theme-toggle{margin-left:auto;width:36px;height:20px;border-radius:10px;background:var(--line);border:none;cursor:pointer;position:relative;flex-shrink:0;}
+.theme-toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--violet);transition:.2s;}
+body.light .theme-toggle::after{left:calc(100% - 18px);}
+
+/* ---------- curve editor ---------- */
+.ce-wrap{position:relative;border-radius:14px;overflow:hidden;background:var(--bg-deep);border:1px solid var(--line);touch-action:none;}
+.ce-canvas{display:block;width:100%;touch-action:none;}
+.ce-toolbar{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap;}
+.ce-info{font-size:10px;color:var(--txt-faint);font-family:var(--mono);text-align:center;margin-top:6px;}
+.zoom-row{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.zoom-row span{font-size:10px;color:var(--txt-dim);}
+.zoom-btn{width:30px;height:30px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--txt);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+/* ---------- replay mode ---------- */
+.replay-panel{background:var(--card2);border:1px solid var(--violet-dim);border-radius:12px;padding:14px;margin-bottom:14px;}
+.replay-bar{height:4px;background:var(--line);border-radius:2px;margin:8px 0;overflow:hidden;}
+.replay-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--profit));border-radius:2px;width:0%;transition:width .3s;}
+.replay-trade{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:9px;margin-top:8px;font-size:12px;animation:slideIn .3s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---------- animated equity stroke (draw-on-load) ---------- */
+@keyframes drawStroke{from{stroke-dashoffset:1000;}to{stroke-dashoffset:0;}}
+.eq-animated path.line{stroke-dasharray:1000;animation:drawStroke 1.2s ease forwards;}
+
+/* ---------- settings ---------- */
+.settings-section{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px;}
+.settings-section h3{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--violet);}
+.quick-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.quick-ai-btn{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:12px;font-weight:700;}
+.quick-ai-btn:active{transform:scale(.97);}
+.quick-ai-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ---------- sound visual ---------- */
+.sound-row{display:flex;align-items:center;gap:10px;}
+.sound-row label{font-size:12px;flex:1;}
+.sound-toggle{width:44px;height:24px;border-radius:12px;background:var(--line);border:none;cursor:pointer;position:relative;transition:.2s;}
+.sound-toggle.on{background:var(--violet);}
+.sound-toggle::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;}
+.sound-toggle.on::after{left:calc(100% - 22px);}
+
+/* ---------- journal panel download button ---------- */
+.jcard-dl{position:absolute;bottom:8px;right:8px;z-index:5;width:26px;height:26px;border-radius:7px;background:rgba(0,0,0,.4);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:.2s;}
+.jcard:hover .jcard-dl,.jcard:active .jcard-dl{opacity:1;}
+.jcard-dl svg{width:13px;height:13px;color:var(--txt-dim);}
+</style>
+<body>
+
+<div id="topbar">
+  <div class="tb-back" id="tbBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+  <div class="tb-brand">
+    <div class="tb-mark">IPI</div>
+    <div class="tb-title"><h1 id="tbTitle">IPISTORE</h1><p id="tbSub">AI Trade Battle</p></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Dark/Light mode" onclick="toggleTheme()"></button>
+</div>
+
+<!-- ============ HOME ============ -->
+<section class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="logo-big" id="homeBrand">IPISTORE</div>
+    <p>AI Trade Battle Studio</p>
+  </div>
+  <div class="menu-list">
+    <div class="menu-card" data-go="roster">
+      <div class="menu-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 016-6h4a6 6 0 016 6v1"/></svg></div>
+      <div class="menu-txt"><h2>AI List</h2><p>Kelola profil, foto, tema warna & statistik tiap AI.</p></div>
+    </div>
+    <div class="menu-card" data-go="journal">
+      <div class="menu-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+      <div class="menu-txt"><h2>Journal</h2><p>Catat & pantau performa tiap AI dalam grid equity bercahaya.</p></div>
+    </div>
+    <div class="menu-card" data-go="battle">
+      <div class="menu-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/><path d="M9.5 6.5L3 13v3h3l6.5-6.5"/></svg></div>
+      <div class="menu-txt"><h2>Battle AI</h2><p>Adu beberapa AI, atur pemenang, equity & frekuensi trade.</p></div>
+    </div>
+    <div class="menu-card" data-go="curve">
+      <div class="menu-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="menu-txt"><h2>Curve Editor</h2><p>Bentuk equity curve bebas dengan drag jari — seperti menggeser tali elastis.</p></div>
+    </div>
+    <div class="menu-card" data-go="settings">
+      <div class="menu-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <div class="menu-txt"><h2>Settings</h2><p>Brand name, watermark, tema, import/export data, quick-add AI populer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOURNAL ============ -->
+<section class="screen" id="screen-journal"></section>
+
+<!-- ============ ROSTER (Daftar AI) ============ -->
+<section class="screen" id="screen-roster"></section>
+
+<!-- ============ BATTLE ============ -->
+<section class="screen" id="screen-battle"></section>
+
+<!-- ============ CURVE EDITOR ============ -->
+<section class="screen" id="screen-curve"></section>
+
+<!-- ============ SETTINGS ============ -->
+<section class="screen" id="screen-settings"></section>
+
+<div id="toast"></div>
+<div class="modal-back" id="modalBack"><div class="modal" id="modalBox"></div></div>
+
+<script>
+/* ============================================================
+   STATE & PERSISTENCE
+============================================================ */
+const SKEY='ipistore_v1';
+
+const THEMES={
+  violet:{name:'Ungu',c:'#9d4dff',c2:'#ffffff'},
+  cyan:  {name:'Cyan',c:'#22d3ee',c2:'#ffffff'},
+  green: {name:'Hijau',c:'#26c6a8',c2:'#d9fff5'},
+  gold:  {name:'Emas',c:'#f5b740',c2:'#fff4d6'},
+  pink:  {name:'Pink',c:'#ff4d9d',c2:'#ffffff'},
+  red:   {name:'Merah',c:'#ef5350',c2:'#ffe1e0'},
+};
+
+function defaultState(){
+  return {
+    timeframe:'3 Bulan Terakhir',
+    brandText:'Full memanfaatkan & mengembangkan AI Trade',
+    ais:[
+      mkAI('AI Alpha','violet'),
+      mkAI('AI Beta','cyan'),
+      mkAI('AI Gamma','green'),
+      mkAI('AI Delta','gold'),
+    ],
+  };
+}
+let _idc=1;
+function mkAI(name,theme){
+  return {
+    id:'ai'+(Date.now().toString(36))+(_idc++),
+    name:name||'AI Baru',
+    photo:'',
+    theme:theme||'violet',
+    status:'Bot Trading',
+    equity:[],
+    trades:[],
+    genCfg:{modal:1000,pct:25,n:20,xau:false,cry:true},
+  };
+}
+function mkTrade(sym,tag,color,pl,pct){
+  return {sym:sym||'ETH',tag:tag||'',color:color||'profit',pl:pl||0,pct:pct||0};
+}
+
+let state=loadState();
+
+function loadState(){
+  try{const r=localStorage.getItem(SKEY);if(r)return migrate(JSON.parse(r));}catch(e){}
+  try{const c=readCookie(SKEY);if(c)return migrate(JSON.parse(decodeURIComponent(c)));}catch(e){}
+  return defaultState();
+}
+function migrate(s){
+  if(!s.ais)s.ais=[];
+  s.ais.forEach(a=>{
+    if(!a.id)a.id='ai'+(_idc++);
+    if(!a.theme)a.theme='violet';
+    if(!a.equity)a.equity=[];
+    if(!a.trades)a.trades=[];
+    a.trades.forEach(t=>{ if(!t.side)t.side=(t.color==='loss'?'SELL':'BUY'); });
+    if(!a.genCfg)a.genCfg={modal:1000,pct:25,n:20,xau:false,cry:true};
+    if(a.photo===undefined)a.photo='';
+  });
+  if(!s.timeframe)s.timeframe='3 Bulan Terakhir';
+  if(!s.brandText)s.brandText='Full memanfaatkan & mengembangkan AI Trade';
+  return s;
+}
+let _st=null;
+function save(){
+  try{localStorage.setItem(SKEY,JSON.stringify(state));}catch(e){}
+  clearTimeout(_st);
+  _st=setTimeout(()=>{
+    try{const p=encodeURIComponent(JSON.stringify(state));if(p.length<3800)writeCookie(SKEY,p,3650);}catch(e){}
+  },400);
+}
+function writeCookie(n,v,d){const e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=n+'='+v+';expires='+e.toUTCString()+';path=/;SameSite=Lax';}
+function readCookie(n){const m=document.cookie.match('(?:^|; )'+n+'=([^;]*)');return m?m[1]:null;}
+
+/* ============================================================
+   HELPERS
+============================================================ */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function themeOf(ai){return THEMES[ai.theme]||THEMES.violet;}
+function initials(name){
+  const p=String(name||'').trim().split(/\s+/);
+  if(p.length>=2)return (p[0][0]+p[1][0]).toUpperCase();
+  return String(name||'?').slice(0,2).toUpperCase();
+}
+function fmtMoneySimple(v){const n=+v||0;const a=Math.abs(n).toLocaleString('id-ID',{maximumFractionDigits:0});return (n>0?'+':(n<0?'-':''))+a+' Cent';}
+function fmtPct(v){const n=+v||0;const a=Math.abs(n).toFixed(1);return n>0?'+'+a+'%':(n<0?'-'+a+'%':a+'%');}
+function fmtUSD_id(v){const n=+v||0;const s=n>0?'+':(n<0?'-':'');return s+Math.abs(n).toLocaleString('id-ID',{maximumFractionDigits:0})+' Cent';}
+function fmtPct_id(v){const n=+v||0;const s=n>0?'+':(n<0?'-':'');return s+Math.abs(n).toFixed(2).replace('.',',')+'%';}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+let curScreen='home';
+const SCR_META={
+  home:{title:'IPISTORE',sub:'AI Trade Battle',back:false},
+  journal:{title:'Journal',sub:'Equity Journal',back:true},
+  roster:{title:'AI List',sub:'Roster & Profil',back:true},
+  battle:{title:'AI Battle',sub:'Trade Battle Studio',back:true},
+  curve:{title:'Curve Editor',sub:'Drag Equity Curve',back:true},
+  settings:{title:'Settings',sub:'Konfigurasi App',back:true},
+};
+function go(screen){
+  curScreen=screen;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+screen).classList.add('active');
+  const m=SCR_META[screen];
+  document.getElementById('tbTitle').textContent=m.title;
+  document.getElementById('tbSub').textContent=m.sub;
+  document.getElementById('tbBack').style.display=m.back?'flex':'none';
+  window.scrollTo(0,0);
+  if(screen!=='home')pushHist(screen);
+  if(screen==='journal')renderJournal();
+  if(screen==='roster')renderRoster();
+  if(screen==='battle')renderBattle();
+  if(screen==='curve')renderCurveEditor();
+  if(screen==='settings')renderSettings();
+}
+document.querySelectorAll('.menu-card').forEach(c=>c.onclick=()=>go(c.dataset.go));
+document.getElementById('tbBack').onclick=()=>{
+  if(battleRunning){stopBattle();}
+  go('home');
+};
+
+/* ============================================================
+   MODAL
+============================================================ */
+function openModal(html){
+  document.getElementById('modalBox').innerHTML=html;
+  document.getElementById('modalBack').classList.add('show');
+}
+function closeModal(){document.getElementById('modalBack').classList.remove('show');}
+document.getElementById('modalBack').onclick=e=>{if(e.target.id==='modalBack')closeModal();};
+
+/* ============================================================
+   EQUITY CURVE SVG (glowing, theme-colored)
+============================================================ */
+function equitySVG(points,w,h,col,col2){
+  col=col||'#9d4dff';col2=col2||'#ffffff';
+  if(!points||points.length<2)return '<div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--txt-faint);border:1px dashed var(--line);border-radius:8px;">Belum ada data</div>';
+  const min=Math.min(...points),max=Math.max(...points),range=(max-min)||1,pad=6;
+  const iw=w-pad*2,ih=h-pad*2,sx=iw/(points.length-1);
+  const co=points.map((v,i)=>[pad+i*sx, pad+ih-((v-min)/range)*ih]);
+  const line=co.map((c,i)=>(i?'L':'M')+c[0].toFixed(1)+' '+c[1].toFixed(1)).join(' ');
+  const area=line+` L${(pad+iw).toFixed(1)} ${(pad+ih).toFixed(1)} L${pad.toFixed(1)} ${(pad+ih).toFixed(1)} Z`;
+  const lx=co[co.length-1][0],ly=co[co.length-1][1];
+  const u='g'+Math.random().toString(36).slice(2,8);
+  return `<svg width="100%" height="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block">
+    <defs>
+      <linearGradient id="${u}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${col}" stop-opacity=".35"/><stop offset="100%" stop-color="${col}" stop-opacity="0"/></linearGradient>
+      <linearGradient id="${u}l" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${col}"/><stop offset="100%" stop-color="${col2}"/></linearGradient>
+      <filter id="${u}g" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <path d="${area}" fill="url(#${u}a)"/>
+    <path d="${line}" fill="none" stroke="url(#${u}l)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#${u}g)"/>
+    <circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="3.2" fill="#fff" filter="url(#${u}g)"/>
+  </svg>`;
+}
+function equitySummary(points){
+  if(!points||points.length<2)return {usd:0,pct:0};
+  const s=points[0],e=points[points.length-1],usd=e-s;
+  const base=(s===0)?Math.max(1,Math.abs(e)):Math.abs(s);
+  return {usd,pct:(usd/base)*100};
+}
+function maxDrawdown(points){
+  if(!points||points.length<2)return {abs:0,pct:0};
+  let peak=points[0],mddAbs=0,mddPct=0;
+  for(const v of points){
+    if(v>peak)peak=v;
+    const dd=peak-v;
+    if(dd>mddAbs)mddAbs=dd;
+    const ddp=peak!==0?(dd/Math.abs(peak))*100:0;
+    if(ddp>mddPct)mddPct=ddp;
+  }
+  return {abs:Math.round(mddAbs),pct:mddPct};
+}
+function aiStats(ai){
+  const wins=ai.trades.filter(t=>t.color==='profit').length;
+  const losses=ai.trades.filter(t=>t.color==='loss').length;
+  const tot=wins+losses, wr=tot?Math.round(wins/tot*100):0;
+  const pnl=ai.trades.reduce((s,t)=>s+(+t.pl||0),0);
+  const eq=equitySummary(ai.equity);
+  const mdd=maxDrawdown(ai.equity);
+  return {wins,losses,tot,wr,pnl,eq,mdd};
+}
+/* random equity generator: realistis, bergerigi, fluktuasi by % & eksponensial.
+   start -> end melalui n titik. flucPct = amplitudo gerigi relatif (%).
+   Pertumbuhan eksponensial: tiap langkah tumbuh proporsional thd nilai berjalan,
+   bukan tambahan tetap, jadi makin lama makin "membesar" (compounding look). */
+function genEquity(start,end,n,flucPct){
+  start=+start||0; end=+end||0; n=Math.max(2,n||10);
+  flucPct=(flucPct==null?6:flucPct)/100;
+  // base eksponensial dari start->end
+  // kalau start 0, pakai basis kecil supaya rasio terdefinisi
+  const s=start, e=end;
+  const pts=[s];
+  let prev=s;
+  for(let i=1;i<n;i++){
+    const frac=i/(n-1);
+    // kurva dasar: interpolasi eksponensial (ease) dari s ke e
+    // pakai easeInExpo-ish supaya gerakan makin agresif di akhir
+    const ease=Math.pow(frac,1.7);
+    const base=s+(e-s)*ease;
+    // amplitudo gerigi proporsional thd skala nilai berjalan (by %)
+    const scale=Math.max(Math.abs(base),Math.abs(e),50);
+    const noise=(Math.random()*2-1)*scale*flucPct;
+    let v=base+noise;
+    // jaga supaya bergerigi: pastikan beda dari prev (hindari datar)
+    if(Math.abs(v-prev)<scale*flucPct*0.15){
+      v+=(Math.random()<0.5?-1:1)*scale*flucPct*0.4;
+    }
+    pts.push(Math.round(v));
+    prev=v;
+  }
+  pts[n-1]=Math.round(e); // titik akhir tepat
+  return pts;
+}
+
+/* ============================================================
+   GENERATOR SINKRON: urutan W/L dinamis + PnL + equity curve
+   ------------------------------------------------------------
+   Input: start (modal awal), end (hasil akhir), n (jumlah trade),
+          rr (reward:risk, default 2 -> RR 1:2).
+   Output: { trades:[{color,pl,cum}], equity:[start,...,end] }
+   - W/L tidak kaku: pakai "regime" berganti (winstreak, lossstreak,
+     stagnan/choppy, hoki) sehingga ritme realistis.
+   - tiap W ~ +rr*R, tiap L ~ -1*R (R = risk per trade, dikalkulasi).
+   - PnL akhir didaratkan TEPAT di target (end-start).
+============================================================ */
+function pickRegime(){
+  // bobot: choppy paling sering, winstreak & lossstreak sedang, hoki jarang
+  const r=Math.random();
+  if(r<0.42)return {type:'choppy', len:2+Math.floor(Math.random()*4), winBias:0.5};
+  if(r<0.66)return {type:'winstreak',len:2+Math.floor(Math.random()*4), winBias:0.82};
+  if(r<0.88)return {type:'lossstreak',len:2+Math.floor(Math.random()*5), winBias:0.18};
+  return {type:'hoki', len:1+Math.floor(Math.random()*3), winBias:0.93};
+}
+function genTradeSequence(start,end,n,rr){
+  start=+start||0; end=+end||0; n=Math.max(1,Math.floor(n||10)); rr=rr||2;
+  const target=end-start;
+
+  // 1) tentukan jumlah W ideal agar R wajar.
+  //    total = R*(wins*(rr+1) - n). Pilih R acuan acak dalam rentang wajar
+  //    supaya jumlah W (winrate) ikut bervariasi antar-generate (tidak kaku).
+  const baseR=Math.max(1, Math.abs(target)/Math.max(1,n) / ((rr+1)/2));
+  const Rref=baseR*(0.7+Math.random()*0.9); // 0.7x–1.6x: variasi risk per sesi
+  let idealWins = Math.round( (target/Rref + n) / (rr+1) );
+  idealWins=Math.max(0,Math.min(n,idealWins));
+  // jitter jumlah W ±2 supaya winrate tidak selalu sama
+  idealWins += Math.round((Math.random()*2-1)*2);
+  idealWins=Math.max(0,Math.min(n, idealWins));
+
+  // 2) bangun urutan W/L dinamis via regime, lalu nudge jumlah W -> idealWins
+  let seq=[]; let i=0;
+  while(i<n){
+    const rg=pickRegime();
+    for(let k=0;k<rg.len && i<n;k++,i++) seq.push(Math.random()<rg.winBias);
+  }
+  // koreksi jumlah W agar = idealWins (ubah posisi acak, pertahankan sebaran)
+  let curWins=seq.filter(Boolean).length;
+  let guard=0;
+  while(curWins<idealWins && guard++<n*4){ const idx=Math.floor(Math.random()*n); if(!seq[idx]){seq[idx]=true;curWins++;} }
+  guard=0;
+  while(curWins>idealWins && guard++<n*4){ const idx=Math.floor(Math.random()*n); if(seq[idx]){seq[idx]=false;curWins--;} }
+  if(n>2 && seq.every(x=>x===seq[0])){ seq[Math.floor(Math.random()*n)]=!seq[0]; curWins=seq.filter(Boolean).length; }
+  let wins=curWins, losses=n-wins;
+
+  // 3) hitung R aktual dari komposisi final
+  const denom=(wins*rr - losses);
+  let R = Math.abs(denom)>0.0001 ? target/denom : Rref*(target<0?-1:1);
+  if(!isFinite(R)||R===0) R=Rref;
+  const Rabs=Math.max(1,Math.abs(R));
+
+  // 4) PnL tiap trade: W ~ +rr*R, L ~ -R, dengan noise ±25%
+  let pls=seq.map(win=>{
+    const base = win? rr*Rabs : -Rabs;
+    const noise=1+(Math.random()*0.5-0.25);
+    return base*noise;
+  });
+  // 5) koreksi agar SUM == target persis
+  let sum=pls.reduce((a,b)=>a+b,0);
+  const diff=target-sum;
+  const absTot=pls.reduce((a,b)=>a+Math.abs(b),0)||1;
+  pls=pls.map(p=>p + diff*(Math.abs(p)/absTot));
+  pls=pls.map(p=>Math.round(p));
+  let rsum=pls.reduce((a,b)=>a+b,0);
+  pls[n-1]+=(target-rsum);
+
+  // 6) susun trades + equity kumulatif (warna ikut tanda PnL final)
+  const trades=[]; const equity=[start]; let cum=start;
+  for(let j=0;j<n;j++){
+    cum+=pls[j];
+    trades.push({color:pls[j]>=0?'profit':'loss',pl:pls[j],cum:Math.round(cum)});
+    equity.push(Math.round(cum));
+  }
+  return {trades,equity,R:Math.round(Rabs)};
+}
+function randTicker(cats){
+  let pool=[];
+  (cats&&cats.length?cats:['CRYPTO']).forEach(c=>{pool=pool.concat(PAIR_CATS[c]||[]);});
+  if(!pool.length)pool=CRYPTO20;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+/* injected next: renderRoster, renderJournal, renderBattle */
+
+/* ============================================================
+   ROSTER — Daftar AI (profil, foto, tema, statistik)
+============================================================ */
+function renderRoster(){
+  const s=document.getElementById('screen-roster');
+  let cards='';
+  state.ais.forEach((ai,i)=>{
+    const th=themeOf(ai);
+    const st=aiStats(ai);
+    const av=ai.photo
+      ?`<img src="${ai.photo}" style="width:100%;height:100%;object-fit:cover;">`
+      :`<span style="font-family:var(--mono);font-weight:700;font-size:18px;color:${th.c}">${esc(initials(ai.name))}</span>`;
+    cards+=`
+      <div class="roster-card" style="--ac:${th.c}">
+        <div class="rc-glow"></div>
+        <div class="rc-inner">
+          <div class="rc-avatar" style="border-color:${th.c};box-shadow:0 0 16px ${th.c}66">${av}</div>
+          <div class="rc-main">
+            <div class="rc-name">${esc(ai.name)}</div>
+            <div class="rc-status"><span class="rc-dot" style="background:${th.c};box-shadow:0 0 6px ${th.c}"></span>${esc(ai.status)}</div>
+            <div class="rc-stats">
+              <span>WR <b style="color:${th.c}">${st.wr}%</b></span>
+              <span>W/L <b>${st.wins}/${st.losses}</b></span>
+              <span>PnL <b style="color:${st.pnl>=0?th.c:'var(--loss)'}">${fmtUSD_id(st.pnl)}</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="rc-actions">
+          <button class="btn sm" onclick="editAI('${ai.id}')">Edit</button>
+          <button class="btn sm" onclick="openJournalFor('${ai.id}')">Jurnal</button>
+          <button class="btn sm danger" onclick="delAI('${ai.id}')">Hapus</button>
+        </div>
+        <div class="rc-mini">
+          <button class="mini-btn" onclick="previewAI('${ai.id}')" title="Preview statistik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <button class="mini-btn" onclick="downloadAI('${ai.id}')" title="Download HD"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg></button>
+        </div>
+      </div>`;
+  });
+  s.innerHTML=`
+    <div class="section-hd">
+      <div><h2>AI List</h2><div class="sub">${state.ais.length} peserta terdaftar</div></div>
+      <button class="btn primary sm" onclick="editAI(null)">+ Tambah AI</button>
+    </div>
+    <div class="roster-list">${cards||'<p style="color:var(--txt-faint);text-align:center;padding:30px">Belum ada AI. Tambah dulu.</p>'}</div>
+    ${state.ais.length>=1?`
+    <div class="roster-play-cfg" id="playCfgPanel">
+      <div style="font-size:11px;font-weight:700;margin-bottom:8px;color:var(--violet)">⚙️ Pengaturan Play All</div>
+      <div class="play-cfg-grid" id="playCfgGrid">${state.ais.map(a=>`
+        <div class="play-cfg-row">
+          <label>${esc(a.name)} — n trade terakhir</label>
+          <input type="number" min="1" value="${Math.min(a.trades.length||10,20)}" id="pcfg_${a.id}">
+        </div>`).join('')}</div>
+      <label class="field-label">Durasi total (detik)</label>
+      <input class="inp mono" id="playDurInp" type="number" min="3" value="20" style="margin-bottom:10px">
+      <label class="field-label">Jenis Pair</label>
+      <div style="display:flex;gap:8px;margin:6px 0 10px">
+        <label class="catchk" id="pXAUlbl"><input type="checkbox" id="pXAU"> XAU</label>
+        <label class="catchk on" id="pCRYlbl"><input type="checkbox" id="pCRY" checked> Crypto</label>
+      </div>
+      <button class="btn primary full" onclick="launchPlayAll()">▶ Play Battle</button>
+    </div>`:''}
+    <div class="roster-foot">
+      <button class="mini-btn wide" onclick="previewAll()" title="Preview semua"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg> Preview Semua</button>
+      <button class="mini-btn wide" onclick="downloadAll()" title="Download semua HD"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> Download HD</button>
+      ${state.ais.length>=1?`<button class="mini-btn wide" onclick="togglePlayCfg()" style="color:var(--violet);border-color:var(--violet-dim)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg> Play</button>`:''}
+    </div>
+  `;
+}
+function togglePlayCfg(){
+  const p=document.getElementById('playCfgPanel');
+  if(p)p.classList.toggle('open');
+  ['pXAU','pCRY'].forEach(id=>{
+    const cb=document.getElementById(id);
+    if(cb) cb.onchange=()=>document.getElementById(id+'lbl').classList.toggle('on',cb.checked);
+  });
+}
+function launchPlayAll(){
+  if(!state.ais.length){toast('Belum ada AI');return;}
+  const dur=parseInt(document.getElementById('playDurInp')?.value)||20;
+  const cats=[];
+  if(document.getElementById('pXAU')?.checked) cats.push('XAU');
+  if(document.getElementById('pCRY')?.checked) cats.push('CRYPTO');
+  if(!cats.length) cats.push('CRYPTO');
+  // build battleCfg dari data roster
+  battleCfg.participantIds=state.ais.map(a=>a.id);
+  battleCfg.winnerId='';
+  battleCfg.durationSec=dur;
+  battleCfg.pairCats=cats;
+  state.ais.forEach(a=>{
+    const inp=document.getElementById('pcfg_'+a.id);
+    const n=parseInt(inp?.value)||Math.min(a.trades.length||10,20);
+    battleCfg.tradesPerAI[a.id]=Math.max(1,n);
+    // gunakan equity existing (modal & hasil dari data jurnal)
+    battleCfg.startEquity[a.id]=a.equity.length>0?a.equity[0]:0;
+    battleCfg.endEquity[a.id]=a.equity.length>0?a.equity[a.equity.length-1]:500;
+  });
+  // pemenang = AI dengan equity akhir tertinggi
+  let bestId=state.ais[0].id,bestEq=battleCfg.endEquity[state.ais[0].id];
+  state.ais.forEach(a=>{if((battleCfg.endEquity[a.id]||0)>bestEq){bestEq=battleCfg.endEquity[a.id];bestId=a.id;}});
+  battleCfg.winnerId=bestId;
+  go('battle');
+  startBattle();
+}
+
+function editAI(id){
+  const isNew=!id;
+  const ai=isNew?mkAI('',''):state.ais.find(a=>a.id===id);
+  if(!ai)return;
+  const draft={name:ai.name,photo:ai.photo,theme:ai.theme||'violet',status:ai.status};
+  let themeBtns='';
+  Object.keys(THEMES).forEach(k=>{
+    const t=THEMES[k];
+    themeBtns+=`<div class="theme-opt" data-k="${k}" style="background:${t.c};${draft.theme===k?'outline:3px solid #fff;outline-offset:2px;':''}" title="${t.name}"></div>`;
+  });
+  openModal(`
+    <h3>${isNew?'Tambah AI Baru':'Edit AI'}</h3>
+    <div style="display:flex;gap:14px;align-items:center;margin-bottom:6px">
+      <div id="avPrev" class="av-prev">${draft.photo?`<img src="${draft.photo}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-family:var(--mono);font-weight:700">${esc(initials(draft.name||'AI'))}</span>`}</div>
+      <div style="flex:1">
+        <button class="btn sm full" onclick="document.getElementById('photoInp').click()">Pilih Foto</button>
+        ${draft.photo?`<button class="btn sm full danger" style="margin-top:6px" onclick="clearPhoto()">Hapus Foto</button>`:''}
+        <input type="file" id="photoInp" accept="image/*" style="display:none">
+      </div>
+    </div>
+    <label class="field-label">Nama AI</label>
+    <input class="inp" id="aiName" value="${esc(draft.name)}" placeholder="cth: AI Alpha">
+    <label class="field-label">Status (teks bebas)</label>
+    <input class="inp" id="aiStatus" value="${esc(draft.status)}" placeholder="cth: Bot Trading">
+    <label class="field-label">Tema Warna</label>
+    <div class="theme-row" id="themeRow">${themeBtns}</div>
+    <div class="modal-actions">
+      <button class="btn full" onclick="closeModal()">Batal</button>
+      <button class="btn primary full" id="saveAiBtn">Simpan</button>
+    </div>
+  `);
+  document.getElementById('photoInp').onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=ev=>{resizePhoto(ev.target.result,256,data=>{draft.photo=data;refreshAvPrev(draft);});};
+    rd.readAsDataURL(f);
+  };
+  window.clearPhoto=()=>{draft.photo='';refreshAvPrev(draft);};
+  document.getElementById('themeRow').querySelectorAll('.theme-opt').forEach(o=>{
+    o.onclick=()=>{
+      draft.theme=o.dataset.k;
+      document.getElementById('themeRow').querySelectorAll('.theme-opt').forEach(x=>x.style.outline='none');
+      o.style.outline='3px solid #fff';o.style.outlineOffset='2px';
+    };
+  });
+  document.getElementById('saveAiBtn').onclick=()=>{
+    ai.name=document.getElementById('aiName').value||'AI Baru';
+    ai.status=document.getElementById('aiStatus').value||'Bot Trading';
+    ai.theme=draft.theme;
+    ai.photo=draft.photo;
+    if(isNew)state.ais.push(ai);
+    save();closeModal();renderRoster();
+    toast(isNew?'AI ditambahkan':'AI diperbarui');
+  };
+}
+function refreshAvPrev(draft){
+  document.getElementById('avPrev').innerHTML=draft.photo
+    ?`<img src="${draft.photo}" style="width:100%;height:100%;object-fit:cover">`
+    :`<span style="font-family:var(--mono);font-weight:700">${esc(initials(document.getElementById('aiName').value||'AI'))}</span>`;
+}
+function resizePhoto(dataUrl,maxSize,cb){
+  const img=new Image();
+  img.onload=()=>{
+    let{width:w,height:h}=img;
+    const sc=Math.min(1,maxSize/Math.max(w,h));
+    w=Math.round(w*sc);h=Math.round(h*sc);
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(img,0,0,w,h);
+    cb(cv.toDataURL('image/jpeg',0.82));
+  };
+  img.onerror=()=>cb(dataUrl);
+  img.src=dataUrl;
+}
+
+/* ---------- STAT SHEET (preview / download "data asli") ---------- */
+function statSheetHTML(ai){
+  const th=themeOf(ai);const st=aiStats(ai);
+  const av=ai.photo?`<img src="${ai.photo}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-family:var(--mono);font-weight:700;font-size:22px;color:${th.c}">${esc(initials(ai.name))}</span>`;
+  return `
+    <div class="sheet" style="--ac:${th.c}">
+      <div class="sheet-hd">
+        <div class="sheet-av" style="border-color:${th.c};box-shadow:0 0 18px ${th.c}66">${av}</div>
+        <div><div class="sheet-name" style="color:${th.c}">${esc(ai.name)}</div><div class="sheet-status">${esc(ai.status)}</div></div>
+      </div>
+      <div class="sheet-grid">
+        <div class="sheet-stat"><label>Win Rate</label><div class="v" style="color:${th.c}">${st.wr}%</div></div>
+        <div class="sheet-stat"><label>Total Trade</label><div class="v">${st.tot}</div></div>
+        <div class="sheet-stat"><label>Menang</label><div class="v" style="color:var(--profit)">${st.wins}</div></div>
+        <div class="sheet-stat"><label>Kalah</label><div class="v" style="color:var(--loss)">${st.losses}</div></div>
+        <div class="sheet-stat"><label>Total PnL</label><div class="v" style="color:${st.pnl>=0?th.c:'var(--loss)'}">${fmtUSD_id(st.pnl)}</div></div>
+        <div class="sheet-stat"><label>Max Drawdown</label><div class="v" style="color:var(--loss)">-${st.mdd.abs.toLocaleString('id-ID')} Cent <small>(${st.mdd.pct.toFixed(1)}%)</small></div></div>
+      </div>
+      <label class="sheet-eqlabel">Equity Curve</label>
+      <div class="sheet-eq">${equitySVG(ai.equity,360,120,th.c,th.c2)}</div>
+      <div class="sheet-eqval" style="color:${st.eq.usd>=0?th.c:'var(--loss)'}">${fmtUSD_id(st.eq.usd)} <span style="font-size:13px;opacity:.85">(${fmtPct_id(st.eq.pct)})</span></div>
+      <div class="sheet-wm">${getWM()}</div>
+    </div>`;
+}
+function previewAI(id){
+  const ai=state.ais.find(a=>a.id===id);if(!ai)return;
+  openModal(`<h3>Statistik — ${esc(ai.name)}</h3>${statSheetHTML(ai)}
+    <div class="modal-actions"><button class="btn full" onclick="closeModal()">Tutup</button><button class="btn primary full" onclick="downloadAI('${id}')">Download HD</button></div>`);
+}
+function previewAll(){
+  let sheets='';
+  state.ais.forEach(ai=>sheets+=statSheetHTML(ai));
+  openModal(`<h3>Preview Semua AI</h3><div id="allSheets">${sheets}</div>
+    <div class="modal-actions"><button class="btn full" onclick="closeModal()">Tutup</button><button class="btn primary full" onclick="downloadAll()">Download HD</button></div>`);
+}
+async function downloadAI(id){
+  const ai=state.ais.find(a=>a.id===id);if(!ai)return;
+  await renderSheetToPNG(statSheetHTML(ai),'ipistore-'+ai.name.replace(/\s+/g,'_'));
+}
+async function downloadAll(){
+  let sheets='';state.ais.forEach(ai=>sheets+=statSheetHTML(ai));
+  await renderSheetToPNG('<div id="allSheets" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+sheets+'</div>','ipistore-semua-AI');
+}
+async function renderSheetToPNG(innerHTML,fname){
+  toast('Menyiapkan gambar...');
+  // offscreen container styled like app; lebih lebar bila konten grid
+  const wide=/id="allSheets"|class="jgrid"/.test(innerHTML);
+  const holder=document.createElement('div');
+  holder.style.cssText='position:fixed;left:-9999px;top:0;width:'+(wide?'760px':'400px')+';padding:16px;background:#08070d;';
+  holder.innerHTML=innerHTML;
+  document.body.appendChild(holder);
+  try{
+    if(!window.html2canvas)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    const cv=await window.html2canvas(holder,{backgroundColor:'#08070d',scale:2,useCORS:true});
+    const a=document.createElement('a');a.download=fname+'.png';a.href=cv.toDataURL('image/png');a.click();
+    toast('Gambar tersimpan!');
+  }catch(e){toast('Gagal: '+e.message);}
+  finally{document.body.removeChild(holder);}
+}
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('gagal load library'));document.head.appendChild(s);});}
+
+function delAI(id){
+  const ai=state.ais.find(a=>a.id===id);if(!ai)return;
+  openModal(`<h3>Hapus AI?</h3><p style="color:var(--txt-dim);font-size:13px">"${esc(ai.name)}" akan dihapus permanen beserta jurnalnya.</p>
+    <div class="modal-actions"><button class="btn full" onclick="closeModal()">Batal</button><button class="btn danger full" id="cfDel">Hapus</button></div>`);
+  document.getElementById('cfDel').onclick=()=>{
+    state.ais=state.ais.filter(a=>a.id!==id);save();closeModal();renderRoster();toast('AI dihapus');
+  };
+}
+
+/* ============================================================
+   JOURNAL — sama seperti versi sebelumnya, kini per-AI dari roster
+============================================================ */
+let journalFocusId=null;
+function openJournalFor(id){journalFocusId=id;go('journal');}
+function renderJournal(){
+  const s=document.getElementById('screen-journal');
+  if(journalFocusId){renderJournalFocus(s);return;}
+  // grid overview semua AI (2 kolom)
+  let cards='';
+  state.ais.forEach(ai=>{
+    const th=themeOf(ai);
+    const eq=equitySummary(ai.equity);
+    let rows='';
+    // tampilkan maksimal 4 trade TERAKHIR (hemat tempat, panel lega)
+    const last4=ai.trades.slice(-4).reverse();
+    last4.forEach(t=>{
+      const p=t.color==='profit';
+      const side=t.side||(p?'BUY':'SELL');
+      const sideCol=side==='BUY'?'#3d8bff':'#ef5350';
+      rows+=`<div class="trow ${p?'profit':'loss'}"><div class="tl"><span class="tsym">${esc(t.sym)}</span><span class="tside" style="color:${sideCol}">${side}</span></div><span class="tpl ${p?'profit':'loss'}">${fmtMoneySimple(t.pl)}</span></div>`;
+    });
+    for(let i=last4.length;i<4;i++)rows+=`<div class="trow empty">— kosong —</div>`;
+    cards+=`
+      <div class="jcard" style="--ac:${th.c}" onclick="openJournalFor('${ai.id}')">
+        <div class="jcard-glow"></div>
+        <div class="jcard-dl" onclick="event.stopPropagation();downloadJournalPanel('${ai.id}')" title="Download panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        </div>
+        <div class="jcard-in">
+          <div class="jc-hd"><span class="jc-name">${esc(ai.name)}</span><span class="jc-stat"><span class="jc-dot" style="background:${th.c}"></span>${esc(ai.status)}</span></div>
+          <div class="jc-trades">${rows}</div>
+          <div class="jc-ft">
+            <div class="jc-eq">${equitySVG(ai.equity,150,42,th.c,th.c2)}</div>
+            <div class="jc-val" style="color:${eq.usd>=0?th.c:'var(--loss)'}">${fmtUSD_id(eq.usd)} <span style="font-size:11px;opacity:.85">(${fmtPct_id(eq.pct)})</span></div>
+          </div>
+        </div>
+      </div>`;
+  });
+  s.innerHTML=`
+    <div class="tf-bar"><input id="tfInp" value="${esc(state.timeframe)}" placeholder="cth: 3 Bulan Terakhir"></div>
+    <div class="jgrid">${cards||'<p style="grid-column:1/-1;color:var(--txt-faint);text-align:center;padding:30px">Belum ada AI. Tambah di menu AI List.</p>'}</div>
+    ${state.ais.length?`<div class="roster-foot">
+      <button class="mini-btn wide" onclick="downloadJournal()" title="Download grid journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> Download HD</button>
+    </div>`:''}
+  `;
+  document.getElementById('tfInp').oninput=e=>{state.timeframe=e.target.value;save();};
+}
+/* download seluruh grid journal sebagai PNG */
+async function downloadJournal(){
+  let cards='';
+  state.ais.forEach(ai=>{
+    const th=themeOf(ai);const eq=equitySummary(ai.equity);
+    let rows='';
+    const last4=ai.trades.slice(-4).reverse();
+    last4.forEach(t=>{
+      const p=t.color==='profit';const side=t.side||(p?'BUY':'SELL');
+      const sideCol=side==='BUY'?'#3d8bff':'#ef5350';
+      rows+=`<div class="trow ${p?'profit':'loss'}"><div class="tl"><span class="tsym">${esc(t.sym)}</span><span class="tside" style="color:${sideCol}">${side}</span></div><span class="tpl ${p?'profit':'loss'}">${fmtMoneySimple(t.pl)}</span></div>`;
+    });
+    for(let i=last4.length;i<4;i++)rows+=`<div class="trow empty">— kosong —</div>`;
+    cards+=`<div class="jcard" style="--ac:${th.c}"><div class="jcard-in" style="margin:0">
+      <div class="jc-hd"><span class="jc-name">${esc(ai.name)}</span><span class="jc-stat"><span class="jc-dot" style="background:${th.c}"></span>${esc(ai.status)}</span></div>
+      <div class="jc-trades">${rows}</div>
+      <div class="jc-ft"><div class="jc-eq">${equitySVG(ai.equity,150,42,th.c,th.c2)}</div>
+      <div class="jc-val" style="color:${eq.usd>=0?th.c:'var(--loss)'}">${fmtUSD_id(eq.usd)} <span style="font-size:11px;opacity:.85">(${fmtPct_id(eq.pct)})</span></div></div>
+    </div></div>`;
+  });
+  const html=`<div style="text-align:center;margin-bottom:12px"><div style="font-family:var(--mono);font-weight:700;font-size:18px;color:var(--violet)">${esc(state.timeframe)}</div></div>
+    <div class="jgrid">${cards}</div>
+    <div style="text-align:center;margin-top:12px;font-family:var(--mono);font-weight:700;font-size:12px;color:var(--txt-faint)">${getWM()}</div>`;
+  await renderSheetToPNG(html,'ipistore-journal');
+}
+
+async function downloadJournalPanel(id){
+  const ai=state.ais.find(a=>a.id===id);if(!ai)return;
+  const th=themeOf(ai);const eq=equitySummary(ai.equity);
+  let rows='';
+  const last4=ai.trades.slice(-4).reverse();
+  last4.forEach(t=>{
+    const p=t.color==='profit';const side=t.side||(p?'BUY':'SELL');
+    const sideCol=side==='BUY'?'#3d8bff':'#ef5350';
+    rows+=`<div class="trow ${p?'profit':'loss'}"><div class="tl"><span class="tsym">${esc(t.sym)}</span><span class="tside" style="color:${sideCol}">${side}</span></div><span class="tpl ${p?'profit':'loss'}">${fmtMoneySimple(t.pl)}</span></div>`;
+  });
+  for(let i=last4.length;i<4;i++)rows+=`<div class="trow empty">— kosong —</div>`;
+  const html=`<div class="jcard" style="--ac:${th.c};width:200px"><div class="jcard-in" style="margin:0">
+    <div class="jc-hd"><span class="jc-name">${esc(ai.name)}</span><span class="jc-stat"><span class="jc-dot" style="background:${th.c}"></span>${esc(ai.status)}</span></div>
+    <div class="jc-trades">${rows}</div>
+    <div class="jc-ft"><div class="jc-eq">${equitySVG(ai.equity,150,42,th.c,th.c2)}</div>
+    <div class="jc-val" style="color:${eq.usd>=0?th.c:'var(--loss)'}">${fmtUSD_id(eq.usd)} <span style="font-size:11px;opacity:.85">(${fmtPct_id(eq.pct)})</span></div></div>
+    <div style="text-align:center;font-size:8px;color:#5c5770;margin-top:6px;font-family:var(--mono)">${getWM()}</div>
+  </div></div>`;
+  await renderSheetToPNG(html,'panel-'+ai.name.replace(/\s+/g,'_'));
+}
+
+function renderJournalFocus(s){
+  const ai=state.ais.find(a=>a.id===journalFocusId);
+  if(!ai){journalFocusId=null;renderJournal();return;}
+  const th=themeOf(ai);
+  const eq=equitySummary(ai.equity);
+  let tr='';
+  ai.trades.forEach((t,ti)=>{
+    const side=t.side||(t.color==='profit'?'BUY':'SELL');
+    tr+=`
+      <div class="tedit" data-ti="${ti}">
+        <div class="te-r1">
+          <input class="te-sym" data-f="sym" value="${esc(t.sym)}" placeholder="XAU/BTC" maxlength="8">
+          <div class="ctoggle te-side">
+            <div class="copt sideopt ${side==='BUY'?'sel':''}" data-v="BUY" style="color:#3d8bff">BUY</div>
+            <div class="copt sideopt ${side==='SELL'?'sel':''}" data-v="SELL" style="color:#ef5350">SELL</div>
+          </div>
+        </div>
+        <div class="te-r2">
+          <div class="ctoggle">
+            <div class="copt profit ${t.color==='profit'?'sel':''}" data-v="profit">↑</div>
+            <div class="copt loss ${t.color==='loss'?'sel':''}" data-v="loss">↓</div>
+          </div>
+          <input class="te-pl" data-f="pl" type="number" step="1" value="${t.pl}" placeholder="P/L Cent">
+          <div class="te-del"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6"/></svg></div>
+        </div>
+      </div>`;
+  });
+  s.innerHTML=`
+    <div class="focus-hd">
+      <div class="back-btn" onclick="journalFocusId=null;renderJournal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div style="flex:1"><div style="font-family:var(--mono);font-weight:700;font-size:17px;color:${th.c}">${esc(ai.name)}</div><div style="font-size:10px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.06em">${esc(ai.status)} · Edit Jurnal</div></div>
+      <button class="btn sm primary" onclick="startReplay('${ai.id}')" title="Replay trade">▶ Replay</button>
+    </div>
+    <div class="eq-panel">
+      <div class="eq-drag-wrap" id="eqDragWrap" style="height:90px;position:relative;">
+        <div id="eq-panel-curve" style="height:90px;">${equitySVG(ai.equity,320,90,th.c,th.c2)}</div>
+        <canvas id="eqDragCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:10;touch-action:none;cursor:ns-resize;"></canvas>
+      </div>
+      <div class="eq-drag-hint">↕ drag kurva untuk edit equity — history otomatis sinkron</div>
+      <div class="eq-panel-val" id="eqPanelVal" style="color:${eq.usd>=0?th.c:'var(--loss)'};text-shadow:0 0 16px ${th.c}88">${fmtUSD_id(eq.usd)} <span style="font-size:14px;opacity:.85">(${fmtPct_id(eq.pct)})</span></div>
+      <button class="btn sm full" style="margin-top:4px" onclick="genJournal('${ai.id}')">🎲 Generate Trade + Equity (sinkron)</button>
+      <div style="font-size:9px;color:var(--txt-faint);text-align:center;margin-top:6px">History & kurva otomatis sinkron dari satu generator</div>
+    </div>
+    <div class="tedit-list">${tr}</div>
+    <button class="btn full" id="addTradeBtn" style="border:1px dashed var(--violet-dim);background:rgba(157,77,255,.06);color:var(--violet)">+ Tambah Trade Manual</button>
+  `;
+  document.getElementById('addTradeBtn').onclick=()=>{ai.trades.push(mkTrade(randTicker(['CRYPTO']),'',ai.trades.length%2?'loss':'profit',0,0));ai.trades[ai.trades.length-1].side='BUY';save();renderJournalFocus(s);};
+  s.querySelectorAll('.tedit').forEach(el=>{
+    const ti=+el.dataset.ti;
+    el.querySelectorAll('input[data-f]').forEach(inp=>inp.oninput=()=>{
+      const f=inp.dataset.f;ai.trades[ti][f]=(f==='pl'||f==='pct')?parseFloat(inp.value)||0:inp.value;save();
+    });
+    el.querySelectorAll('.copt.profit,.copt.loss').forEach(o=>o.onclick=()=>{ai.trades[ti].color=o.dataset.v;save();renderJournalFocus(s);});
+    el.querySelectorAll('.sideopt').forEach(o=>o.onclick=()=>{ai.trades[ti].side=o.dataset.v;save();renderJournalFocus(s);});
+    el.querySelector('.te-del').onclick=()=>{ai.trades.splice(ti,1);save();renderJournalFocus(s);};
+  });
+  // ---------- drag equity curve ----------
+  setupEqDrag(ai, th);
+}
+
+function setupEqDrag(ai, th){
+  const wrap=document.getElementById('eqDragWrap');
+  const canvas=document.getElementById('eqDragCanvas');
+  if(!wrap||!canvas)return;
+  // ensure equity has points (at least 2)
+  if(!ai.equity||ai.equity.length<2) return;
+
+  let dragging=false;
+  let dragIdx=-1; // which equity point is being dragged
+  const PAD=6;
+
+  function getEqCoords(eq,w,h){
+    const min=Math.min(...eq),max=Math.max(...eq),range=(max-min)||1;
+    const iw=w-PAD*2,ih=h-PAD*2;
+    return eq.map((v,i)=>[PAD+i*(iw/(eq.length-1)), PAD+ih-((v-min)/range)*ih]);
+  }
+
+  function clientToCanvas(e){
+    const rect=canvas.getBoundingClientRect();
+    const cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    const cy=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+    return {cx,cy,w:rect.width,h:rect.height};
+  }
+
+  function nearestIdx(cx,coords){
+    let best=0,bd=Infinity;
+    coords.forEach(([x],i)=>{const d=Math.abs(x-cx);if(d<bd){bd=d;best=i;}});
+    return best;
+  }
+
+  function yToValue(cy,h,eq){
+    const min=Math.min(...eq),max=Math.max(...eq),range=(max-min)||1;
+    const ih=h-PAD*2;
+    const frac=Math.max(0,Math.min(1,(cy-PAD)/ih));
+    return Math.round(max-(frac*range));
+  }
+
+  function onStart(e){
+    e.preventDefault();
+    if(!ai.equity||ai.equity.length<2)return;
+    const {cx,cy,w,h}=clientToCanvas(e);
+    const coords=getEqCoords(ai.equity,w,h);
+    dragIdx=nearestIdx(cx,coords);
+    dragging=true;
+  }
+  function onMove(e){
+    e.preventDefault();
+    if(!dragging||dragIdx<0)return;
+    const {cy,w,h}=clientToCanvas(e);
+    const newVal=yToValue(cy,h,ai.equity);
+    ai.equity[dragIdx]=newVal;
+    // redraw curve
+    document.getElementById('eq-panel-curve').innerHTML=equitySVG(ai.equity,320,90,th.c,th.c2);
+    // update val label
+    const eq=equitySummary(ai.equity);
+    const valEl=document.getElementById('eqPanelVal');
+    if(valEl){valEl.style.color=eq.usd>=0?th.c:'var(--loss)';valEl.innerHTML=fmtUSD_id(eq.usd)+' <span style="font-size:14px;opacity:.85">('+fmtPct_id(eq.pct)+')</span>';}
+  }
+  function onEnd(){
+    if(!dragging)return;
+    dragging=false;
+    dragIdx=-1;
+    // resync trades from equity: redistribute PnL proportionally
+    resyncTradesFromEquity(ai);
+    save();
+    renderJournalFocus(document.getElementById('screen-journal'));
+  }
+
+  canvas.addEventListener('mousedown',onStart,{passive:false});
+  canvas.addEventListener('touchstart',onStart,{passive:false});
+  window.addEventListener('mousemove',onMove,{passive:false});
+  window.addEventListener('touchmove',onMove,{passive:false});
+  window.addEventListener('mouseup',onEnd);
+  window.addEventListener('touchend',onEnd);
+}
+
+/* Resync trades dari equity yang sudah diedit manual.
+   Jumlah trade tetap, urutan W/L dipertahankan (warna ikut tanda delta),
+   hanya nilai PnL tiap trade di-redistribute sesuai delta antar titik equity. */
+function resyncTradesFromEquity(ai){
+  const eq=ai.equity;
+  if(!eq||eq.length<2)return;
+  const n=ai.trades.length;
+  if(n===0)return;
+  // equity sekarang punya eq.length titik; interpolasi ke n+1 titik jika perlu
+  let pts=eq;
+  if(eq.length!==n+1){
+    // resampling linear ke n+1 titik
+    pts=[];
+    for(let i=0;i<=n;i++){
+      const t=i/n*(eq.length-1);
+      const lo=Math.floor(t),hi=Math.min(eq.length-1,Math.ceil(t));
+      pts.push(Math.round(eq[lo]+(eq[hi]-eq[lo])*(t-lo)));
+    }
+  }
+  // tiap trade: pl = delta ekuitas, warna = tanda delta
+  ai.trades.forEach((tr,i)=>{
+    const delta=pts[i+1]-pts[i];
+    tr.pl=delta;
+    tr.color=delta>=0?'profit':'loss';
+    tr.side=delta>=0?tr.side||'BUY':tr.side||'SELL';
+  });
+  // update equity ke pts yang sudah ter-resample
+  ai.equity=pts;
+}
+function genJournal(id){
+  const ai=state.ais.find(a=>a.id===id);if(!ai)return;
+  if(!ai.genCfg)ai.genCfg={modal:1000,pct:25,n:20,xau:false,cry:true};
+  const cfg=ai.genCfg;
+  openModal(`<h3>Generate Trade + Equity</h3>
+    <p style="font-size:10.5px;color:var(--txt-dim);margin-bottom:6px;line-height:1.5">History & equity curve dibuat dari satu sumber — selalu sinkron. W/L dinamis.</p>
+    <label class="field-label">Modal awal (Cent)</label><input class="inp mono" id="gModal" type="number" value="${cfg.modal}">
+    <label class="field-label">PnL akhir (%) — boleh minus</label><input class="inp mono" id="gPct" type="number" step="0.1" value="${cfg.pct}">
+    <label class="field-label">Jumlah trade</label><input class="inp mono" id="gN" type="number" min="1" value="${cfg.n}">
+    <label class="field-label">Ticker</label>
+    <div class="catchk-row" style="margin-top:2px">
+      <label class="catchk ${cfg.xau?'on':''}" id="gcXAU"><input type="checkbox" id="gXAU" ${cfg.xau?'checked':''}>XAU</label>
+      <label class="catchk ${cfg.cry?'on':''}" id="gcCRY"><input type="checkbox" id="gCRY" ${cfg.cry?'checked':''}>Crypto (top 20)</label>
+    </div>
+    <div class="modal-actions"><button class="btn full" onclick="closeModal()">Batal</button><button class="btn primary full" id="gGo">Generate</button></div>`);
+  ['gXAU','gCRY'].forEach(cid=>{
+    const cb=document.getElementById(cid);
+    cb.onchange=()=>cb.closest('.catchk').classList.toggle('on',cb.checked);
+  });
+  document.getElementById('gGo').onclick=()=>{
+    const modal=parseFloat(document.getElementById('gModal').value)||1000;
+    const pct=parseFloat(document.getElementById('gPct').value)||0;
+    const n=parseInt(document.getElementById('gN').value)||10;
+    const xau=document.getElementById('gXAU').checked;
+    const cry=document.getElementById('gCRY').checked;
+    // simpan kembali ke genCfg
+    ai.genCfg={modal,pct,n,xau,cry};
+    const cats=[];
+    if(xau)cats.push('XAU');
+    if(cry)cats.push('CRYPTO');
+    if(!cats.length)cats.push('CRYPTO');
+    const end=Math.round(modal*(1+pct/100));
+    const seq=genTradeSequence(modal,end,n,2);
+    ai.trades=seq.trades.map(t=>({sym:randTicker(cats),tag:'',side:Math.random()<0.5?'BUY':'SELL',color:t.color,pl:t.pl,pct:0}));
+    ai.equity=seq.equity;
+    save();closeModal();
+    journalFocusId=id;renderJournalFocus(document.getElementById('screen-journal'));
+    toast('Trade & equity dibuat ('+n+' trade)');
+  };
+}
+
+/* ============================================================
+   BATTLE MODULE
+============================================================ */
+let battleCfg=loadBattleCfg();
+function loadBattleCfg(){
+  return {
+    participantIds:[],
+    winnerId:'',
+    durationSec:20,
+    period:'Periode 1 Minggu',
+    tradesPerAI:{},
+    startEquity:{},
+    endEquity:{},
+    flucPct:6,
+    pairCats:['CRYPTO'],   // kategori pair dicentang manual
+  };
+}
+/* daftar ticker bersih (hemat space): XAU + 20 top crypto */
+const CRYPTO20=['BTC','ETH','BNB','SOL','XRP','ADA','DOGE','TRX','AVAX','LINK','DOT','MATIC','TON','SHIB','LTC','BCH','UNI','ATOM','XLM','NEAR'];
+const PAIR_CATS={
+  XAU:['XAU'],
+  CRYPTO:CRYPTO20,
+};
+
+function renderBattle(){
+  const s=document.getElementById('screen-battle');
+  battleCfg.participantIds=battleCfg.participantIds.filter(id=>state.ais.find(a=>a.id===id));
+
+  let avail=state.ais.filter(a=>!battleCfg.participantIds.includes(a.id));
+  let chips='';
+  battleCfg.participantIds.forEach(id=>{
+    const ai=state.ais.find(a=>a.id===id);const th=themeOf(ai);
+    chips+=`<div class="pchip" style="border-color:${th.c};box-shadow:0 0 12px ${th.c}44">
+      <span class="pchip-dot" style="background:${th.c}"></span>${esc(ai.name)}
+      <span class="pchip-x" onclick="removeParticipant('${id}')">✕</span></div>`;
+  });
+
+  let catBoxes='';
+  Object.keys(PAIR_CATS).forEach(cat=>{
+    const on=battleCfg.pairCats.includes(cat);
+    catBoxes+=`<label class="catchk ${on?'on':''}"><input type="checkbox" ${on?'checked':''} onchange="togglePairCat('${cat}')">${cat}</label>`;
+  });
+
+  let cfgRows='';
+  battleCfg.participantIds.forEach(id=>{
+    const ai=state.ais.find(a=>a.id===id);const th=themeOf(ai);
+    const tc=battleCfg.tradesPerAI[id]||10;
+    const se=battleCfg.startEquity[id]!==undefined?battleCfg.startEquity[id]:0;
+    const ee=battleCfg.endEquity[id]!==undefined?battleCfg.endEquity[id]:500;
+    cfgRows+=`
+      <div class="bcfg-row">
+        <div class="bcfg-name"><span class="rc-dot" style="background:${th.c};box-shadow:0 0 6px ${th.c}"></span>${esc(ai.name)}</div>
+        <div class="bcfg-inputs">
+          <label>Modal awal<input class="inp mono bcfg-in" type="number" value="${se}" oninput="setStartEq('${id}',this.value)"></label>
+          <label>Hasil akhir<input class="inp mono bcfg-in" type="number" value="${ee}" oninput="setEndEq('${id}',this.value)"></label>
+          <label>Jml trade<input class="inp mono bcfg-in" type="number" min="1" value="${tc}" oninput="setTrades('${id}',this.value)"></label>
+          <label>Menang<input type="radio" name="winner" ${battleCfg.winnerId===id?'checked':''} onchange="battleCfg.winnerId='${id}'"></label>
+        </div>
+      </div>`;
+  });
+
+  s.innerHTML=`
+    <div class="section-hd"><div><h2>AI Battle Trade</h2><div class="sub">${battleCfg.participantIds.length} peserta dipilih</div></div></div>
+
+    <label class="field-label">Periode (tampil di atas battle)</label>
+    <input class="inp mono" id="periodInp" value="${esc(battleCfg.period)}" placeholder="cth: Periode 1 Minggu" oninput="battleCfg.period=this.value">
+
+    <label class="field-label" style="margin-top:14px">Jenis Pair (centang yang dipakai)</label>
+    <div class="catchk-row">${catBoxes}</div>
+
+    <label class="field-label" style="margin-top:14px">Peserta (dari Daftar AI)</label>
+    <div class="pchips">${chips||'<span style="color:var(--txt-faint);font-size:12px">Belum ada peserta</span>'}</div>
+    ${avail.length?`<select class="inp" id="addPart" style="margin-top:8px"><option value="">+ Tambah peserta...</option>${avail.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('')}</select>`:'<p style="font-size:11px;color:var(--txt-faint);margin-top:8px">Semua AI sudah jadi peserta.</p>'}
+
+    ${battleCfg.participantIds.length?`
+    <label class="field-label" style="margin-top:16px">Pengaturan per AI</label>
+    <div class="bcfg-list">${cfgRows}</div>
+
+    <label class="field-label" style="margin-top:14px">Durasi Battle (detik) — semua selesai bareng</label>
+    <input class="inp mono" id="durInp" type="number" min="3" value="${battleCfg.durationSec}" oninput="battleCfg.durationSec=parseInt(this.value)||20">
+
+    <label class="field-label" style="margin-top:10px">Range fluktuasi equity (%)</label>
+    <input class="inp mono" id="flucInp" type="number" value="${battleCfg.flucPct}" oninput="battleCfg.flucPct=parseFloat(this.value)||6">
+
+    <button class="btn primary full" style="margin-top:18px" onclick="startBattle()">▶ Mulai Battle</button>
+    `:''}
+  `;
+  const ap=document.getElementById('addPart');
+  if(ap)ap.onchange=()=>{if(ap.value){addParticipant(ap.value);}};
+}
+function togglePairCat(cat){
+  const i=battleCfg.pairCats.indexOf(cat);
+  if(i>=0)battleCfg.pairCats.splice(i,1);else battleCfg.pairCats.push(cat);
+  renderBattle();
+}
+function addParticipant(id){
+  if(!battleCfg.participantIds.includes(id))battleCfg.participantIds.push(id);
+  if(battleCfg.tradesPerAI[id]===undefined)battleCfg.tradesPerAI[id]=10;
+  if(battleCfg.startEquity[id]===undefined)battleCfg.startEquity[id]=0;
+  if(battleCfg.endEquity[id]===undefined)battleCfg.endEquity[id]=500;
+  renderBattle();
+}
+function removeParticipant(id){
+  battleCfg.participantIds=battleCfg.participantIds.filter(x=>x!==id);
+  if(battleCfg.winnerId===id)battleCfg.winnerId='';
+  renderBattle();
+}
+function setTrades(id,v){battleCfg.tradesPerAI[id]=Math.max(1,parseInt(v)||1);}
+function setStartEq(id,v){battleCfg.startEquity[id]=parseFloat(v)||0;}
+function setEndEq(id,v){battleCfg.endEquity[id]=parseFloat(v)||0;}
+function _removed(){}
+
+/* ---------- BATTLE ARENA (animation) ---------- */
+let battleRunning=false;
+let battleRAF=null;
+let battleTimers=[];
+
+function startBattle(){
+  if(!battleCfg.participantIds.length){toast('Pilih peserta dulu');return;}
+  const parts=battleCfg.participantIds.map(id=>state.ais.find(a=>a.id===id)).filter(Boolean);
+  if(!parts.length)return;
+  if(!battleCfg.winnerId)battleCfg.winnerId=parts[0].id;
+
+  const dur=Math.max(3,battleCfg.durationSec)*1000;
+  const fl=battleCfg.flucPct!=null?battleCfg.flucPct:6;
+  const cats=battleCfg.pairCats.length?battleCfg.pairCats:['CRYPTO'];
+  const plan=parts.map(ai=>{
+    const n=battleCfg.tradesPerAI[ai.id]||10;
+    const st=battleCfg.startEquity[ai.id]!==undefined?battleCfg.startEquity[ai.id]:0;
+    const end=battleCfg.endEquity[ai.id]!==undefined?battleCfg.endEquity[ai.id]:500;
+    // generator sinkron: history & equity dari satu sumber
+    const seq=genTradeSequence(st,end,n,2);
+    const eqPts=seq.equity; // n+1 titik (incl modal awal)
+    // interval acak yang totalnya = durasi (semua selesai bareng)
+    let raw=[];for(let i=0;i<n;i++)raw.push(0.5+Math.random());
+    const sum=raw.reduce((a,b)=>a+b,0);
+    let t=0;const times=raw.map(r=>{t+=r/sum*dur;return t;});
+    const trades=[];
+    for(let i=0;i<n;i++){
+      const st2=seq.trades[i];
+      trades.push({
+        sym:randTicker(cats),
+        side:Math.random()<0.5?'BUY':'SELL',
+        color:st2.color,
+        pl:st2.pl,
+        appearAt:times[i],
+        equityAfter:st2.cum,
+      });
+    }
+    return {ai,trades,eqPts,n,end};
+  });
+
+  buildArena(parts,plan,dur);
+}
+
+function buildArena(parts,plan,dur){
+  battleRunning=true;
+  pushHist('arena');
+  const s=document.getElementById('screen-battle');
+  const cols=parts.length<=2?parts.length:2;
+  const winner=state.ais.find(a=>a.id===battleCfg.winnerId);
+
+  let panels='';
+  plan.forEach((p,idx)=>{
+    const ai=p.ai;const th=themeOf(ai);
+    const av=ai.photo?`<img src="${ai.photo}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-family:var(--mono);font-weight:700;color:${th.c}">${esc(initials(ai.name))}</span>`;
+    panels+=`
+      <div class="bpanel" data-aid="${ai.id}" style="--ac:${th.c}">
+        <div class="bpanel-glow"></div>
+        <div class="bpanel-in">
+          <div class="bp-hd">
+            <div class="bp-av" style="border-color:${th.c};box-shadow:0 0 14px ${th.c}66">${av}</div>
+            <div class="bp-id"><div class="bp-name">${esc(ai.name)}</div><div class="bp-sub"><span class="rc-dot" style="background:${th.c};box-shadow:0 0 6px ${th.c}"></span>LIVE</div></div>
+            <div class="bp-crown" id="crown-${ai.id}">👑</div>
+          </div>
+          <div class="bp-trades" id="bt-${ai.id}"></div>
+          <div class="bp-ft">
+            <div class="bp-eq" id="eq-${ai.id}"></div>
+            <div class="bp-val" id="val-${ai.id}" style="color:${th.c};text-shadow:0 0 14px ${th.c}88">+0 Cent <span style="font-size:11px;opacity:.8">(+0,00%)</span></div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  s.innerHTML=`
+    <div class="arena-topbar">
+      <button class="arena-back" onclick="exitArena()">←</button>
+      <div class="arena-period">${esc(battleCfg.period||'')}</div>
+    </div>
+    <div id="arena">
+      <div class="arena-grid" id="arenaGrid" style="grid-template-columns:repeat(${cols},1fr)">
+        ${panels}
+        ${parts.length===2?'<div class="vs-badge">VS</div>':''}
+      </div>
+      <div class="wm">
+        <div class="wm-owner">${getWM()}</div>
+      </div>
+      <div id="winnerOverlay" class="winner-overlay"></div>
+    </div>
+  `;
+
+  // animate
+  const startT=performance.now();
+  const appeared={};plan.forEach(p=>appeared[p.ai.id]=0);
+
+  function frame(now){
+    if(!battleRunning)return;
+    const t=now-startT;
+    plan.forEach(p=>{
+      const ai=p.ai;const th=themeOf(ai);
+      // reveal trades whose appearAt <= t
+      while(appeared[ai.id]<p.trades.length && p.trades[appeared[ai.id]].appearAt<=t){
+        const tr=p.trades[appeared[ai.id]];
+        addTradeToPanel(ai,tr,th);
+        appeared[ai.id]++;
+        // update equity curve + value progressively
+        const shownEq=p.eqPts.slice(0,appeared[ai.id]+1);
+        document.getElementById('eq-'+ai.id).innerHTML=equitySVG(shownEq,300,70,th.c,th.c2);
+        const sum=equitySummary(shownEq.length>1?shownEq:[0,tr.equityAfter]);
+        animateVal(ai.id,sum.usd,sum.pct,th.c);
+      }
+    });
+    if(t>=dur){
+      finishBattle(plan);
+      return;
+    }
+    battleRAF=requestAnimationFrame(frame);
+  }
+  battleRAF=requestAnimationFrame(frame);
+}
+
+function addTradeToPanel(ai,tr,th){
+  const box=document.getElementById('bt-'+ai.id);
+  if(!box)return;
+  const p=tr.color==='profit';
+  if(p)sndWin();else sndLoss();
+  const sideCol=tr.side==='BUY'?'#3d8bff':'#ef5350';
+  const row=document.createElement('div');
+  row.className='btrow '+(p?'profit':'loss');
+  row.innerHTML=`<span class="tsym">${esc(tr.sym)}</span>`
+    +`<span class="tside" style="color:${sideCol}">${tr.side}</span>`
+    +`<span class="tpl ${p?'profit':'loss'}">${fmtMoneySimple(tr.pl)}</span>`;
+  box.insertBefore(row,box.firstChild);
+  // tampilkan maksimal 4 baris terakhir (hemat tempat)
+  while(box.children.length>4){box.removeChild(box.lastChild);}
+  requestAnimationFrame(()=>row.classList.add('in'));
+}
+
+function animateVal(id,usd,pct,col){
+  const el=document.getElementById('val-'+id);
+  if(!el)return;
+  el.style.color=usd>=0?col:'var(--loss)';
+  el.innerHTML=fmtUSD_id(usd)+' <span style="font-size:11px;opacity:.8">('+fmtPct_id(pct)+')</span>';
+}
+
+function finishBattle(plan){
+  battleRunning=false;
+  if(battleRAF)cancelAnimationFrame(battleRAF);
+  // ensure final equity rendered fully
+  plan.forEach(p=>{
+    const ai=p.ai;const th=themeOf(ai);
+    document.getElementById('eq-'+ai.id).innerHTML=equitySVG(p.eqPts,300,70,th.c,th.c2);
+    const sum=equitySummary(p.eqPts);
+    animateVal(ai.id,sum.usd,sum.pct,th.c);
+  });
+  // crown winner
+  const winId=battleCfg.winnerId||bestByEquity(plan);
+  sndBattleEnd();
+  const crown=document.getElementById('crown-'+winId);
+  if(crown)crown.classList.add('show');
+  const panel=document.querySelector('.bpanel[data-aid="'+winId+'"]');
+  if(panel)panel.classList.add('winner');
+
+  // sort leaderboard by PnL akhir
+  const ranked=[...plan].sort((a,b)=>{
+    const pa=equitySummary(a.eqPts).usd, pb=equitySummary(b.eqPts).usd;
+    return pb-pa;
+  });
+  const medals=['🥇','🥈','🥉'];
+  // podium row (top 3)
+  const top3=ranked.slice(0,3);
+  // reorder visual: 2nd left, 1st center, 3rd right
+  const podiumOrder=[1,0,2].map(i=>top3[i]).filter(Boolean);
+  const podiumClass=['p2','p1','p3'];
+  let podiumHTML='';
+  podiumOrder.forEach((p,vi)=>{
+    if(!p)return;
+    const th=themeOf(p.ai);
+    const eq=equitySummary(p.eqPts);
+    const realRank=ranked.indexOf(p);
+    podiumHTML+=`<div class="podium-slot">
+      <div style="font-size:11px;font-family:var(--mono);color:${th.c};margin-bottom:3px">${medals[realRank]||''}</div>
+      <div class="podium-bar ${podiumClass[vi]}">
+        <div style="font-size:9px;font-family:var(--mono);font-weight:700;color:${th.c}">${fmtUSD_id(eq.usd)}</div>
+      </div>
+      <div class="podium-name" style="color:${th.c}">${esc(p.ai.name)}</div>
+    </div>`;
+  });
+  // full list rows
+  let lbRows='';
+  ranked.forEach((p,ri)=>{
+    const th=themeOf(p.ai);const eq=equitySummary(p.eqPts);
+    const wins=p.trades.filter(t=>t.color==='profit').length;
+    const wr=p.trades.length?Math.round(wins/p.trades.length*100):0;
+    lbRows+=`<div class="lb-row">
+      <span class="lb-rank" style="color:${ri<3?['#ffd700','#c0c0c0','#cd7f32'][ri]:'var(--txt-faint)'}">${ri+1}</span>
+      <span class="lb-dot" style="background:${th.c};box-shadow:0 0 5px ${th.c}"></span>
+      <span class="lb-name" style="color:${th.c}">${esc(p.ai.name)}</span>
+      <span class="lb-wr">WR ${wr}%</span>
+      <span class="lb-pnl" style="color:${eq.usd>=0?th.c:'var(--loss)'}">${fmtUSD_id(eq.usd)}</span>
+    </div>`;
+  });
+
+  // winner flash then show leaderboard
+  const ai=state.ais.find(a=>a.id===winId);
+  if(ai){
+    const ov=document.getElementById('winnerOverlay');
+    if(ov){
+      ov.innerHTML=`<div class="wo-inner"><div class="wo-crown">👑</div><div class="wo-name">${esc(ai.name)}</div><div class="wo-label">PEMENANG</div></div>`;
+      ov.classList.add('show');
+      setTimeout(()=>{
+        ov.classList.remove('show');
+        // append leaderboard below arena
+        const arena=document.getElementById('arena');
+        if(arena){
+          const lb=document.createElement('div');
+          lb.innerHTML=`<div class="podium-wrap">
+            <div style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--violet);margin-bottom:10px;text-align:center;letter-spacing:.08em">LEADERBOARD</div>
+            <div class="podium-row">${podiumHTML}</div>
+            <div class="lb-list">${lbRows}</div>
+          </div>`;
+          lb.style.cssText='padding:14px;border-top:1px solid var(--line);';
+          arena.appendChild(lb);
+        }
+      },2600);
+    }
+  }
+}
+function bestByEquity(plan){let b=plan[0];plan.forEach(p=>{if(p.end>b.end)b=p;});return b.ai.id;}
+
+function exitArena(){
+  battleRunning=false;
+  if(battleRAF)cancelAnimationFrame(battleRAF);
+  stopRecordIfAny();
+  renderBattle();
+}
+function stopBattle(){battleRunning=false;if(battleRAF)cancelAnimationFrame(battleRAF);stopRecordIfAny();}
+
+/* ---------- VIDEO RECORD (MediaRecorder, browser-dependent) ---------- */
+let mediaRec=null,recChunks=[],recStream=null;
+function toggleRecord(){
+  if(mediaRec&&mediaRec.state==='recording'){stopRecordIfAny();return;}
+  startRecord();
+}
+async function startRecord(){
+  const arena=document.getElementById('arena');
+  if(!arena){toast('Arena tidak ada');return;}
+  try{
+    if(typeof arena.captureStream!=='function' && !window.MediaRecorder){
+      toast('HP/Browser ini belum dukung rekam. Pakai screen-record bawaan HP.');return;
+    }
+    // capture via canvas mirror (html element can't be captured directly; use display capture if available)
+    if(navigator.mediaDevices&&navigator.mediaDevices.getDisplayMedia){
+      recStream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:30},audio:false});
+    }else{
+      toast('Rekam layar tidak didukung. Gunakan perekam layar bawaan HP.');return;
+    }
+    recChunks=[];
+    mediaRec=new MediaRecorder(recStream,{mimeType:pickMime()});
+    mediaRec.ondataavailable=e=>{if(e.data.size)recChunks.push(e.data);};
+    mediaRec.onstop=()=>{
+      const blob=new Blob(recChunks,{type:recChunks[0]?recChunks[0].type:'video/webm'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download='ipistore-battle-'+Date.now()+'.webm';a.click();
+      URL.revokeObjectURL(url);
+      recStream.getTracks().forEach(t=>t.stop());recStream=null;
+      toast('Video tersimpan (.webm)');
+      const rb=document.getElementById('recBtn');if(rb){rb.textContent='⏺ Rekam Video';rb.classList.add('primary');}
+    };
+    mediaRec.start();
+    const rb=document.getElementById('recBtn');if(rb){rb.textContent='⏹ Stop Rekam';rb.classList.remove('primary');}
+    toast('Merekam... jalankan battle lalu Stop');
+  }catch(err){
+    toast('Rekam dibatalkan / tidak diizinkan');
+  }
+}
+function pickMime(){
+  const c=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4'];
+  for(const m of c){if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m))return m;}
+  return 'video/webm';
+}
+function stopRecordIfAny(){if(mediaRec&&mediaRec.state==='recording')mediaRec.stop();mediaRec=null;}
+
+/* ============================================================
+   DARK / LIGHT MODE
+============================================================ */
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  try{localStorage.setItem('ipi_theme',document.body.classList.contains('light')?'light':'dark');}catch(e){}
+}
+(function(){try{if(localStorage.getItem('ipi_theme')==='light')document.body.classList.add('light');}catch(e){}})();
+
+/* ============================================================
+   SOUND ENGINE (Web Audio API — no library)
+============================================================ */
+let soundOn=true;
+(function(){try{soundOn=localStorage.getItem('ipi_sound')!=='off';}catch(e){}})();
+let _actx=null;
+function getACtx(){if(!_actx)_actx=new(window.AudioContext||window.webkitAudioContext)();return _actx;}
+function playTone(freq,type,dur,vol,delay){
+  if(!soundOn)return;
+  try{
+    const ctx=getACtx();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.type=type||'sine';osc.frequency.value=freq||440;
+    const t=ctx.currentTime+(delay||0);
+    gain.gain.setValueAtTime(vol||0.15,t);
+    gain.gain.exponentialRampToValueAtTime(0.0001,t+(dur||0.3));
+    osc.start(t);osc.stop(t+(dur||0.3)+0.05);
+  }catch(e){}
+}
+function sndWin(){playTone(880,'sine',0.08,0.12);setTimeout(()=>playTone(1100,'sine',0.12,0.1),80);}
+function sndLoss(){playTone(220,'sawtooth',0.15,0.08);}
+function sndBattleEnd(){
+  [0,0.1,0.2,0.35].forEach((d,i)=>playTone([523,659,784,1047][i],'sine',0.2,0.14,d));
+}
+function sndTick(){playTone(660,'square',0.04,0.05);}
+
+/* ============================================================
+   SETTINGS PAGE
+============================================================ */
+const QUICK_AIS=[
+  {name:'Claude AI',theme:'violet'},{name:'ChatGPT',theme:'cyan'},
+  {name:'DeepSeek',theme:'green'},{name:'Gemini',theme:'gold'},
+  {name:'Qwen',theme:'red'},{name:'Grok',theme:'pink'},
+  {name:'Copilot',theme:'cyan'},{name:'Mistral',theme:'violet'},
+];
+function renderSettings(){
+  const s=document.getElementById('screen-settings');
+  const brand=state.brandText||'IPISTORE';
+  const wm=state.watermark||'Pemilik: IPISTORE';
+  s.innerHTML=`
+    <div class="settings-section">
+      <h3>🏷️ Brand & Watermark</h3>
+      <label class="field-label">Nama Brand (tampil di home)</label>
+      <input class="inp" id="setBrand" value="${esc(brand)}" placeholder="IPISTORE">
+      <label class="field-label">Teks Watermark (tampil di semua download)</label>
+      <input class="inp" id="setWM" value="${esc(wm)}" placeholder="Pemilik: IPISTORE">
+      <button class="btn primary full" style="margin-top:10px" onclick="saveBrandSettings()">Simpan</button>
+    </div>
+    <div class="settings-section">
+      <h3>🔊 Sound</h3>
+      <div class="sound-row">
+        <label>Efek suara battle & trade</label>
+        <button class="sound-toggle ${soundOn?'on':''}" id="soundToggleBtn" onclick="toggleSound()"></button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h3>⚡ Quick-Add AI Populer</h3>
+      <p style="font-size:11px;color:var(--txt-dim);margin-bottom:10px">Tap untuk langsung tambah AI dengan nama & tema preset.</p>
+      <div class="quick-ai-grid">
+        ${QUICK_AIS.map(q=>`<div class="quick-ai-btn" onclick="quickAddAI('${esc(q.name)}','${q.theme}')">
+          <span class="quick-ai-dot" style="background:${THEMES[q.theme]?.c||'#9d4dff'}"></span>${esc(q.name)}
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="settings-section">
+      <h3>💾 Import / Export Data</h3>
+      <p style="font-size:11px;color:var(--txt-dim);margin-bottom:10px">Export: backup semua AI & jurnal ke file JSON. Import: restore dari backup.</p>
+      <div style="display:flex;gap:8px">
+        <button class="btn full" onclick="exportData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> Export JSON</button>
+        <button class="btn full" onclick="document.getElementById('importInp').click()">📂 Import JSON</button>
+      </div>
+      <input type="file" id="importInp" accept=".json,application/json" style="display:none">
+    </div>
+  `;
+  document.getElementById('importInp').onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=ev=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        if(!data.ais)throw new Error('format salah');
+        state=migrate(data);save();
+        toast('Data berhasil diimport!');renderSettings();
+      }catch(err){toast('Import gagal: '+err.message);}
+    };
+    rd.readAsText(f);
+  };
+}
+function saveBrandSettings(){
+  state.brandText=document.getElementById('setBrand').value||'IPISTORE';
+  state.watermark=document.getElementById('setWM').value||'Pemilik: IPISTORE';
+  // update logo di home
+  document.querySelector('.logo-big')&&(document.querySelector('.logo-big').textContent=state.brandText);
+  save();toast('Settings disimpan');
+}
+function toggleSound(){
+  soundOn=!soundOn;
+  try{localStorage.setItem('ipi_sound',soundOn?'on':'off');}catch(e){}
+  document.getElementById('soundToggleBtn')?.classList.toggle('on',soundOn);
+}
+function quickAddAI(name,theme){
+  if(state.ais.find(a=>a.name===name)){toast(name+' sudah ada');return;}
+  state.ais.push(mkAI(name,theme));
+  save();toast(name+' ditambahkan');
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='ipistore-backup-'+Date.now()+'.json';a.click();
+  URL.revokeObjectURL(url);toast('Data diekspor');
+}
+
+/* ============================================================
+   WATERMARK HELPER
+============================================================ */
+function getWM(){return state.watermark||'Pemilik: IPISTORE';}
+
+/* ============================================================
+   CURVE EDITOR — drag bebas seperti tali elastis
+   Canvas-based, titik = jumlah trade AI yang dipilih,
+   sentuh sembarang titik kurva → titik terdekat bergerak,
+   titik lain tertarik secara gaussian (efek tali).
+   Zoom pinch dan tombol +/-.
+============================================================ */
+let ceAiId=null, cePts=[], ceZoom=1, ceOffsetY=0;
+let ceDragging=false, ceDragIdx=-1;
+let cePinching=false, cePinchDist0=1, cePinchZoom0=1;
+let ceCanvas=null, ceCtx=null;
+let ceAnimFrame=null;
+
+function renderCurveEditor(){
+  const s=document.getElementById('screen-curve');
+  const ais=state.ais;
+  if(!ais.length){
+    s.innerHTML='<p style="color:var(--txt-faint);text-align:center;padding:40px">Belum ada AI. Tambah dulu di AI List.</p>';
+    return;
+  }
+  if(!ceAiId||!ais.find(a=>a.id===ceAiId))ceAiId=ais[0].id;
+  const ai=ais.find(a=>a.id===ceAiId);
+  const th=themeOf(ai);
+  // init pts dari equity ai, atau buat default
+  if(!cePts.length||cePts.aiId!==ceAiId){
+    cePts=ai.equity.length>=2?[...ai.equity]:Array.from({length:20},(_,i)=>Math.round(1000+(i/19)*500));
+    cePts.aiId=ceAiId;
+  }
+  s.innerHTML=`
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+      <select class="inp" id="ceSelect" style="flex:1">${ais.map(a=>`<option value="${a.id}" ${a.id===ceAiId?'selected':''}>${esc(a.name)}</option>`).join('')}</select>
+      <button class="btn sm" onclick="ceReset()">Reset</button>
+    </div>
+    <div class="ce-wrap" id="ceWrap">
+      <canvas id="ceCanvas" class="ce-canvas" height="260"></canvas>
+    </div>
+    <div class="zoom-row">
+      <span>Zoom Y:</span>
+      <button class="zoom-btn" onclick="ceZoomIn()">+</button>
+      <button class="zoom-btn" onclick="ceZoomOut()">−</button>
+      <span id="ceZoomLabel">${Math.round(ceZoom*100)}%</span>
+    </div>
+    <div class="ce-info" id="ceInfo">Sentuh & seret kurva untuk membentuk — titik lain mengikuti seperti tali</div>
+    <div class="ce-toolbar">
+      <button class="btn sm" onclick="ceSmoothAll()">〰 Haluskan</button>
+      <button class="btn sm" onclick="ceFlip()">↕ Balik</button>
+      <button class="btn sm primary" onclick="ceApply()">✓ Terapkan ke AI</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn full" onclick="cePreview()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg> Preview</button>
+      <button class="btn full" onclick="ceDownload()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> Download PNG</button>
+    </div>
+  `;
+  document.getElementById('ceSelect').onchange=e=>{
+    ceAiId=e.target.value;
+    cePts=[];ceZoom=1;ceOffsetY=0;
+    renderCurveEditor();
+  };
+  ceCanvas=document.getElementById('ceCanvas');
+  ceCtx=ceCanvas.getContext('2d');
+  resizeCeCanvas();
+  ceDraw();
+  // touch events — touch-action:none sudah di CSS .ce-canvas
+  ceCanvas.addEventListener('touchstart',ceTouchStart,{passive:false});
+  ceCanvas.addEventListener('touchmove',ceTouchMove,{passive:false});
+  ceCanvas.addEventListener('touchend',ceTouchEnd,{passive:false});
+  ceCanvas.addEventListener('mousedown',ceMouseDown);
+  ceCanvas.addEventListener('mousemove',ceMouseMove);
+  ceCanvas.addEventListener('mouseup',ceMouseUp);
+  window.addEventListener('resize',resizeCeCanvas);
+}
+
+function resizeCeCanvas(){
+  if(!ceCanvas)return;
+  const wrap=document.getElementById('ceWrap');
+  if(!wrap)return;
+  ceCanvas.width=wrap.offsetWidth||360;
+  ceDraw();
+}
+
+function cePtToXY(i,n,w,h){
+  const PAD=20;
+  const min=Math.min(...cePts),max=Math.max(...cePts);
+  const range=(max-min)||1;
+  const x=PAD+(i/(n-1))*(w-PAD*2);
+  const visRange=range/ceZoom;
+  const midVal=(min+max)/2+ceOffsetY;
+  const y=(h/2)-((cePts[i]-midVal)/visRange)*(h-PAD*2)/2;
+  return [x,Math.max(PAD,Math.min(h-PAD,y))];
+}
+function ceXYToPtIdx(px,py,w,h){
+  const n=cePts.length;
+  let best=0,bd=1e9;
+  for(let i=0;i<n;i++){
+    const [x,y]=cePtToXY(i,n,w,h);
+    const d=Math.hypot(px-x,py-y);
+    if(d<bd){bd=d;best=i;}
+  }
+  return best;
+}
+function ceYToVal(py,w,h){
+  const min=Math.min(...cePts),max=Math.max(...cePts);
+  const range=(max-min)||1;
+  const PAD=20;
+  const visRange=range/ceZoom;
+  const midVal=(min+max)/2+ceOffsetY;
+  return midVal - ((py-h/2)/((h-PAD*2)/2))*visRange;
+}
+
+function ceDraw(){
+  if(!ceCanvas||!ceCtx)return;
+  const w=ceCanvas.width,h=ceCanvas.height;
+  const n=cePts.length;
+  const ai=state.ais.find(a=>a.id===ceAiId);
+  const th=ai?themeOf(ai):{c:'#9d4dff'};
+  const ctx=ceCtx;
+  ctx.clearRect(0,0,w,h);
+  // bg grid
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;
+  for(let y=0;y<h;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+  for(let x=0;x<w;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  // zero line
+  const [,zy]=cePtToXY(0,n,w,h);
+  ctx.strokeStyle='rgba(255,255,255,.08)';ctx.setLineDash([4,6]);
+  ctx.beginPath();ctx.moveTo(0,zy);ctx.lineTo(w,zy);ctx.stroke();
+  ctx.setLineDash([]);
+  // fill area
+  const coords=cePts.map((_,i)=>cePtToXY(i,n,w,h));
+  const grad=ctx.createLinearGradient(0,0,0,h);
+  grad.addColorStop(0,th.c+'55');grad.addColorStop(1,th.c+'00');
+  ctx.beginPath();
+  coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+  ctx.lineTo(coords[n-1][0],h);ctx.lineTo(coords[0][0],h);ctx.closePath();
+  ctx.fillStyle=grad;ctx.fill();
+  // line
+  ctx.beginPath();ctx.strokeStyle=th.c;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';
+  coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+  ctx.stroke();
+  // glow
+  ctx.save();ctx.filter='blur(4px)';ctx.globalAlpha=0.5;
+  ctx.beginPath();coords.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+  ctx.stroke();ctx.restore();
+  // dots
+  coords.forEach(([x,y],i)=>{
+    ctx.beginPath();ctx.arc(x,y,i===ceDragIdx?6:3,0,Math.PI*2);
+    ctx.fillStyle=i===ceDragIdx?'#fff':th.c;ctx.fill();
+    if(i===ceDragIdx){ctx.strokeStyle=th.c;ctx.lineWidth=2;ctx.stroke();}
+  });
+  // value labels at ends
+  ctx.font='bold 10px monospace';ctx.fillStyle='rgba(255,255,255,.6)';
+  ctx.fillText(Math.round(cePts[0]),coords[0][0]+4,coords[0][1]-6);
+  ctx.fillText(Math.round(cePts[n-1]),coords[n-1][0]-34,coords[n-1][1]-6);
+  // info
+  const eq=cePts[cePts.length-1]-cePts[0];
+  const infoEl=document.getElementById('ceInfo');
+  if(infoEl)infoEl.textContent=`${n} titik  |  ${fmtUSD_id(eq)}  |  Zoom ${Math.round(ceZoom*100)}%`;
+}
+
+// drag dengan efek tali (gaussian pull)
+function ceApplyDrag(idx,newVal){
+  const sigma=cePts.length*0.25; // radius tarik
+  cePts.forEach((_,i)=>{
+    const dist=Math.abs(i-idx);
+    const weight=Math.exp(-(dist*dist)/(2*sigma*sigma));
+    const delta=(newVal-cePts[idx])*weight;
+    cePts[i]=Math.round(cePts[i]+delta);
+  });
+  cePts[idx]=Math.round(newVal);
+}
+
+function ceGetPos(e,canvas){
+  const rect=canvas.getBoundingClientRect();
+  const scaleX=canvas.width/rect.width;
+  const scaleY=canvas.height/rect.height;
+  if(e.touches){
+    return {x:(e.touches[0].clientX-rect.left)*scaleX,y:(e.touches[0].clientY-rect.top)*scaleY};
+  }
+  return {x:(e.clientX-rect.left)*scaleX,y:(e.clientY-rect.top)*scaleY};
+}
+function ceTouchStart(e){
+  if(e.touches.length===2){
+    cePinching=true;
+    cePinchDist0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    cePinchZoom0=ceZoom;return;
+  }
+  e.preventDefault();
+  const {x,y}=ceGetPos(e,ceCanvas);
+  ceDragIdx=ceXYToPtIdx(x,y,ceCanvas.width,ceCanvas.height);
+  ceDragging=true;
+}
+function ceTouchMove(e){
+  e.preventDefault();
+  if(cePinching&&e.touches.length===2){
+    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    ceZoom=Math.max(0.5,Math.min(5,cePinchZoom0*(d/cePinchDist0)));
+    document.getElementById('ceZoomLabel')&&(document.getElementById('ceZoomLabel').textContent=Math.round(ceZoom*100)+'%');
+    ceDraw();return;
+  }
+  if(!ceDragging||ceDragIdx<0)return;
+  const {x,y}=ceGetPos(e,ceCanvas);
+  const newVal=ceYToVal(y,ceCanvas.width,ceCanvas.height);
+  ceApplyDrag(ceDragIdx,newVal);
+  ceDraw();
+}
+function ceTouchEnd(e){ceDragging=false;cePinching=false;ceDragIdx=-1;ceDraw();}
+function ceMouseDown(e){
+  const {x,y}=ceGetPos(e,ceCanvas);
+  ceDragIdx=ceXYToPtIdx(x,y,ceCanvas.width,ceCanvas.height);
+  ceDragging=true;
+}
+function ceMouseMove(e){
+  if(!ceDragging||ceDragIdx<0)return;
+  const {x,y}=ceGetPos(e,ceCanvas);
+  ceApplyDrag(ceDragIdx,ceYToVal(y,ceCanvas.width,ceCanvas.height));
+  ceDraw();
+}
+function ceMouseUp(){ceDragging=false;ceDragIdx=-1;ceDraw();}
+function ceZoomIn(){ceZoom=Math.min(5,ceZoom*1.3);document.getElementById('ceZoomLabel').textContent=Math.round(ceZoom*100)+'%';ceDraw();}
+function ceZoomOut(){ceZoom=Math.max(0.3,ceZoom/1.3);document.getElementById('ceZoomLabel').textContent=Math.round(ceZoom*100)+'%';ceDraw();}
+function ceReset(){
+  const ai=state.ais.find(a=>a.id===ceAiId);if(!ai)return;
+  cePts=ai.equity.length>=2?[...ai.equity]:Array.from({length:ai.trades.length||20},(_,i)=>Math.round(1000+(i/(ai.trades.length||20))*500));
+  cePts.aiId=ceAiId;ceZoom=1;ceOffsetY=0;ceDraw();toast('Direset ke data jurnal');
+}
+function ceSmoothAll(){
+  // gaussian smooth
+  const n=cePts.length;
+  const s=[...cePts];
+  for(let i=1;i<n-1;i++)cePts[i]=Math.round((s[i-1]+s[i]*2+s[i+1])/4);
+  ceDraw();toast('Kurva dihaluskan');
+}
+function ceFlip(){
+  const mn=Math.min(...cePts),mx=Math.max(...cePts);
+  cePts=cePts.map(v=>Math.round(mn+mx-v));ceDraw();toast('Kurva dibalik');
+}
+function ceApply(){
+  const ai=state.ais.find(a=>a.id===ceAiId);if(!ai)return;
+  ai.equity=[...cePts];
+  resyncTradesFromEquity(ai);
+  save();toast('Diterapkan ke '+ai.name);
+}
+function cePreview(){
+  const ai=state.ais.find(a=>a.id===ceAiId);if(!ai)return;
+  const th=themeOf(ai);
+  const tmpEq=[...cePts];
+  openModal(`<h3>Preview Curve — ${esc(ai.name)}</h3>
+    <div style="height:160px">${equitySVG(tmpEq,360,160,th.c,th.c2)}</div>
+    <div style="font-family:var(--mono);font-weight:700;font-size:16px;text-align:center;margin-top:8px;color:${th.c}">${fmtUSD_id(tmpEq[tmpEq.length-1]-tmpEq[0])}</div>
+    <div class="modal-actions"><button class="btn full" onclick="closeModal()">Tutup</button><button class="btn primary full" onclick="ceApply();closeModal()">Terapkan</button></div>`);
+}
+function ceDownload(){
+  const ai=state.ais.find(a=>a.id===ceAiId);if(!ai)return;
+  const th=themeOf(ai);
+  const tmpEq=[...cePts];
+  const eq=equitySummary(tmpEq);
+  renderSheetToPNG(`
+    <div style="padding:16px;background:#08070d;border-radius:14px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:16px;color:${th.c};margin-bottom:8px">${esc(ai.name)} — Equity Curve</div>
+      <div style="height:180px">${equitySVG(tmpEq,400,180,th.c,th.c2)}</div>
+      <div style="font-family:var(--mono);font-weight:700;font-size:20px;text-align:center;margin-top:10px;color:${th.c}">${fmtUSD_id(eq.usd)} <span style="font-size:14px;opacity:.7">(${fmtPct_id(eq.pct)})</span></div>
+      <div style="text-align:center;font-size:10px;color:#5c5770;margin-top:8px">${getWM()}</div>
+    </div>
+  `,'ipistore-curve-'+ai.name.replace(/\s+/g,'_'));
+}
+
+/* ============================================================
+   REPLAY MODE — putar ulang history trade per-AI
+============================================================ */
+let replayAnim=null;
+function startReplay(id){
+  const ai=state.ais.find(a=>a.id===id);if(!ai||!ai.trades.length){toast('Belum ada trade');return;}
+  const th=themeOf(ai);
+  const s=document.getElementById('screen-journal');
+  let idx=0;const total=ai.trades.length;
+  function renderReplayFrame(){
+    const t=ai.trades[idx];
+    const p=t.color==='profit';
+    const sideCol=t.side==='BUY'?'#3d8bff':'#ef5350';
+    const shownEq=ai.equity.slice(0,idx+2);
+    const eq=equitySummary(shownEq.length>1?shownEq:[ai.equity[0],ai.equity[0]]);
+    if(p)sndWin();else sndLoss();
+    s.innerHTML=`
+      <div class="focus-hd">
+        <div class="back-btn" onclick="stopReplay()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+        <div style="flex:1"><div style="font-family:var(--mono);font-weight:700;font-size:16px;color:${th.c}">${esc(ai.name)}</div><div style="font-size:9px;color:var(--txt-dim);text-transform:uppercase">REPLAY · Trade ${idx+1}/${total}</div></div>
+        <button class="btn sm" onclick="stopReplay()">Stop</button>
+      </div>
+      <div class="replay-panel">
+        <div style="height:120px">${equitySVG(shownEq.length>1?shownEq:[ai.equity[0]||0,ai.equity[1]||0],320,120,th.c,th.c2)}</div>
+        <div class="replay-bar"><div class="replay-fill" style="width:${((idx+1)/total)*100}%"></div></div>
+        <div style="font-family:var(--mono);font-weight:700;font-size:22px;text-align:center;color:${eq.usd>=0?th.c:'var(--loss)'}">
+          ${fmtUSD_id(eq.usd)} <span style="font-size:14px;opacity:.7">(${fmtPct_id(eq.pct)})</span>
+        </div>
+      </div>
+      <div class="replay-trade" style="background:${p?'rgba(38,198,168,.12)':'rgba(239,83,80,.12)'};border:1px solid ${p?'rgba(38,198,168,.25)':'rgba(239,83,80,.25)'}">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-family:var(--mono);font-weight:800;font-size:14px">${esc(t.sym)}</span>
+          <span style="color:${sideCol};font-weight:800;font-size:11px">${t.side}</span>
+        </div>
+        <span style="font-family:var(--mono);font-weight:700;font-size:16px;color:${p?'var(--profit)':'var(--loss)'}">${fmtMoneySimple(t.pl)}</span>
+      </div>
+      <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--txt-faint)">Auto-replay berjalan… ketuk Stop untuk berhenti</div>
+    `;
+    idx++;
+    if(idx<total){
+      replayAnim=setTimeout(renderReplayFrame,1100);
+    }else{
+      sndBattleEnd();
+      setTimeout(()=>{
+        journalFocusId=id;renderJournalFocus(s);
+        toast('Replay selesai!');
+      },1500);
+    }
+  }
+  renderReplayFrame();
+}
+function stopReplay(){
+  clearTimeout(replayAnim);replayAnim=null;
+  renderJournalFocus(document.getElementById('screen-journal'));
+}
+
+/* ============================================================
+   JOURNAL — tambah tombol Replay & Download per panel
+============================================================ */
+function pushHist(tag){try{history.pushState({scr:tag},'');}catch(e){}}
+window.addEventListener('popstate',()=>{
+  // modal terbuka? tutup dulu
+  if(document.getElementById('modalBack').classList.contains('show')){
+    closeModal();pushHist('modal');return;
+  }
+  if(curScreen==='battle'){
+    const inArena=!!document.getElementById('arena');
+    if(inArena){
+      // tahan navigasi, minta konfirmasi exit
+      pushHist('arena');
+      confirmExitArena();
+      return;
+    }
+    // di layar setup battle -> kembali ke home
+    pushHist('home');go('home');return;
+  }
+  if(curScreen!=='home'){
+    pushHist('home');go('home');return;
+  }
+  // di home: biarkan default (boleh keluar app) — tapi re-push agar tidak langsung exit tak sengaja
+  pushHist('home');
+});
+function confirmExitArena(){
+  openModal(`<h3>Keluar dari Battle?</h3><p style="color:var(--txt-dim);font-size:13px">Animasi battle akan dihentikan.</p>
+    <div class="modal-actions"><button class="btn full" onclick="closeModal()">Batal</button><button class="btn danger full" id="cfExit">Exit</button></div>`);
+  document.getElementById('cfExit').onclick=()=>{closeModal();exitArena();};
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+pushHist('home');
+go('home');
+// update brand text on home
+const homeBrand=document.getElementById('homeBrand');
+if(homeBrand&&state.brandText)homeBrand.textContent=state.brandText;
+// migrate watermark field
+if(!state.watermark)state.watermark='Pemilik: IPISTORE';
+</script>
+</body>
+</html>
