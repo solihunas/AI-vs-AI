@@ -106,7 +106,7 @@
         <div class="pv-dot" style="background:#FF5F57"></div>
         <div class="pv-dot" style="background:#FFBD2E"></div>
         <div class="pv-dot" style="background:#28CA41"></div>
-        <div class="pv-logo" style="color:${cs.navColor};font-family:${cs.font}">WebsiteKu</div>
+        <img src="assets/logo-placeholder.png" style="height:14px;object-fit:contain;vertical-align:middle">
         <div class="pv-links">
           <span class="pv-link" style="color:${cs.navColor}">Home</span>
           <span class="pv-link" style="color:${cs.navColor}">Menu</span>
@@ -236,7 +236,11 @@
     previewTitle.textContent = tpl.name;
     previewUrl.textContent = `${tpl.name.toLowerCase().replace(/\s+/g, '-').replace('websiteku-','')}.websiteku.id`;
 
-    const html = generateTemplateHTML(tpl);
+    const basePath = window.location.pathname.endsWith('/')
+      ? window.location.pathname
+      : window.location.pathname.replace(/[^\/]+$/, '');
+    const base = window.location.origin + basePath;
+    const html = generateTemplateHTML(tpl, base);
     previewFrame.srcdoc = html;
     previewOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';

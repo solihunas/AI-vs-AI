@@ -3,37 +3,45 @@
    Each returns a complete self-contained HTML string for iframe preview
    ============================================================ */
 
-function generateTemplateHTML(tpl) {
+/* Rating + product image helpers */
+const _RATES = [4.8, 4.9, 4.9, 5.0, 4.8, 5.0, 4.9, 4.8, 4.9, 5.0];
+const _BUYS  = [523, 1247, 891, 672, 1089, 543, 2134, 734, 956, 1423];
+function fStar(i){ return _RATES[i % _RATES.length].toFixed(1); }
+function fBuy(i){ var n=_BUYS[i%_BUYS.length]; return n>=1000?(n/1000).toFixed(1).replace('.',',')+'rb':''+n; }
+function fImg(i){ return 'assets/foto-produk-'+((i%7)+1)+'.png'; }
+
+function generateTemplateHTML(tpl, base) {
+  base = base || '';
   switch (tpl.style) {
-    case 'minimalist':    return tmplMinimalist(tpl);
-    case 'corporate':     return tmplCorporate(tpl);
-    case 'luxury':        return tmplLuxury(tpl);
-    case 'dark':          return tmplDark(tpl);
-    case 'glassmorphism': return tmplGlassmorphism(tpl);
-    case 'neon':          return tmplNeon(tpl);
-    case 'startup':       return tmplStartup(tpl);
-    case 'elegant':       return tmplElegant(tpl);
-    case 'futuristic':    return tmplFuturistic(tpl);
-    case 'premium':       return tmplPremium(tpl);
-    default:              return tmplStartup(tpl);
+    case 'minimalist':    return tmplMinimalist(tpl, base);
+    case 'corporate':     return tmplCorporate(tpl, base);
+    case 'luxury':        return tmplLuxury(tpl, base);
+    case 'dark':          return tmplDark(tpl, base);
+    case 'glassmorphism': return tmplGlassmorphism(tpl, base);
+    case 'neon':          return tmplNeon(tpl, base);
+    case 'startup':       return tmplStartup(tpl, base);
+    case 'elegant':       return tmplElegant(tpl, base);
+    case 'futuristic':    return tmplFuturistic(tpl, base);
+    case 'premium':       return tmplPremium(tpl, base);
+    default:              return tmplStartup(tpl, base);
   }
 }
 
 /* ============================================================ */
 /* 1. MINIMALIST                                                 */
 /* ============================================================ */
-function tmplMinimalist(t) {
+function tmplMinimalist(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:#FAFAFA;color:#1A1A1A;line-height:1.6}
 a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #E5E5E5;z-index:100;padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.2rem;font-weight:700;letter-spacing:-.02em;color:#000}.logo span{color:${p}}
 .nav-links{display:flex;gap:2rem}.nav-links a{font-size:.9rem;font-weight:500;color:#555;transition:color .2s}.nav-links a:hover{color:#000}
 .nav-cta{padding:.5rem 1.2rem;border:1.5px solid #000;border-radius:6px;font-size:.85rem;font-weight:600;color:#000;transition:all .2s}
 .nav-cta:hover{background:#000;color:#fff}
@@ -48,11 +56,7 @@ nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #E5E5E5;z-inde
 .btn-ghost{padding:.85rem 2rem;border:1.5px solid #ccc;border-radius:8px;font-weight:500;font-size:.95rem;color:#333;transition:all .2s}
 .btn-ghost:hover{border-color:#000;color:#000}
 .hero-right{flex:1;display:flex;justify-content:center;align-items:center;padding-left:3rem}
-.hero-img{width:100%;max-width:420px;aspect-ratio:4/3;background:linear-gradient(135deg,${s} 0%,${p}22 100%);border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.hero-img-inner{text-align:center;padding:2rem}
-.hero-img h3{font-size:1.8rem;font-weight:300;color:${p};letter-spacing:.1em}
-.hero-img p{font-size:.85rem;color:#666;margin-top:.5rem}
-.img-shape{position:absolute;width:200px;height:200px;border-radius:50%;background:${p}11;bottom:-50px;right:-50px}
+.hero-img{width:100%;max-width:420px;aspect-ratio:4/3;border-radius:16px;overflow:hidden}
 .stats{border-top:1px solid #E5E5E5;border-bottom:1px solid #E5E5E5;padding:2.5rem 2rem;display:flex;gap:0;max-width:1100px;margin:0 auto}
 .stat{flex:1;text-align:center;padding:0 2rem;border-right:1px solid #E5E5E5}.stat:last-child{border-right:none}
 .stat-n{font-size:2.2rem;font-weight:700;color:${p}}.stat-l{font-size:.85rem;color:#888;margin-top:.3rem}
@@ -60,10 +64,13 @@ nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #E5E5E5;z-inde
 .services h2{font-size:2.2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem}
 .services .sub{color:#777;margin-bottom:3rem}
 .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
-.s-card{border:1px solid #E5E5E5;border-radius:12px;padding:2rem;transition:all .2s}
+.s-card{border:1px solid #E5E5E5;border-radius:12px;overflow:hidden;transition:all .2s}
 .s-card:hover{border-color:${p};transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.07)}
-.s-num{font-size:2.5rem;font-weight:700;color:${p}22;margin-bottom:1rem;font-variant-numeric:tabular-nums}
+.s-card-img{width:100%;height:150px;object-fit:cover;display:block}
+.s-card-body{padding:1.5rem}
+.s-num{font-size:2rem;font-weight:700;color:${p}22;margin-bottom:.5rem}
 .s-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}.s-card p{font-size:.88rem;color:#666;line-height:1.6}
+.prod-rating{display:flex;align-items:center;gap:5px;margin-top:8px;flex-wrap:wrap}
 .menu-sec{background:#f5f5f5;padding:5rem 2rem}
 .menu-inner{max-width:1100px;margin:0 auto}
 .menu-inner h2{font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:2.5rem}
@@ -78,7 +85,7 @@ footer .fc{color:${p}}
 </style></head>
 <body>
 <nav>
-  <div class="logo">Website<span>Ku</span></div>
+  <img src="assets/logo-placeholder.png" style="height:30px;object-fit:contain">
   <div class="nav-links"><a href="#">Home</a><a href="#">Tentang</a><a href="#">Menu</a><a href="#">Kontak</a></div>
   <a href="#" class="nav-cta">Hubungi Kami</a>
 </nav>
@@ -94,11 +101,7 @@ footer .fc{color:${p}}
   </div>
   <div class="hero-right">
     <div class="hero-img">
-      <div class="img-shape"></div>
-      <div class="hero-img-inner">
-        <h3>${t.name.replace('WebsiteKu ','')}</h3>
-        <p>Professional Website</p>
-      </div>
+      <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
   </div>
 </section>
@@ -112,7 +115,7 @@ footer .fc{color:${p}}
   <h2>Layanan Unggulan</h2>
   <p class="sub">Kami menyediakan layanan terbaik untuk kepuasan Anda.</p>
   <div class="s-grid">
-    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-num">0${i+1}</div><h3>${m}</h3><p>Layanan ${m} premium dengan standar kualitas tertinggi dan pelayanan terbaik.</p></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="s-card"><img class="s-card-img" src="${fImg(i)}" alt="${m}"><div class="s-card-body"><div class="s-num">0${i+1}</div><h3>${m}</h3><p>Layanan ${m} premium dengan standar kualitas tertinggi dan pelayanan terbaik.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#888"> · ${fBuy(i)} pembelian</span></div></div></div>`).join('')}
   </div>
 </section>
 <section class="menu-sec">
@@ -133,11 +136,12 @@ footer .fc{color:${p}}
 /* ============================================================ */
 /* 2. CORPORATE                                                  */
 /* ============================================================ */
-function tmplCorporate(t) {
+function tmplCorporate(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -168,24 +172,27 @@ nav{background:${p};padding:1rem 2rem;display:flex;align-items:center;justify-co
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem}
 .sec-head h2{font-size:2rem;font-weight:800}.sec-head a{color:${p};font-weight:600;font-size:.9rem}
 .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
-.s-card{border-radius:12px;padding:2rem;background:#F8FAFC;border:1px solid #E2E8F0;transition:all .2s}
+.s-card{border-radius:12px;overflow:hidden;background:#F8FAFC;border:1px solid #E2E8F0;transition:all .2s}
 .s-card:hover{border-color:${p};box-shadow:0 8px 30px rgba(0,0,0,.08);transform:translateY(-3px)}
-.s-icon{width:48px;height:48px;background:${p}22;border-radius:10px;display:grid;place-items:center;margin-bottom:1rem;font-size:1.4rem}
+.s-card-img{width:100%;height:140px;object-fit:cover;display:block}
+.s-card-body{padding:1.5rem}
+.s-icon{width:48px;height:48px;background:${p}22;border-radius:10px;display:grid;place-items:center;margin-bottom:.8rem;font-size:1.4rem}
 .s-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;color:#0F172A}.s-card p{font-size:.85rem;color:#64748B;line-height:1.6}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .about{background:#0F172A;color:#fff;padding:5rem 2rem}
 .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .about-text h2{font-size:2rem;font-weight:800;margin-bottom:1rem}.about-text p{color:#94A3B8;line-height:1.7;margin-bottom:1.5rem}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .a-stat{background:#1E293B;border-radius:10px;padding:1.2rem;text-align:center}
 .a-num{font-size:1.8rem;font-weight:800;color:${s}}.a-label{font-size:.78rem;color:#94A3B8;margin-top:.3rem}
-.about-img{background:linear-gradient(135deg,${p}33,${s}33);border-radius:16px;height:300px;display:flex;align-items:center;justify-content:center;font-size:4rem}
+.about-img{border-radius:16px;height:300px;overflow:hidden}
 footer{background:${p};color:#fff;padding:2.5rem 2rem;text-align:center}
 footer .fl{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}footer p{opacity:.7;font-size:.85rem}
 @media(max-width:768px){.hero-inner{flex-direction:column;gap:2rem}.hero-right{display:none}.about-inner{grid-template-columns:1fr}.trust-bar{gap:1rem}}
 </style></head>
 <body>
 <nav>
-  <div class="logo">Website<span>Ku</span></div>
+  <img src="assets/logo-placeholder.png" style="height:30px;object-fit:contain">
   <div class="nav-links"><a href="#">Beranda</a><a href="#">Tentang</a><a href="#">Layanan</a><a href="#">Kontak</a></div>
   <a href="#" class="nav-cta">Hubungi Kami</a>
 </nav>
@@ -219,7 +226,7 @@ footer .fl{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}footer p{opacity
     <a href="#">Lihat Semua →</a>
   </div>
   <div class="s-grid">
-    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-icon">${['🏅','📋','🔑','🌟'][i%4]}</div><h3>${m}</h3><p>Solusi ${m} profesional dengan standar kualitas tertinggi dan tim berpengalaman.</p></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="s-card"><img class="s-card-img" src="${fImg(i)}" alt="${m}"><div class="s-card-body"><div class="s-icon">${['🏅','📋','🔑','🌟'][i%4]}</div><h3>${m}</h3><p>Solusi ${m} profesional dengan standar kualitas tertinggi dan tim berpengalaman.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#64748B"> · ${fBuy(i)} pembelian</span></div></div></div>`).join('')}
   </div>
 </section>
 <section class="about">
@@ -234,7 +241,7 @@ footer .fl{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}footer p{opacity
         <div class="a-stat"><div class="a-num">99%</div><div class="a-label">Tingkat Kepuasan</div></div>
       </div>
     </div>
-    <div class="about-img">🏢</div>
+    <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;height:100%;object-fit:cover;display:block"></div>
   </div>
 </section>
 <footer><div class="fl">WebsiteKu</div><p>© 2025 ${t.name}. Hak cipta dilindungi.</p></footer>
@@ -244,11 +251,12 @@ footer .fl{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}footer p{opacity
 /* ============================================================ */
 /* 3. LUXURY                                                     */
 /* ============================================================ */
-function tmplLuxury(t) {
+function tmplLuxury(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -282,12 +290,15 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);border-botto
 .sec-title{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;margin-bottom:.5rem;color:#fff}
 .sec-sub{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:3rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,.08)}
-.g-item{background:#0A0A0A;padding:2.5rem 2rem;transition:all .3s}
+.g-item{background:#0A0A0A;overflow:hidden;transition:all .3s}
 .g-item:hover{background:#111}
-.g-roman{font-family:'Cormorant Garamond',serif;font-size:1rem;color:${s};letter-spacing:.2em;margin-bottom:1rem}
+.g-img{width:100%;height:140px;object-fit:cover;display:block}
+.g-body{padding:2rem}
+.g-roman{font-family:'Cormorant Garamond',serif;font-size:1rem;color:${s};letter-spacing:.2em;margin-bottom:.8rem}
 .g-item h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:#fff;margin-bottom:.7rem}
 .g-item p{font-size:.83rem;color:#666;line-height:1.7}
 .g-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:${s};margin-top:1.2rem}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .experience{background:#111;padding:5rem 3rem;text-align:center;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
 .exp-inner{max-width:600px;margin:0 auto}
 .exp-inner h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#fff;margin-bottom:1rem}
@@ -299,7 +310,7 @@ footer p{font-size:.78rem;color:#555;letter-spacing:.1em}
 </style></head>
 <body>
 <nav>
-  <div class="logo">WebsiteKu</div>
+  <img src="assets/logo-placeholder.png" style="height:28px;object-fit:contain">
   <div class="nav-links"><a href="#">Beranda</a><a href="#">Koleksi</a><a href="#">Tentang</a><a href="#">Reservasi</a></div>
   <a href="#" class="nav-cta">Reservasi</a>
 </nav>
@@ -326,11 +337,14 @@ footer p{font-size:.78rem;color:#555;letter-spacing:.1em}
   <div class="div-sep"></div>
   <div class="div-item"><div class="div-num">5★</div><div class="div-label">Rating Tertinggi</div></div>
 </div>
+<div style="max-width:800px;margin:0 auto;padding:0 2rem 3rem">
+  <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;max-height:380px;object-fit:cover;border-radius:12px;display:block">
+</div>
 <section class="collection">
   <div class="sec-title">Pilihan Terbaik</div>
   <div class="sec-sub">Koleksi Eksklusif Kami</div>
   <div class="grid">
-    ${t.menu.map((m,i)=>`<div class="g-item"><div class="g-roman">${['I','II','III','IV'][i]}</div><h3>${m}</h3><p>Pengalaman ${m} premium dengan standar kualitas internasional yang tak tertandingi.</p><a href="#" class="g-link">Selengkapnya →</a></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="g-item"><img class="g-img" src="${fImg(i)}" alt="${m}"><div class="g-body"><div class="g-roman">${['I','II','III','IV'][i]}</div><h3>${m}</h3><p>Pengalaman ${m} premium dengan standar kualitas internasional yang tak tertandingi.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:#E8E0D0"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#666"> · ${fBuy(i)} pembelian</span></div><a href="#" class="g-link">Selengkapnya →</a></div></div>`).join('')}
   </div>
 </section>
 <section class="experience">
@@ -350,11 +364,12 @@ footer p{font-size:.78rem;color:#555;letter-spacing:.1em}
 /* ============================================================ */
 /* 4. DARK                                                       */
 /* ============================================================ */
-function tmplDark(t) {
+function tmplDark(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -396,10 +411,13 @@ nav{background:#111;border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 2
 .features h2{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
 .feat-sub{color:#666;margin-bottom:3rem}
 .f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
-.f-card{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:2rem;transition:all .3s}
+.f-card{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;transition:all .3s}
 .f-card:hover{border-color:${p};background:#151515;transform:translateY(-4px)}
-.f-icon{width:44px;height:44px;background:${p}22;border-radius:10px;display:grid;place-items:center;margin-bottom:1.2rem;font-size:1.3rem}
+.f-card-img{width:100%;height:140px;object-fit:cover;display:block}
+.f-card-body{padding:1.5rem}
+.f-icon{width:44px;height:44px;background:${p}22;border-radius:10px;display:grid;place-items:center;margin-bottom:.8rem;font-size:1.3rem}
 .f-card h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.5rem}.f-card p{font-size:.83rem;color:#666;line-height:1.6}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .cta-sec{background:linear-gradient(135deg,${p}22,${s}11);border:1px solid ${p}33;margin:5rem 2.5rem;border-radius:16px;padding:4rem 2rem;text-align:center}
 .cta-sec h2{font-size:2rem;font-weight:700;color:#fff;margin-bottom:1rem}.cta-sec p{color:#888;margin-bottom:2rem}
 footer{background:#111;border-top:1px solid rgba(255,255,255,.06);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
@@ -408,7 +426,7 @@ footer .fl{font-size:.95rem;font-weight:700;color:#fff}footer p{font-size:.8rem;
 </style></head>
 <body>
 <nav>
-  <div class="logo">WebsiteKu<span class="logo-dot"></span></div>
+  <img src="assets/logo-placeholder.png" style="height:30px;object-fit:contain">
   <div class="nav-links"><a href="#">Home</a><a href="#">Layanan</a><a href="#">Portfolio</a><a href="#">Kontak</a></div>
   <a href="#" class="nav-cta">Mulai Sekarang</a>
 </nav>
@@ -450,9 +468,12 @@ footer .fl{font-size:.95rem;font-weight:700;color:#fff}footer p{font-size:.8rem;
   <h2>Fitur Unggulan</h2>
   <p class="feat-sub">Semua yang Anda butuhkan dalam satu platform terintegrasi.</p>
   <div class="f-grid">
-    ${t.menu.map((m,i)=>`<div class="f-card"><div class="f-icon">${['🚀','⚡','🔒','📊'][i%4]}</div><h3>${m}</h3><p>Nikmati layanan ${m} premium dengan teknologi terkini dan support profesional.</p></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="f-card"><img class="f-card-img" src="${fImg(i)}" alt="${m}"><div class="f-card-body"><div class="f-icon">${['🚀','⚡','🔒','📊'][i%4]}</div><h3>${m}</h3><p>Nikmati layanan ${m} premium dengan teknologi terkini dan support profesional.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:#fff"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#666"> · ${fBuy(i)} pembelian</span></div></div></div>`).join('')}
   </div>
 </section>
+<div style="max-width:900px;margin:0 2.5rem;border-radius:16px;overflow:hidden">
+  <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;max-height:340px;object-fit:cover;display:block">
+</div>
 <div class="cta-sec">
   <h2>Siap untuk Memulai?</h2>
   <p>Bergabung dengan ribuan pengguna yang sudah mempercayai layanan kami.</p>
@@ -468,11 +489,12 @@ footer .fl{font-size:.95rem;font-weight:700;color:#fff}footer p{font-size:.8rem;
 /* ============================================================ */
 /* 5. GLASSMORPHISM                                              */
 /* ============================================================ */
-function tmplGlassmorphism(t) {
+function tmplGlassmorphism(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -516,10 +538,13 @@ nav{position:sticky;top:0;z-index:100;padding:1rem 2rem;background:rgba(10,5,20,
 .sec-head h2 span{background:linear-gradient(135deg,${p},${a});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sec-head p{color:rgba(255,255,255,.55)}
 .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
-.s-card{padding:2rem;transition:all .3s}
+.s-card{overflow:hidden;transition:all .3s}
 .s-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22)}
-.s-emoji{font-size:2rem;margin-bottom:1rem}
+.s-card-img{width:100%;height:140px;object-fit:cover;display:block}
+.s-card-body{padding:1.5rem}
+.s-emoji{font-size:2rem;margin-bottom:.8rem}
 .s-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}.s-card p{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.6}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 footer{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);padding:2.5rem 2rem;text-align:center}
 footer .fl{font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,${p},${a});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
 footer p{color:rgba(255,255,255,.4);font-size:.83rem}
@@ -530,7 +555,7 @@ footer p{color:rgba(255,255,255,.4);font-size:.83rem}
 <div class="bg-orb orb2"></div>
 <div class="bg-orb orb3"></div>
 <nav>
-  <div class="logo">WebsiteKu</div>
+  <img src="assets/logo-placeholder.png" style="height:30px;object-fit:contain">
   <div class="nav-links"><a href="#">Home</a><a href="#">Fitur</a><a href="#">Harga</a><a href="#">Kontak</a></div>
   <a href="#" class="nav-cta">Mulai Gratis</a>
 </nav>
@@ -546,14 +571,17 @@ footer p{color:rgba(255,255,255,.4);font-size:.83rem}
       </div>
     </div>
     <div class="hero-cards">
-      ${t.menu.map((m,i)=>`<div class="glass h-card"><div class="h-card-icon icon${i+1}">${['🎯','⚡','🔐','🌟'][i%4]}</div><div><strong>${m}</strong><span>Tersedia sekarang</span></div></div>`).join('')}
+      <div class="glass" style="border-radius:16px;overflow:hidden;margin-bottom:1rem">
+        <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;height:180px;object-fit:cover;display:block">
+      </div>
+      ${t.menu.map((m,i)=>`<div class="glass h-card"><div class="h-card-icon icon${(i%4)+1}">${['🎯','⚡','🔐','🌟'][i%4]}</div><div><strong>${m}</strong><span>Tersedia sekarang</span></div></div>`).join('')}
     </div>
   </div>
 </section>
 <section class="services">
   <div class="sec-head"><h2>Mengapa Pilih <span>Kami?</span></h2><p>Solusi terbaik untuk kebutuhan Anda.</p></div>
   <div class="s-grid">
-    ${t.menu.map((m,i)=>`<div class="glass s-card"><div class="s-emoji">${['🚀','💎','🛡️','📈'][i%4]}</div><h3>${m}</h3><p>Layanan ${m} terdepan dengan teknologi mutakhir dan tim profesional berdedikasi tinggi.</p></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="glass s-card"><img class="s-card-img" src="${fImg(i)}" alt="${m}"><div class="s-card-body"><div class="s-emoji">${['🚀','💎','🛡️','📈'][i%4]}</div><h3>${m}</h3><p>Layanan ${m} terdepan dengan teknologi mutakhir dan tim profesional berdedikasi tinggi.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:#fff"> ${fStar(i)}</strong><span style="font-size:.75rem;color:rgba(255,255,255,.5)"> · ${fBuy(i)} pembelian</span></div></div></div>`).join('')}
   </div>
 </section>
 <footer>
@@ -566,11 +594,12 @@ footer p{color:rgba(255,255,255,.4);font-size:.83rem}
 /* ============================================================ */
 /* 6. NEON                                                       */
 /* ============================================================ */
-function tmplNeon(t) {
+function tmplNeon(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
@@ -603,13 +632,16 @@ nav{position:sticky;top:0;z-index:100;padding:1rem 2rem;background:rgba(3,3,5,.9
 .services h2{font-size:2rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 0 20px ${s};margin-bottom:.5rem;text-align:center}
 .services p{text-align:center;color:#666;font-family:'Share Tech Mono',monospace;font-size:.83rem;margin-bottom:3rem}
 .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:${p}22}
-.s-card{background:#030305;padding:2rem;transition:all .3s;border:1px solid ${p}22;position:relative}
+.s-card{background:#030305;overflow:hidden;transition:all .3s;border:1px solid ${p}22;position:relative}
 .s-card:hover{background:#07070F;border-color:${p}}
 .s-card:hover .s-title{text-shadow:0 0 12px ${p}}
-.s-id{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:${p};margin-bottom:1rem;opacity:.7}
+.s-card-img{width:100%;height:130px;object-fit:cover;display:block;opacity:.8}
+.s-card-body{padding:1.5rem}
+.s-id{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:${p};margin-bottom:.7rem;opacity:.7}
 .s-title{font-size:1.2rem;font-weight:700;letter-spacing:.05em;color:#fff;margin-bottom:.7rem;transition:text-shadow .3s}
 .s-card p{font-size:.85rem;color:#555;line-height:1.6}
 .s-corner{position:absolute;top:0;right:0;width:24px;height:24px;border-top:2px solid ${p};border-right:2px solid ${p}}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .counter{background:#07070F;border-top:1px solid ${p}44;border-bottom:1px solid ${p}44;padding:2.5rem 2rem}
 .counter-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:2rem}
 .c-num{font-size:2.2rem;font-weight:700;color:${p};text-shadow:0 0 20px ${p};font-family:'Share Tech Mono',monospace}
@@ -622,7 +654,7 @@ footer p{color:#444;font-family:'Share Tech Mono',monospace;font-size:.78rem;mar
 <body>
 <div class="grid-bg"></div>
 <nav>
-  <div class="logo">Website<span>Ku</span></div>
+  <img src="assets/logo-placeholder.png" style="height:28px;object-fit:contain">
   <div class="nav-links"><a href="#">HOME</a><a href="#">SERVICES</a><a href="#">PORTFOLIO</a><a href="#">CONTACT</a></div>
   <a href="#" class="nav-cta">MULAI</a>
 </nav>
@@ -651,9 +683,12 @@ footer p{color:#444;font-family:'Share Tech Mono',monospace;font-size:.78rem;mar
   <h2>Layanan Kami</h2>
   <p>// INITIATING SERVICE PROTOCOLS</p>
   <div class="s-grid">
-    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-corner"></div><div class="s-id">SVC_${String(i+1).padStart(2,'0')}</div><div class="s-title">${m.toUpperCase()}</div><p>Protocol ${m} initialized. Running diagnostic checks... Status: OPERATIONAL</p></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-corner"></div><img class="s-card-img" src="${fImg(i)}" alt="${m}"><div class="s-card-body"><div class="s-id">SVC_${String(i+1).padStart(2,'0')}</div><div class="s-title">${m.toUpperCase()}</div><p>Protocol ${m} initialized. Status: OPERATIONAL</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:${p}"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#555"> · ${fBuy(i)} pembelian</span></div></div></div>`).join('')}
   </div>
 </section>
+<div style="padding:3rem 2rem;max-width:800px;margin:0 auto">
+  <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;max-height:300px;object-fit:cover;border-radius:4px;display:block;border:1px solid ${p}44">
+</div>
 <footer>
   <div class="fl">WEBSITEKU</div>
   <p>// © 2025 ${t.name.toUpperCase()} — ALL SYSTEMS ONLINE</p>
@@ -664,11 +699,12 @@ footer p{color:#444;font-family:'Share Tech Mono',monospace;font-size:.78rem;mar
 /* ============================================================ */
 /* 7. STARTUP                                                    */
 /* ============================================================ */
-function tmplStartup(t) {
+function tmplStartup(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -704,12 +740,15 @@ nav{padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-be
 .sec-h h2 span{background:linear-gradient(135deg,${p},${a});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sec-h p{color:#8892A4}
 .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem}
-.feat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:2rem;transition:all .3s;position:relative;overflow:hidden}
-.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,${p}11,${s}07);opacity:0;transition:opacity .3s}
+.feat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;transition:all .3s;position:relative}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,${p}11,${s}07);opacity:0;transition:opacity .3s;pointer-events:none}
 .feat-card:hover{border-color:rgba(255,255,255,.16);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4)}.feat-card:hover::before{opacity:1}
-.feat-num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,${p},${a});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:1rem}
+.feat-card-img{width:100%;height:150px;object-fit:cover;display:block}
+.feat-card-body{padding:1.5rem;position:relative}
+.feat-num{font-size:2rem;font-weight:900;background:linear-gradient(135deg,${p},${a});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.8rem}
 .feat-card h3{font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
 .feat-card p{font-size:.85rem;color:#8892A4;line-height:1.6}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .cta-strip{background:linear-gradient(135deg,${p}22,${s}11);border:1px solid ${p}33;border-radius:20px;margin:4rem 2rem;padding:4rem 2rem;text-align:center;max-width:1200px;margin-left:auto;margin-right:auto}
 .cta-strip h2{font-size:2rem;font-weight:900;margin-bottom:1rem;letter-spacing:-.02em}
 .cta-strip p{color:#8892A4;margin-bottom:2rem}
@@ -720,7 +759,7 @@ footer p{color:#555;font-size:.83rem}
 </style></head>
 <body>
 <nav>
-  <div class="logo">Website<span class="logo-accent">Ku</span></div>
+  <img src="assets/logo-placeholder.png" style="height:30px;object-fit:contain">
   <div class="nav-links"><a href="#">Produk</a><a href="#">Fitur</a><a href="#">Harga</a><a href="#">Tentang</a></div>
   <div class="nav-actions">
     <a href="#" class="nav-login">Masuk</a>
@@ -740,11 +779,14 @@ footer p{color:#555;font-size:.83rem}
     <div class="trust-dots">${['A','B','C'].map(l=>`<div class="trust-dot">${l}</div>`).join('')}</div>
     <span>Dipercaya 10,000+ bisnis Indonesia</span>
   </div>
+  <div style="max-width:800px;margin:3rem auto 0;border-radius:16px;overflow:hidden">
+    <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;max-height:340px;object-fit:cover;display:block">
+  </div>
 </section>
 <section class="features">
   <div class="sec-h"><h2>Semua Yang Anda <span>Butuhkan</span></h2><p>Fitur lengkap untuk bisnis Anda tumbuh lebih cepat.</p></div>
   <div class="feat-grid">
-    ${t.menu.map((m,i)=>`<div class="feat-card"><div class="feat-num">${String(i+1).padStart(2,'0')}</div><h3>${m}</h3><p>Solusi ${m} terdepan yang membantu bisnis Anda berkembang dengan lebih efisien dan profesional.</p></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="feat-card"><img class="feat-card-img" src="${fImg(i)}" alt="${m}"><div class="feat-card-body"><div class="feat-num">${String(i+1).padStart(2,'0')}</div><h3>${m}</h3><p>Solusi ${m} terdepan yang membantu bisnis Anda berkembang dengan lebih efisien dan profesional.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:#fff"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#8892A4"> · ${fBuy(i)} pembelian</span></div></div></div>`).join('')}
   </div>
 </section>
 <div class="cta-strip">
@@ -762,11 +804,12 @@ footer p{color:#555;font-size:.83rem}
 /* ============================================================ */
 /* 8. ELEGANT                                                    */
 /* ============================================================ */
-function tmplElegant(t) {
+function tmplElegant(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -803,12 +846,15 @@ nav{padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-be
 .sh-left p{color:#888;font-size:.88rem}
 .sh-right a{color:${p};font-size:.85rem;letter-spacing:.05em}
 .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border:1px solid #EDE8E3}
-.s-card{padding:2.5rem;border-right:1px solid #EDE8E3;border-bottom:1px solid #EDE8E3;transition:all .3s}
+.s-card{overflow:hidden;border-right:1px solid #EDE8E3;border-bottom:1px solid #EDE8E3;transition:all .3s}
 .s-card:hover{background:#FFF8F5}
-.s-num{font-family:'Libre Baskerville',serif;font-size:.85rem;color:${p};margin-bottom:1.2rem}
+.s-card-img{width:100%;height:140px;object-fit:cover;display:block}
+.s-card-body{padding:2rem}
+.s-num{font-family:'Libre Baskerville',serif;font-size:.85rem;color:${p};margin-bottom:.8rem}
 .s-card h3{font-family:'Libre Baskerville',serif;font-size:1.2rem;font-weight:400;margin-bottom:.7rem;color:#2A1E1A}
 .s-card p{font-size:.83rem;color:#888;line-height:1.7}
-.s-link{display:inline-block;margin-top:1.2rem;font-size:.8rem;color:${p};letter-spacing:.05em}
+.s-link{display:inline-block;margin-top:1rem;font-size:.8rem;color:${p};letter-spacing:.05em}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .testimonial{background:#2A1E1A;color:#FAFAF6;padding:6rem 3rem;text-align:center}
 .testi-inner{max-width:600px;margin:0 auto}
 .testi-inner blockquote{font-family:'Libre Baskerville',serif;font-size:1.4rem;font-weight:400;font-style:italic;line-height:1.6;margin-bottom:2rem;color:#EDE8E3}
@@ -820,7 +866,7 @@ footer p{font-size:.8rem;color:#aaa}
 </style></head>
 <body>
 <nav>
-  <div class="logo">Website<span>Ku</span></div>
+  <img src="assets/logo-placeholder.png" style="height:30px;object-fit:contain">
   <div class="nav-links"><a href="#">Beranda</a><a href="#">Koleksi</a><a href="#">Tentang</a><a href="#">Kontak</a></div>
   <a href="#" class="nav-cta">Hubungi Kami</a>
 </nav>
@@ -834,12 +880,8 @@ footer p{font-size:.8rem;color:#aaa}
       <a href="#" class="btn-line">Lihat Koleksi →</a>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hr-decor"></div>
-    <div class="hr-inner">
-      <div class="hr-icon">✨</div>
-      <div class="hr-title">${t.name.replace('WebsiteKu ','')}</div>
-    </div>
+  <div class="hero-right" style="overflow:hidden">
+    <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;height:100%;object-fit:cover;display:block;min-height:400px">
   </div>
 </section>
 <div class="strip">
@@ -853,7 +895,7 @@ footer p{font-size:.8rem;color:#aaa}
     <div class="sh-right"><a href="#">Lihat Semua →</a></div>
   </div>
   <div class="s-grid">
-    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-num">0${i+1}</div><h3>${m}</h3><p>Layanan ${m} kami menghadirkan pengalaman yang tak tertandingi dengan sentuhan keindahan.</p><a href="#" class="s-link">Pelajari lebih →</a></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="s-card"><img class="s-card-img" src="${fImg(i)}" alt="${m}"><div class="s-card-body"><div class="s-num">0${i+1}</div><h3>${m}</h3><p>Layanan ${m} kami menghadirkan pengalaman yang tak tertandingi dengan sentuhan keindahan.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:#2A1E1A"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#888"> · ${fBuy(i)} pembelian</span></div><a href="#" class="s-link">Pelajari lebih →</a></div></div>`).join('')}
   </div>
 </section>
 <section class="testimonial">
@@ -872,11 +914,12 @@ footer p{font-size:.8rem;color:#aaa}
 /* ============================================================ */
 /* 9. FUTURISTIC                                                 */
 /* ============================================================ */
-function tmplFuturistic(t) {
+function tmplFuturistic(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
@@ -919,16 +962,19 @@ nav{position:sticky;top:0;z-index:100;padding:1rem 2.5rem;background:rgba(5,9,16
 .services h2 span{color:${a};text-shadow:0 0 15px ${a}}
 .services .sub{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:#4A5A6A;letter-spacing:.1em;margin-bottom:3rem}
 .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:${a}11}
-.s-card{background:#050910;padding:2rem;border:1px solid ${a}22;transition:all .3s;position:relative}
+.s-card{background:#050910;overflow:hidden;border:1px solid ${a}22;transition:all .3s;position:relative}
 .s-card:hover{border-color:${a};background:#07101A}
-.s-corner-tl,.s-corner-br{position:absolute;width:10px;height:10px;border-color:${a}}
+.s-corner-tl,.s-corner-br{position:absolute;width:10px;height:10px;border-color:${a};z-index:1}
 .s-corner-tl{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid}
 .s-corner-br{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid}
-.s-id{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:${a}88;margin-bottom:.8rem;letter-spacing:.1em}
+.s-card-img{width:100%;height:130px;object-fit:cover;display:block;opacity:.8}
+.s-card-body{padding:1.5rem}
+.s-id{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:${a}88;margin-bottom:.7rem;letter-spacing:.1em}
 .s-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.6rem;letter-spacing:.03em}
 .s-card p{font-size:.82rem;color:#4A5A6A;line-height:1.6}
-.s-bar{height:2px;background:linear-gradient(90deg,${a},${s});margin-top:1.2rem;width:0;transition:width .5s}
+.s-bar{height:2px;background:linear-gradient(90deg,${a},${s});margin-top:1rem;width:0;transition:width .5s}
 .s-card:hover .s-bar{width:100%}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 footer{background:rgba(0,212,255,.03);border-top:1px solid ${a}22;padding:2.5rem;text-align:center}
 .f-logo{font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:.1em;margin-bottom:.5rem}.f-logo span{color:${a};text-shadow:0 0 10px ${a}}
 footer p{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#3A4A5A;letter-spacing:.08em}
@@ -937,7 +983,7 @@ footer p{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#3A4A5A;
 <body>
 <div class="dot-bg"></div>
 <nav>
-  <div class="logo">Website<span class="logo-accent">Ku</span></div>
+  <img src="assets/logo-placeholder.png" style="height:28px;object-fit:contain">
   <div class="nav-links"><a href="#">BERANDA</a><a href="#">LAYANAN</a><a href="#">PORTFOLIO</a><a href="#">KONTAK</a></div>
   <a href="#" class="nav-cta">MULAI</a>
 </nav>
@@ -969,9 +1015,12 @@ footer p{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#3A4A5A;
   <h2>Modul <span>Layanan</span></h2>
   <p class="sub">▶ LOADING SERVICE MODULES... 4/4 COMPLETE</p>
   <div class="s-grid">
-    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-corner-tl"></div><div class="s-corner-br"></div><div class="s-id">MOD_${String(i+1).padStart(3,'0')}</div><h3>${m}</h3><p>Modul ${m} beroperasi dalam mode optimal dengan efisiensi tertinggi.</p><div class="s-bar"></div></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="s-card"><div class="s-corner-tl"></div><div class="s-corner-br"></div><img class="s-card-img" src="${fImg(i)}" alt="${m}"><div class="s-card-body"><div class="s-id">MOD_${String(i+1).padStart(3,'0')}</div><h3>${m}</h3><p>Modul ${m} beroperasi dalam mode optimal dengan efisiensi tertinggi.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:${a}"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#4A5A6A"> · ${fBuy(i)} pembelian</span></div><div class="s-bar"></div></div></div>`).join('')}
   </div>
 </section>
+<div style="max-width:900px;margin:0 2.5rem;border-radius:4px;overflow:hidden;border:1px solid ${a}33">
+  <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;max-height:300px;object-fit:cover;display:block">
+</div>
 <footer>
   <div class="f-logo">WEBSITE<span>KU</span></div>
   <p>© 2025 ${t.name.toUpperCase()} — ALL SYSTEMS OPERATIONAL</p>
@@ -982,11 +1031,12 @@ footer p{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:#3A4A5A;
 /* ============================================================ */
 /* 10. PREMIUM                                                   */
 /* ============================================================ */
-function tmplPremium(t) {
+function tmplPremium(t, base) {
+  base = base || '';
   const p = t.primary, s = t.secondary, a = t.accent;
   return `<!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.name}</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 <style>
@@ -1033,15 +1083,18 @@ nav{position:sticky;top:0;z-index:100;padding:1.5rem 3rem;background:rgba(11,15,
 .col-header h2{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:400;color:#fff;margin-bottom:.5rem}
 .col-header p{color:#5A6A7A;font-size:.85rem;font-weight:300;letter-spacing:.05em}
 .col-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:${p}15}
-.col-item{background:#0B0F1E;padding:2.5rem 2rem;transition:all .4s;position:relative}
+.col-item{background:#0B0F1E;overflow:hidden;transition:all .4s;position:relative}
 .col-item:hover{background:#0F1525}
-.col-roman{font-family:'Cinzel',serif;font-size:.85rem;color:${p}55;margin-bottom:1rem;letter-spacing:.15em}
+.col-img{width:100%;height:140px;object-fit:cover;display:block;opacity:.85}
+.col-body{padding:2rem}
+.col-roman{font-family:'Cinzel',serif;font-size:.85rem;color:${p}55;margin-bottom:.8rem;letter-spacing:.15em}
 .col-item h3{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:400;color:#D4C5A9;margin-bottom:.7rem;letter-spacing:.05em}
 .col-item p{font-size:.82rem;color:#5A6A7A;line-height:1.7;font-weight:300}
-.col-arrow{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.2rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:${p}88;transition:color .3s}
+.col-arrow{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:${p}88;transition:color .3s}
 .col-item:hover .col-arrow{color:${p}}
 .col-border-bot{position:absolute;bottom:0;left:2rem;right:2rem;height:1px;background:linear-gradient(90deg,transparent,${p}44,transparent);transform:scaleX(0);transition:transform .4s}
 .col-item:hover .col-border-bot{transform:scaleX(1)}
+.prod-rating{display:flex;align-items:center;gap:4px;margin-top:8px;flex-wrap:wrap}
 .cta{background:#080B14;border-top:1px solid ${p}15;border-bottom:1px solid ${p}15;padding:6rem 2rem;text-align:center}
 .cta-inner{max-width:600px;margin:0 auto}
 .cta-inner h2{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:400;color:#fff;margin-bottom:1rem}
@@ -1054,7 +1107,7 @@ footer p{font-size:.75rem;color:#3A4A5A;letter-spacing:.1em;text-transform:upper
 </style></head>
 <body>
 <nav>
-  <div class="logo">WEBSITE<span class="logo-gold">KU</span></div>
+  <img src="assets/logo-placeholder.png" style="height:28px;object-fit:contain">
   <div class="nav-links"><a href="#">BERANDA</a><a href="#">KOLEKSI</a><a href="#">TENTANG</a><a href="#">RESERVASI</a></div>
   <a href="#" class="nav-cta">RESERVASI</a>
 </nav>
@@ -1088,9 +1141,12 @@ footer p{font-size:.75rem;color:#3A4A5A;letter-spacing:.1em;text-transform:upper
     <p>Pengalaman premium yang dirancang untuk mereka yang menghargai keunggulan.</p>
   </div>
   <div class="col-grid">
-    ${t.menu.map((m,i)=>`<div class="col-item"><div class="col-border-bot"></div><div class="col-roman">${['I','II','III','IV'][i%4]}</div><h3>${m}</h3><p>Pengalaman ${m} eksklusif dengan standar kelas dunia dan pelayanan yang tak tertandingi.</p><div class="col-arrow">Selengkapnya →</div></div>`).join('')}
+    ${t.menu.map((m,i)=>`<div class="col-item"><div class="col-border-bot"></div><img class="col-img" src="${fImg(i)}" alt="${m}"><div class="col-body"><div class="col-roman">${['I','II','III','IV'][i%4]}</div><h3>${m}</h3><p>Pengalaman ${m} eksklusif dengan standar kelas dunia dan pelayanan yang tak tertandingi.</p><div class="prod-rating"><span style="color:#FFD700">★★★★★</span><strong style="font-size:.82rem;color:#D4C5A9"> ${fStar(i)}</strong><span style="font-size:.75rem;color:#5A6A7A"> · ${fBuy(i)} pembelian</span></div><div class="col-arrow">Selengkapnya →</div></div></div>`).join('')}
   </div>
 </section>
+<div style="max-width:800px;margin:0 auto;padding:0 3rem 3rem">
+  <img src="assets/foto-bisnis-anda.png" alt="Foto Bisnis" style="width:100%;max-height:340px;object-fit:cover;border-radius:8px;display:block;border:1px solid ${p}22">
+</div>
 <section class="cta">
   <div class="cta-inner">
     <h2>Mulai Pengalaman <span class="gold-text">Premium</span></h2>
