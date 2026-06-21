@@ -1281,10 +1281,6 @@ input, textarea, select { font-family: inherit; }
 
 @media (max-width: 768px) {
   .section { padding: 3.5rem 0; }
-  .testi-grid { grid-template-columns: 1fr 1fr; }
-  .float-wa-label { display: none; }
-  .float-wa { padding: .9rem; width: 52px; height: 52px; border-radius: 50%; justify-content: center; }
-  .float-wa-pulse { display: none; }
   .nav-links {
     display: none;
     position: fixed;
@@ -1320,10 +1316,6 @@ input, textarea, select { font-family: inherit; }
   .footer-grid { grid-template-columns: 1fr; }
   .harga-popular { transform: scale(1); }
   .preview-btn span { display: none; }
-  .testi-grid { grid-template-columns: 1fr; }
-  .testi-summary { gap: 1rem; }
-  .ts-num { font-size: 3rem; }
-  .back-top { bottom: 6rem; }
 }
 
 /* ============================================================
@@ -1545,3 +1537,88 @@ input, textarea, select { font-family: inherit; }
 .badge-elegant     { background: rgba(183,110,121,.15); color: #D4A0A9; }
 .badge-futuristic  { background: rgba(0,212,255,.1); color: #00D4FF; }
 .badge-premium     { background: rgba(245,197,24,.12); color: #F5C518; }
+
+/* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-accent), var(--c-secondary));
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(108,99,255,.7);
+  pointer-events: none;
+  transition: width .05s linear;
+}
+
+/* ============================================================
+   TYPED TEXT HERO
+   ============================================================ */
+#heroTyped { display: inline; }
+.hero-cursor {
+  display: inline;
+  color: var(--c-accent);
+  font-weight: 200;
+  font-size: .9em;
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+
+/* ============================================================
+   RESPONSIVE — NEW SECTIONS
+   Must be AFTER all base styles to win the cascade
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Testimonials: single column */
+  .testi-grid { grid-template-columns: 1fr; }
+  .testi-card { padding: 1.3rem; }
+
+  /* Floating WA → icon circle only */
+  .float-wa-label { display: none; }
+  .float-wa-pulse { display: none; }
+  .float-wa {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+    bottom: 1.2rem;
+    right: 1.2rem;
+  }
+  .back-top {
+    bottom: 4.8rem;
+    right: 1.2rem;
+  }
+
+  /* Services: force single column on tight screens */
+  .services-grid { grid-template-columns: 1fr; }
+
+  /* Kategori: single column */
+  .kategori-grid { grid-template-columns: 1fr; }
+
+  /* Ticker smaller text */
+  .ticker-item { padding: 0 1.4rem; font-size: .78rem; }
+}
+
+@media (max-width: 480px) {
+  /* Testi summary compact */
+  .testi-summary { padding: 1.3rem 1rem; gap: .75rem; }
+  .ts-num { font-size: 2.8rem; }
+
+  /* Testi grid: ensure 1 col on tiny phones */
+  .testi-grid { grid-template-columns: 1fr; }
+
+  /* Hero typed */
+  .hero-cursor { font-size: .8em; }
+
+  /* Harga grid: single column */
+  .harga-grid { grid-template-columns: 1fr; }
+
+  /* Section header tighter */
+  .section-header { margin-bottom: 2.5rem; }
+
+  /* Services grid min-width override */
+  .services-grid { grid-template-columns: 1fr; }
+}

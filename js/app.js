@@ -340,6 +340,34 @@
   document.head.appendChild(style);
 
   /* ======================================================== */
+  /* SCROLL PROGRESS BAR                                       */
+  /* ======================================================== */
+  const scrollProg = document.getElementById('scrollProgress');
+  if (scrollProg) {
+    window.addEventListener('scroll', () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProg.style.width = (maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0) + '%';
+    }, { passive: true });
+  }
+
+  /* ======================================================== */
+  /* TYPED TEXT HERO                                           */
+  /* ======================================================== */
+  const typedEl = document.getElementById('heroTyped');
+  if (typedEl) {
+    const phrases = ['Bisnis Anda', 'UMKM Anda', 'Brand Anda', 'Restoran Anda', 'Startup Anda'];
+    let pi = 0, ci = 0, del = false;
+    function tick() {
+      const p = phrases[pi];
+      typedEl.textContent = del ? p.slice(0, --ci) : p.slice(0, ++ci);
+      if (!del && ci >= p.length) { del = true; setTimeout(tick, 2400); return; }
+      if ( del && ci <= 0)        { del = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 300); return; }
+      setTimeout(tick, del ? 48 : 85);
+    }
+    setTimeout(tick, 1500);
+  }
+
+  /* ======================================================== */
   /* BACK TO TOP                                               */
   /* ======================================================== */
   const backTopBtn = document.getElementById('backTop');
