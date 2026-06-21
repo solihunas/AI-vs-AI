@@ -74,7 +74,7 @@
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('.service-card, .kat-card, .harga-card, .proses-item, .ki-item').forEach(el => {
+  document.querySelectorAll('.service-card, .kat-card, .harga-card, .proses-item, .ki-item, .testi-card').forEach(el => {
     el.classList.add('reveal');
     observer.observe(el);
   });
@@ -338,6 +338,19 @@
   const style = document.createElement('style');
   style.textContent = '.nav-links a.active-nav{color:#fff!important}';
   document.head.appendChild(style);
+
+  /* ======================================================== */
+  /* BACK TO TOP                                               */
+  /* ======================================================== */
+  const backTopBtn = document.getElementById('backTop');
+  if (backTopBtn) {
+    window.addEventListener('scroll', () => {
+      backTopBtn.classList.toggle('visible', window.scrollY > 500);
+    }, { passive: true });
+    backTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   /* ======================================================== */
   /* INIT                                                      */
