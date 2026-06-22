@@ -29,21 +29,60 @@ function testiHTML(){return `
   <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Sudah 2 tahun berlangganan, tidak pernah kecewa. Tim sangat ramah dan profesional dalam setiap layanan."</p><div class="testi-author"><div class="testi-av">SD</div><div><div class="testi-name">Sari Dewi</div><div class="testi-role">Member VIP</div></div></div></div>
   <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Rekomendasi terbaik! Hasil kerja rapi, tepat waktu, dan harga sangat terjangkau untuk kualitas sebagus ini."</p><div class="testi-author"><div class="testi-av">AF</div><div><div class="testi-name">Ahmad Fauzi</div><div class="testi-role">Mitra Bisnis</div></div></div></div>`;}
 
+function generateSplash(t){
+  var s=t.style;
+  var isDk=['corporate','luxury','dark','glassmorphism','neon','startup','futuristic','premium'].indexOf(s)>=0;
+  var bgs={minimalist:'#FAFAFA',corporate:'linear-gradient(135deg,'+t.primary+','+t.secondary+')',luxury:'#0A0A0A',dark:'#0D0D0D',glassmorphism:'linear-gradient(135deg,#0F0520,#0E1B3D)',neon:'#030305',startup:'linear-gradient(135deg,#050510,#0A0A20)',elegant:'#FAFAF6',futuristic:'linear-gradient(135deg,#050910,#0A1628)',premium:'linear-gradient(135deg,#0B0F1E,#161B2E)'};
+  var fnts={minimalist:"'DM Sans',sans-serif",corporate:"'Inter',sans-serif",luxury:"'Cormorant Garamond',serif",dark:"'Space Grotesk',sans-serif",glassmorphism:"'Plus Jakarta Sans',sans-serif",neon:"'Rajdhani',sans-serif",startup:"'Inter',sans-serif",elegant:"'Playfair Display',serif",futuristic:"'Exo 2',sans-serif",premium:"'Cinzel',serif"};
+  var bg=bgs[s]||'#0D0D0D';var fn=fnts[s]||"'Inter',sans-serif";
+  var tc=isDk?'#fff':'#111';var sc=isDk?'rgba(255,255,255,.62)':'#555';
+  var ac=t.primary;var lf=isDk?'filter:brightness(12) saturate(0);':'';
+  var glows={neon:'<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,'+ac+'15,transparent 70%);pointer-events:none"></div>',glassmorphism:'<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,'+ac+'25,transparent 55%);pointer-events:none"></div>',premium:'<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,'+t.secondary+'25,transparent 60%);pointer-events:none"></div>',futuristic:'<div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.025) 2px,rgba(0,212,255,0.025) 4px);pointer-events:none"></div>'};
+  var ex=glows[s]||'';
+  var ctag={1:'🍽️ Cita Rasa Terbaik',2:'🏠 Properti & Hunian Premium',3:'💊 Kesehatan Adalah Investasi',4:'🚀 Inovasi Digital Terdepan',5:'🛍️ Solusi Bisnis Terpercaya'}[t.cat]||'✨ Selamat Datang';
+  var bn=t.name.replace('WebsiteKu ','');
+  return '<div id="__splash" style="position:fixed;inset:0;z-index:9999;background:'+bg+';display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;transition:opacity .5s ease;overflow:hidden;">'+ex+'<div style="position:relative;z-index:2;max-width:500px;width:100%;"><div style="font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:'+ac+';margin-bottom:1.3rem;">'+ctag+'</div><img src="assets/logo-placeholder.png" alt="logo" style="height:62px;width:auto;object-fit:contain;margin:0 auto 1.6rem;display:block;'+lf+'"><h1 style="font-size:clamp(1.7rem,6vw,2.7rem);font-weight:900;color:'+tc+';line-height:1.15;margin:0 0 .8rem;font-family:'+fn+';">'+bn+'</h1><p style="color:'+sc+';font-size:.9rem;line-height:1.65;margin:0 auto 2rem;max-width:360px;">'+t.headline+'</p><button onclick="__ds()" style="display:inline-flex;align-items:center;gap:.5rem;background:'+ac+';color:#fff;border:none;padding:.85rem 2.2rem;border-radius:100px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:'+fn+';box-shadow:0 8px 28px rgba(0,0,0,.3);">Masuk ke Website &#8594;</button></div></div><script>function __ds(){var e=document.getElementById("__splash");e.style.opacity="0";setTimeout(function(){e.style.display="none"},500);}setTimeout(function(){__ds()},9000);<\/script>';
+}
+
+function generateWhyUs(t){
+  var s=t.style;
+  var isDk=['corporate','luxury','dark','glassmorphism','neon','startup','futuristic','premium'].indexOf(s)>=0;
+  var tc=isDk?'#fff':'#111';var sc=isDk?'rgba(255,255,255,.62)':'#555';
+  var sbgs={minimalist:'#F5F5F5',corporate:'rgba(0,0,0,.1)',luxury:'#080808',dark:'#0D0D0D',glassmorphism:'rgba(0,0,0,.15)',neon:'rgba(0,0,0,.2)',startup:'rgba(255,255,255,.02)',elegant:'#F0EDE8',futuristic:'rgba(0,0,0,.15)',premium:'rgba(0,0,0,.15)'};
+  var cbgs={minimalist:'#fff',corporate:'rgba(255,255,255,.06)',luxury:'rgba(255,255,255,.04)',dark:'rgba(255,255,255,.04)',glassmorphism:'rgba(255,255,255,.04)',neon:'rgba(0,0,0,.4)',startup:'rgba(255,255,255,.04)',elegant:'#fff',futuristic:'rgba(255,255,255,.03)',premium:'rgba(255,255,255,.04)'};
+  var bdrs={minimalist:'#E5E5E5',corporate:'rgba(255,255,255,.1)',luxury:'rgba(255,255,255,.06)',dark:'rgba(255,255,255,.06)',glassmorphism:'rgba(255,255,255,.06)',neon:t.primary+'33',startup:'rgba(255,255,255,.06)',elegant:'#E8E0D8',futuristic:t.accent+'22',premium:'rgba(255,255,255,.06)'};
+  var sbg=sbgs[s]||'rgba(0,0,0,.1)';var cbg=cbgs[s]||'rgba(255,255,255,.04)';var bdr=bdrs[s]||'rgba(255,255,255,.06)';
+  var p=t.primary;var bn=t.name.replace('WebsiteKu ','');
+  var feats={
+    1:[['🌿','Bahan Segar Premium','Bahan pilihan langsung dari petani lokal terpercaya. Kesegaran dan kualitas tertinggi dijamin dalam setiap hidangan.'],['👨‍🍳','Chef Berpengalaman','Tim chef dengan pengalaman 10+ tahun di industri kuliner nasional dan internasional.'],['⚡','Pelayanan Cepat','Pesanan diproses dalam 15 menit. Waktu Anda sangat berharga bagi kami.'],['🏆','Terpercaya & Berpengalaman','Dipercaya 5.000+ pelanggan setia sejak 2015. Penghargaan restoran terbaik versi majalah kuliner nasional.']],
+    2:[['📍','Lokasi Strategis','Properti di kawasan premium dengan akses mudah ke pusat bisnis, sekolah internasional, dan fasilitas kota.'],['📋','Legalitas 100% Aman','SHM, IMB lengkap, dan telah melalui due diligence ketat oleh tim hukum independen kami.'],['🏗️','Konstruksi Premium','Material berstandar SNI dan internasional. Garansi struktur 10 tahun dengan teknisi bersertifikat.'],['🤝','After Sales Terbaik','Pendampingan KPR, balik nama, dan konsultasi renovasi 2 tahun penuh setelah serah terima kunci.']],
+    3:[['🩺','Dokter Tersertifikasi','Seluruh dokter tersertifikasi nasional BPOM & Kemenkes dengan pengalaman klinis 5+ tahun.'],['🔬','Teknologi Medis Modern','Peralatan terkini tersertifikasi resmi untuk hasil diagnostik akurat dan perawatan optimal.'],['🌸','Perawatan Personal','Program individual sesuai kondisi, kebutuhan, dan target kesehatan spesifik setiap klien.'],['✅','Hasil Terbukti','Lebih dari 5.000 klien puas, tingkat kepuasan 98% berdasarkan survei pasca-perawatan.']],
+    4:[['🚀','Teknologi Stack Terkini','Cloud computing, AI, dan DevOps modern untuk solusi digital yang scalable dan future-proof.'],['🔒','Keamanan Enterprise Grade','Enkripsi end-to-end, penetration testing berkala, kepatuhan penuh terhadap standar ISO 27001.'],['📊','Keputusan Berbasis Data','Dashboard analitik real-time dengan insight mendalam untuk pertumbuhan bisnis yang terukur.'],['🌐','Skalabilitas Global','Infrastruktur cloud elastis, siap mendukung pertumbuhan dari startup hingga enterprise internasional.']],
+    5:[['💡','Solusi Tepat Sasaran','Memahami tantangan UMKM Indonesia, menyediakan solusi praktis yang langsung menghasilkan nilai nyata.'],['📱','Ekosistem Digital Lengkap','Terintegrasi dengan Tokopedia, Shopee, WhatsApp Business, Instagram, dan platform digital populer.'],['🎯','Strategi Terukur','Pemasaran berbasis data dengan targeting presisi untuk memaksimalkan ROI investasi bisnis Anda.'],['💬','Dukungan Tanpa Henti','Tim support 7 hari/minggu via WhatsApp, telepon, email, dan kunjungan langsung.']]
+  };
+  var fs=feats[t.cat]||feats[5];
+  return '<section class="why-us" style="padding:5rem 5%;background:'+sbg+'"><div style="max-width:1200px;margin:0 auto"><div style="text-align:center;margin-bottom:3.5rem"><div style="display:inline-block;background:'+p+'22;color:'+p+';border:1px solid '+p+'44;border-radius:100px;padding:.3rem 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Keunggulan Kami</div><h2 style="font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;color:'+tc+';margin:0 0 .6rem;line-height:1.25">Mengapa Memilih <span style="color:'+p+'">'+bn+'?</span></h2><p style="color:'+sc+';font-size:.9rem;max-width:480px;margin:0 auto;line-height:1.65">Lebih dari sekadar layanan — pengalaman yang melampaui ekspektasi dengan hasil nyata dan terukur.</p></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem">'+fs.map(function(f){return '<div style="background:'+cbg+';border:1px solid '+bdr+';border-radius:16px;padding:1.8rem 1.6rem"><div style="font-size:1.8rem;margin-bottom:1rem">'+f[0]+'</div><h3 style="font-size:.95rem;font-weight:700;color:'+tc+';margin:0 0 .5rem">'+f[1]+'</h3><p style="font-size:.83rem;color:'+sc+';line-height:1.65;margin:0">'+f[2]+'</p></div>';}).join('')+'</div></div></section>';
+}
+
 function generateTemplateHTML(tpl,base){
   base=base||'';
+  var html;
   switch(tpl.style){
-    case 'minimalist':    return tmplMinimalist(tpl,base);
-    case 'corporate':     return tmplCorporate(tpl,base);
-    case 'luxury':        return tmplLuxury(tpl,base);
-    case 'dark':          return tmplDark(tpl,base);
-    case 'glassmorphism': return tmplGlassmorphism(tpl,base);
-    case 'neon':          return tmplNeon(tpl,base);
-    case 'startup':       return tmplStartup(tpl,base);
-    case 'elegant':       return tmplElegant(tpl,base);
-    case 'futuristic':    return tmplFuturistic(tpl,base);
-    case 'premium':       return tmplPremium(tpl,base);
-    default:              return tmplStartup(tpl,base);
+    case 'minimalist':    html=tmplMinimalist(tpl,base); break;
+    case 'corporate':     html=tmplCorporate(tpl,base); break;
+    case 'luxury':        html=tmplLuxury(tpl,base); break;
+    case 'dark':          html=tmplDark(tpl,base); break;
+    case 'glassmorphism': html=tmplGlassmorphism(tpl,base); break;
+    case 'neon':          html=tmplNeon(tpl,base); break;
+    case 'startup':       html=tmplStartup(tpl,base); break;
+    case 'elegant':       html=tmplElegant(tpl,base); break;
+    case 'futuristic':    html=tmplFuturistic(tpl,base); break;
+    case 'premium':       html=tmplPremium(tpl,base); break;
+    default:              html=tmplStartup(tpl,base);
   }
+  html=html.replace('<body>','<body>'+generateSplash(tpl));
+  html=html.replace(/<section class="gallery">[\s\S]*?<\/section>/,generateWhyUs(tpl));
+  return html;
 }
 
 /* ============================================================ */
