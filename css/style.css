@@ -820,11 +820,215 @@ a.service-card.sc-link { display: block; color: inherit; text-decoration: none; 
 
 .harga-note {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   font-size: .85rem;
   color: var(--c-muted);
 }
 .harga-note a { color: var(--c-primary); font-weight: 600; }
+
+/* ---- Trial Banner ---- */
+.trial-banner {
+  background: linear-gradient(135deg, rgba(108,99,255,.12) 0%, rgba(139,92,246,.12) 100%);
+  border: 1px solid rgba(108,99,255,.35);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 2.5rem;
+}
+.trial-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.trial-badge {
+  background: linear-gradient(135deg,var(--c-primary),#8B5CF6);
+  color:#fff;
+  font-size:.65rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  padding:.35rem .85rem;
+  border-radius:100px;
+  flex-shrink:0;
+}
+.trial-text { flex:1; min-width:220px; }
+.trial-text strong { display:block; font-size:1rem; color:#fff; margin-bottom:.35rem; }
+.trial-text p { font-size:.87rem; color:var(--c-muted); margin:0; line-height:1.55; }
+
+/* ---- Tiered Steps ---- */
+.tier-steps {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  gap: .75rem;
+  align-items: stretch;
+  margin-bottom: 1.25rem;
+}
+.tier-step {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+.tier-step:hover {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 1px var(--c-primary), 0 8px 30px rgba(108,99,255,.15);
+}
+.tier-plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--c-muted);
+  flex-shrink: 0;
+  width: 32px;
+}
+.tier-step .ts-num {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: var(--c-primary);
+  margin-bottom: .4rem;
+}
+.ts-price {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: .25rem;
+}
+.ts-title {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--c-muted);
+  margin-bottom: .85rem;
+}
+.ts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.ts-list li {
+  font-size: .8rem;
+  color: var(--c-text);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.ts-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--c-primary);
+  font-weight: 700;
+}
+.tier-note {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .82rem;
+  color: var(--c-muted);
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  padding: .75rem 1rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.tier-note svg { flex-shrink:0; color:var(--c-primary); }
+.tier-note a { color:var(--c-primary); font-weight:600; margin-left:auto; }
+
+/* ---- Section Divider ---- */
+.harga-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.harga-divider::before,
+.harga-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--c-border);
+}
+.harga-divider span {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--c-muted);
+  white-space: nowrap;
+}
+
+/* ---- Service Harga Cards ---- */
+.svc-harga-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.svc-h-card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  transition: all var(--trans);
+  position: relative;
+}
+.svc-h-card:hover {
+  border-color: var(--c-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(108,99,255,.18);
+}
+.svc-h-popular {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 1px var(--c-primary), 0 16px 48px rgba(108,99,255,.2);
+}
+.svc-h-icon { font-size: 1.6rem; line-height: 1; }
+.svc-h-cat {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--c-primary);
+}
+.svc-h-price {
+  font-size: .88rem;
+  color: var(--c-muted);
+}
+.svc-h-price strong {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.svc-h-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .38rem;
+  flex: 1;
+}
+.svc-h-list li {
+  font-size: .8rem;
+  color: var(--c-muted);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.svc-h-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--c-green);
+  font-weight: 700;
+  font-size: .75rem;
+}
 
 /* ============================================================
    PROSES
@@ -1573,6 +1777,17 @@ a.service-card.sc-link { display: block; color: inherit; text-decoration: none; 
    RESPONSIVE — NEW SECTIONS
    Must be AFTER all base styles to win the cascade
    ============================================================ */
+@media (max-width: 1024px) {
+  /* Tiered steps: 2 cols on tablet */
+  .tier-steps {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .tier-plus { display: none; }
+  /* Svc harga: 3 cols */
+  .svc-harga-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
 @media (max-width: 768px) {
   /* Testimonials: single column */
   .testi-grid { grid-template-columns: 1fr; }
@@ -1608,7 +1823,7 @@ a.service-card.sc-link { display: block; color: inherit; text-decoration: none; 
 @media (max-width: 480px) {
   /* Testi summary compact */
   .testi-summary { padding: 1.3rem 1rem; gap: .75rem; }
-  .ts-num { font-size: 2.8rem; }
+  .testi-summary .ts-num { font-size: 2.8rem; }
 
   /* Testi grid: ensure 1 col on tiny phones */
   .testi-grid { grid-template-columns: 1fr; }
@@ -1624,4 +1839,15 @@ a.service-card.sc-link { display: block; color: inherit; text-decoration: none; 
 
   /* Services grid min-width override */
   .services-grid { grid-template-columns: 1fr; }
+
+  /* Tiered steps: single column on mobile */
+  .tier-steps { grid-template-columns: 1fr; }
+  .tier-plus { display: none; }
+
+  /* Trial banner */
+  .trial-banner-inner { flex-direction: column; align-items: flex-start; }
+  .trial-banner-inner .btn { align-self: stretch; text-align: center; }
+
+  /* Svc harga: 2 cols on phone */
+  .svc-harga-grid { grid-template-columns: repeat(2, 1fr); }
 }
