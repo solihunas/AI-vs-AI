@@ -115,6 +115,8 @@ function generateTemplateHTML(tpl,base){
   html=html.replace('</body>',generatePremiumInjection(tpl)+'</body>');
   return html;
 }
+
+function generateWhyUs(t){
   var s=t.style;
   var isDk=['corporate','luxury','dark','glassmorphism','neon','startup','futuristic','premium'].indexOf(s)>=0;
   var tc=isDk?'#fff':'#111';var sc=isDk?'rgba(255,255,255,.62)':'#555';
@@ -132,27 +134,6 @@ function generateTemplateHTML(tpl,base){
   };
   var fs=feats[t.cat]||feats[5];
   return '<section class="why-us" style="padding:5rem 5%;background:'+sbg+'"><div style="max-width:1200px;margin:0 auto"><div style="text-align:center;margin-bottom:3.5rem"><div style="display:inline-block;background:'+p+'22;color:'+p+';border:1px solid '+p+'44;border-radius:100px;padding:.3rem 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Keunggulan Kami</div><h2 style="font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;color:'+tc+';margin:0 0 .6rem;line-height:1.25">Mengapa Memilih <span style="color:'+p+'">'+bn+'?</span></h2><p style="color:'+sc+';font-size:.9rem;max-width:480px;margin:0 auto;line-height:1.65">Lebih dari sekadar layanan — pengalaman yang melampaui ekspektasi dengan hasil nyata dan terukur.</p></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem">'+fs.map(function(f){return '<div style="background:'+cbg+';border:1px solid '+bdr+';border-radius:16px;padding:1.8rem 1.6rem"><div style="font-size:1.8rem;margin-bottom:1rem">'+f[0]+'</div><h3 style="font-size:.95rem;font-weight:700;color:'+tc+';margin:0 0 .5rem">'+f[1]+'</h3><p style="font-size:.83rem;color:'+sc+';line-height:1.65;margin:0">'+f[2]+'</p></div>';}).join('')+'</div></div></section>';
-}
-
-function generateTemplateHTML(tpl,base){
-  base=base||'';
-  var html;
-  switch(tpl.style){
-    case 'minimalist':    html=tmplMinimalist(tpl,base); break;
-    case 'corporate':     html=tmplCorporate(tpl,base); break;
-    case 'luxury':        html=tmplLuxury(tpl,base); break;
-    case 'dark':          html=tmplDark(tpl,base); break;
-    case 'glassmorphism': html=tmplGlassmorphism(tpl,base); break;
-    case 'neon':          html=tmplNeon(tpl,base); break;
-    case 'startup':       html=tmplStartup(tpl,base); break;
-    case 'elegant':       html=tmplElegant(tpl,base); break;
-    case 'futuristic':    html=tmplFuturistic(tpl,base); break;
-    case 'premium':       html=tmplPremium(tpl,base); break;
-    default:              html=tmplStartup(tpl,base);
-  }
-  html=html.replace('<body>','<body>'+generateSplash(tpl));
-  html=html.replace(/<section class="gallery">[\s\S]*?<\/section>/,generateWhyUs(tpl));
-  return html;
 }
 
 /* ============================================================ */
