@@ -35,7 +35,7 @@ function generateSplash(t){
   var sc=t.secondary||t.accent||ac;
   var bn=t.name.replace('WebsiteKu ','');
   var ctag={1:'Kuliner & Restoran',2:'Properti & Hunian',3:'Kesehatan & Kecantikan',4:'Teknologi & Digital',5:'Bisnis & UMKM'}[t.cat]||'Profil Bisnis';
-  var glowClr={minimalist:'#6C63FF',corporate:ac,luxury:'#C9A84C',dark:'#8B5CF6',glassmorphism:'#7C3AED',neon:'#39FF14',startup:'#6C63FF',elegant:'#A08060',futuristic:'#00D4FF',premium:'#C9A84C'}[s]||ac;
+  var glowClr={gastro:'#C4A35A',aether:'#C9A87C',lumina:'#00C5D7',nexus:'#22D3EE',zenith:'#8B5CF6',minimalist:'#6C63FF',corporate:ac,luxury:'#C9A84C',dark:'#8B5CF6',glassmorphism:'#7C3AED',neon:'#39FF14',startup:'#6C63FF',elegant:'#A08060',futuristic:'#00D4FF',premium:'#C9A84C'}[s]||ac;
   var hl=t.headline||bn;
   return '<div id="__sp" style="position:fixed;inset:0;z-index:99999;background:#040406;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;font-family:Inter,sans-serif;">'+
   '<style>'+
@@ -98,17 +98,12 @@ function generateTemplateHTML(tpl,base){
   base=base||'';
   var html;
   switch(tpl.style){
-    case 'minimalist':    html=tmplMinimalist(tpl,base); break;
-    case 'corporate':     html=tmplCorporate(tpl,base); break;
-    case 'luxury':        html=tmplLuxury(tpl,base); break;
-    case 'dark':          html=tmplDark(tpl,base); break;
-    case 'glassmorphism': html=tmplGlassmorphism(tpl,base); break;
-    case 'neon':          html=tmplNeon(tpl,base); break;
-    case 'startup':       html=tmplStartup(tpl,base); break;
-    case 'elegant':       html=tmplElegant(tpl,base); break;
-    case 'futuristic':    html=tmplFuturistic(tpl,base); break;
-    case 'premium':       html=tmplPremium(tpl,base); break;
-    default:              html=tmplStartup(tpl,base);
+    case 'gastro':  html=tmplGastro(tpl,base);  break;
+    case 'aether':  html=tmplAether(tpl,base);  break;
+    case 'lumina':  html=tmplLumina(tpl,base);  break;
+    case 'nexus':   html=tmplNexus(tpl,base);   break;
+    case 'zenith':  html=tmplZenith(tpl,base);  break;
+    default:        html=tmplZenith(tpl,base);
   }
   html=html.replace('<body>','<body>'+generateSplash(tpl));
   html=html.replace(/<section class="gallery">[\s\S]*?<\/section>/,generateWhyUs(tpl));
@@ -118,11 +113,11 @@ function generateTemplateHTML(tpl,base){
 
 function generateWhyUs(t){
   var s=t.style;
-  var isDk=['corporate','luxury','dark','glassmorphism','neon','startup','futuristic','premium'].indexOf(s)>=0;
+  var isDk=['gastro','aether','lumina','nexus','zenith','corporate','luxury','dark','glassmorphism','neon','startup','futuristic','premium'].indexOf(s)>=0;
   var tc=isDk?'#fff':'#111';var sc=isDk?'rgba(255,255,255,.62)':'#555';
-  var sbgs={minimalist:'#F5F5F5',corporate:'rgba(0,0,0,.1)',luxury:'#080808',dark:'#0D0D0D',glassmorphism:'rgba(0,0,0,.15)',neon:'rgba(0,0,0,.2)',startup:'rgba(255,255,255,.02)',elegant:'#F0EDE8',futuristic:'rgba(0,0,0,.15)',premium:'rgba(0,0,0,.15)'};
-  var cbgs={minimalist:'#fff',corporate:'rgba(255,255,255,.06)',luxury:'rgba(255,255,255,.04)',dark:'rgba(255,255,255,.04)',glassmorphism:'rgba(255,255,255,.04)',neon:'rgba(0,0,0,.4)',startup:'rgba(255,255,255,.04)',elegant:'#fff',futuristic:'rgba(255,255,255,.03)',premium:'rgba(255,255,255,.04)'};
-  var bdrs={minimalist:'#E5E5E5',corporate:'rgba(255,255,255,.1)',luxury:'rgba(255,255,255,.06)',dark:'rgba(255,255,255,.06)',glassmorphism:'rgba(255,255,255,.06)',neon:t.primary+'33',startup:'rgba(255,255,255,.06)',elegant:'#E8E0D8',futuristic:t.accent+'22',premium:'rgba(255,255,255,.06)'};
+  var sbgs={gastro:'rgba(0,0,0,.25)',aether:'rgba(0,0,0,.2)',lumina:'rgba(0,20,30,.3)',nexus:'rgba(0,0,0,.25)',zenith:'rgba(0,0,0,.2)',minimalist:'#F5F5F5',corporate:'rgba(0,0,0,.1)',luxury:'#080808',dark:'#0D0D0D',glassmorphism:'rgba(0,0,0,.15)',neon:'rgba(0,0,0,.2)',startup:'rgba(255,255,255,.02)',elegant:'#F0EDE8',futuristic:'rgba(0,0,0,.15)',premium:'rgba(0,0,0,.15)'};
+  var cbgs={gastro:'rgba(255,255,255,.04)',aether:'rgba(255,255,255,.04)',lumina:'rgba(255,255,255,.06)',nexus:'rgba(255,255,255,.04)',zenith:'rgba(255,255,255,.05)',minimalist:'#fff',corporate:'rgba(255,255,255,.06)',luxury:'rgba(255,255,255,.04)',dark:'rgba(255,255,255,.04)',glassmorphism:'rgba(255,255,255,.04)',neon:'rgba(0,0,0,.4)',startup:'rgba(255,255,255,.04)',elegant:'#fff',futuristic:'rgba(255,255,255,.03)',premium:'rgba(255,255,255,.04)'};
+  var bdrs={gastro:'rgba(196,163,90,.2)',aether:'rgba(201,168,124,.2)',lumina:'rgba(0,197,215,.2)',nexus:'rgba(34,211,238,.15)',zenith:'rgba(139,92,246,.2)',minimalist:'#E5E5E5',corporate:'rgba(255,255,255,.1)',luxury:'rgba(255,255,255,.06)',dark:'rgba(255,255,255,.06)',glassmorphism:'rgba(255,255,255,.06)',neon:t.primary+'33',startup:'rgba(255,255,255,.06)',elegant:'#E8E0D8',futuristic:t.accent+'22',premium:'rgba(255,255,255,.06)'};
   var sbg=sbgs[s]||'rgba(0,0,0,.1)';var cbg=cbgs[s]||'rgba(255,255,255,.04)';var bdr=bdrs[s]||'rgba(255,255,255,.06)';
   var p=t.primary;var bn=t.name.replace('WebsiteKu ','');
   var feats={
@@ -139,1906 +134,1016 @@ function generateWhyUs(t){
 /* ============================================================ */
 /* 1. MINIMALIST                                                 */
 /* ============================================================ */
-function tmplMinimalist(t,base){
+
+/* ============================================================
+   5 PREMIUM TEMPLATES — each worthy of 100M+ IDR contracts
+   ============================================================ */
+
+/* ── 1. NOIR GASTRO — Fine Dining Dark Luxury ──────────────── */
+function tmplGastro(t,base){
   var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
+  var mn=t.menu||[];while(mn.length<4)mn=mn.concat(mn);
+  var wa='6281234567890';
   return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:#FAFAFA;color:#1A1A1A;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.nav{position:sticky;top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid #E8E8E8;z-index:100;padding:.9rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem}
-.nav-logo{height:30px;width:auto;object-fit:contain}
-.nav-links{display:flex;gap:1.8rem;list-style:none}
-.nav-links a{font-size:.875rem;font-weight:500;color:#555;transition:color .2s}.nav-links a:hover{color:#000}
-.nav-cta{padding:.5rem 1.2rem;background:#000;color:#fff;border-radius:6px;font-size:.85rem;font-weight:600}
-.hero{padding:5.5rem 5% 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-badge{display:inline-block;background:${s};color:${p};font-size:.72rem;font-weight:700;padding:.28rem .75rem;border-radius:4px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.2rem}
-.hero h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:700;line-height:1.15;letter-spacing:-.03em;margin-bottom:1rem}
-.hero-sub{font-size:1rem;color:#666;line-height:1.75;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.75rem}
-.btn-fill{padding:.8rem 1.75rem;background:#000;color:#fff;border-radius:8px;font-weight:600;font-size:.9rem;transition:all .2s}.btn-fill:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.12)}
-.btn-out{padding:.8rem 1.75rem;border:1.5px solid #ddd;border-radius:8px;font-weight:500;font-size:.9rem;color:#333;transition:all .2s}.btn-out:hover{border-color:#000;color:#000}
-.hero-trust{display:flex;align-items:center;gap:.7rem;font-size:.83rem;color:#888}
-.trust-av{display:flex}.trust-av span{width:28px;height:28px;border-radius:50%;background:${p}25;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:${p};margin-left:-7px}.trust-av span:first-child{margin-left:0}
-.hero-img{border-radius:20px;overflow:hidden;aspect-ratio:5/4;box-shadow:0 20px 60px rgba(0,0,0,.08)}.hero-img img{height:100%;object-fit:cover}
-.stats{background:#fff;border-top:1px solid #E8E8E8;border-bottom:1px solid #E8E8E8;padding:2.5rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1rem 2rem;border-right:1px solid #E8E8E8}.stat-item:last-child{border-right:none}
-.stat-num{font-size:2.2rem;font-weight:700;color:${p};line-height:1}.stat-label{font-size:.8rem;color:#999;margin-top:.3rem}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.75rem;font-weight:700;color:${p};letter-spacing:.1em;text-transform:uppercase;margin-bottom:.7rem}
-.about h2{font-size:2.1rem;font-weight:700;letter-spacing:-.02em;margin-bottom:1rem;line-height:1.2}
-.about-desc{color:#666;line-height:1.75;margin-bottom:1.5rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.88rem;font-weight:500}
-.ck{width:18px;height:18px;border-radius:50%;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
-.about-img{border-radius:20px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 20px 60px rgba(0,0,0,.08)}.about-img img{height:100%;object-fit:cover}
-.products{padding:5.5rem 5%;background:#fff}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.4rem}.sec-head p{color:#888;font-size:.95rem}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.prod-card{border:1px solid #E8E8E8;border-radius:14px;overflow:hidden;transition:all .22s;background:#FAFAFA}
-.prod-card:hover{border-color:${p}66;transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.07)}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{transition:transform .35s;height:100%;object-fit:cover}.prod-card:hover .prod-img img{transform:scale(1.05)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.92rem;margin-bottom:.35rem;line-height:1.3}
-.prod-price{font-weight:700;font-size:1.05rem;color:${p};margin-bottom:.45rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:#888}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.9rem;padding:.55rem;background:${p}15;color:${p};border-radius:8px;font-size:.82rem;font-weight:600;transition:all .2s}.prod-btn:hover{background:${p};color:#fff}
-.gallery{padding:5.5rem 5%;background:#F5F5F5}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
-.gal-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3}.gal-item img{transition:transform .4s;height:100%;object-fit:cover}.gal-item:hover img{transform:scale(1.06)}
-.testimonials{padding:5.5rem 5%;background:#fff}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{border:1px solid #E8E8E8;border-radius:16px;padding:2rem;background:#FAFAFA}
-.testi-stars{color:#F5A623;margin-bottom:.8rem}.testi-text{font-size:.9rem;color:#555;line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border-radius:50%;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
-.testi-name{font-weight:600;font-size:.88rem}.testi-role{font-size:.78rem;color:#999}
-.pricing{padding:5.5rem 5%;background:#F9F9F9}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{border:1px solid #E8E8E8;border-radius:16px;padding:2.5rem;background:#fff;position:relative;transition:all .2s}
-.price-card.featured{border-color:${p};box-shadow:0 0 0 2px ${p}30}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${p};color:#fff;font-size:.72rem;font-weight:700;padding:.28rem .9rem;border-radius:20px;white-space:nowrap}
-.price-tier{font-size:.75rem;font-weight:700;color:${p};letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
-.price-amt{font-size:2.4rem;font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#999;margin-bottom:1.2rem}
-.price-div{height:1px;background:#E8E8E8;margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:#555}
-.price-features li::before{content:'✓';color:${p};font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;border-radius:10px;font-weight:600;font-size:.88rem;transition:all .2s}
-.price-btn-def{border:1.5px solid #ddd;color:#444}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:${p};color:#fff}.price-btn-feat:hover{opacity:.9}
-.faq-sec{padding:5.5rem 5%;background:#fff}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.65rem}
-details{border:1px solid #E8E8E8;border-radius:12px;overflow:hidden}
-details[open]{border-color:${p}50}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:300;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#666;line-height:1.7}
-.cta-band{padding:5rem 5%;background:${p};color:#fff;text-align:center}
-.cta-band h2{font-size:2.1rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.7rem}
-.cta-band p{font-size:.95rem;opacity:.85;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;background:#fff;color:${p};border-radius:10px;font-weight:700;font-size:.95rem;transition:all .2s}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
-footer{background:#111;color:#fff;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:#888;font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:#888;transition:color .2s}.footer-links a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:#555}
-.f-brand-name{font-size:1.05rem;font-weight:700}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid #E8E8E8}}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:${s};color:#E8D5A3;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.4rem 5%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(26,18,8,.95) 0%,transparent 100%);backdrop-filter:blur(2px)}
+.nav-logo{height:32px;filter:brightness(0) invert(1) sepia(1) saturate(0.5) hue-rotate(10deg)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:.75rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,213,163,.65);transition:color .3s}
+.nav-links a:hover{color:${p}}
+.nav-cta{font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:.55rem 1.4rem;border:1px solid ${p}66;color:${p};transition:all .3s;border-radius:0}
+.nav-cta:hover{background:${p};color:${s}}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url(assets/foto-produk-1.png) center/cover no-repeat}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,18,8,.92) 0%,rgba(26,18,8,.5) 60%,rgba(26,18,8,.2) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 5%;max-width:720px}
+.hero-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem}
+.hero-eyebrow-line{width:40px;height:1px;background:${p}}
+.hero-eyebrow-txt{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:${p};font-weight:500}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.2rem);font-weight:300;line-height:1.1;letter-spacing:-.01em;color:#fff;margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:${p}}
+.hero-sub{font-size:.95rem;color:rgba(232,213,163,.65);line-height:1.85;max-width:480px;margin-bottom:2.8rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-gold{padding:.9rem 2.2rem;background:${p};color:${s};font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;transition:all .35s}
+.btn-gold:hover{background:#D4B36A;transform:translateY(-2px)}
+.btn-ghost{padding:.9rem 2.2rem;border:1px solid rgba(232,213,163,.3);color:rgba(232,213,163,.8);font-size:.78rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;transition:all .3s}
+.btn-ghost:hover{border-color:${p}88;color:${p}}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2}
+.hero-scroll span{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(232,213,163,.35)}
+.hero-scroll-line{width:1px;height:40px;background:linear-gradient(180deg,${p},transparent);animation:scrollLine 2s ease-in-out infinite}
+@keyframes scrollLine{0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* MARQUEE STRIP */
+.marquee-strip{background:${p};padding:.7rem 0;overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-flex;gap:0;animation:marquee 20s linear infinite}
+.marquee-item{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${s};padding:0 2.5rem}
+.marquee-sep{color:${s}66}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* MENU SECTION */
+.menu-section{padding:7rem 5%;max-width:1200px;margin:0 auto}
+.sec-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.sec-eyebrow-line{width:40px;height:1px;background:${p}}
+.sec-eyebrow-txt{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:${p}}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;color:#fff;margin-bottom:.6rem;line-height:1.15}
+.sec-sub{font-size:.88rem;color:rgba(232,213,163,.5);margin-bottom:4rem;font-weight:300;max-width:500px}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5px;background:rgba(196,163,90,.15)}
+.menu-item{background:${s};padding:2.2rem 1.8rem;position:relative;overflow:hidden;cursor:pointer;transition:background .4s}
+.menu-item::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,${p}44,transparent);transform:translateX(-100%);transition:transform .6s ease}
+.menu-item:hover{background:rgba(196,163,90,.07)}
+.menu-item:hover::before{transform:translateX(0)}
+.menu-num{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:${p}66;font-style:italic;margin-bottom:.8rem;display:block}
+.menu-name{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:#fff;margin-bottom:.5rem;line-height:1.2}
+.menu-desc{font-size:.8rem;color:rgba(232,213,163,.45);line-height:1.7;margin-bottom:1.2rem}
+.menu-price{font-size:.8rem;font-weight:500;letter-spacing:.08em;color:${p}}
+.menu-arrow{position:absolute;bottom:1.8rem;right:1.8rem;font-size:.75rem;color:${p}44;transition:all .3s}
+.menu-item:hover .menu-arrow{color:${p};transform:translateX(4px)}
+
+/* GALLERY placeholder — replaced by WhyUs */
+section.gallery{display:none}
+
+/* EXPERIENCE */
+.experience{padding:7rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1200px;margin:0 auto;align-items:center}
+.exp-img-wrap{position:relative}
+.exp-img{aspect-ratio:3/4;border-radius:0;overflow:hidden}
+.exp-img img{height:100%;object-fit:cover;filter:sepia(.15) contrast(1.05)}
+.exp-badge{position:absolute;bottom:-1.5rem;right:-1.5rem;background:${p};color:${s};padding:1.5rem;text-align:center;width:120px}
+.exp-badge-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;line-height:1;display:block}
+.exp-badge-txt{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;opacity:.7;margin-top:.3rem;display:block}
+.exp-feats{display:flex;flex-direction:column;gap:1.5rem;margin-top:2.5rem}
+.exp-feat{display:flex;gap:1rem;align-items:flex-start;padding:1.2rem;border:1px solid rgba(196,163,90,.12);transition:border-color .3s}
+.exp-feat:hover{border-color:rgba(196,163,90,.3)}
+.exp-feat-icon{font-size:1.2rem;margin-top:.1rem;flex-shrink:0}
+.exp-feat-title{font-size:.9rem;font-weight:500;color:#fff;margin-bottom:.25rem}
+.exp-feat-txt{font-size:.8rem;color:rgba(232,213,163,.5);line-height:1.6}
+
+/* TESTIMONIALS */
+.testi-section{padding:7rem 5%;background:rgba(0,0,0,.3)}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;background:rgba(196,163,90,.1);margin-top:4rem}
+.testi-card{background:${s};padding:2.2rem}
+.testi-stars{color:${p};font-size:.9rem;letter-spacing:.1em;margin-bottom:1rem}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.8;font-style:italic;margin-bottom:1.5rem}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-av{width:38px;height:38px;background:rgba(196,163,90,.15);border:1px solid ${p}33;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:${p}}
+.testi-name{font-size:.85rem;font-weight:500;color:rgba(232,213,163,.8)}
+.testi-role{font-size:.72rem;color:rgba(232,213,163,.35);margin-top:.15rem;letter-spacing:.05em}
+
+/* FAQ */
+.faq-section{padding:7rem 5%;max-width:800px;margin:0 auto}
+.faq-details{border-bottom:1px solid rgba(196,163,90,.15);overflow:hidden}
+.faq-details summary{padding:1.4rem 0;font-size:.9rem;font-weight:400;color:rgba(232,213,163,.8);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;letter-spacing:.02em;transition:color .3s}
+.faq-details summary:hover{color:#fff}
+.faq-details summary::after{content:'+';font-size:1.2rem;color:${p};font-weight:300;flex-shrink:0}
+.faq-details[open] summary::after{content:'−'}
+.faq-answer{padding:.5rem 0 1.4rem;font-size:.85rem;color:rgba(232,213,163,.5);line-height:1.75}
+
+/* CTA */
+.cta-section{padding:7rem 5%;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,${p}18 0%,transparent 65%);pointer-events:none}
+.cta-inner{position:relative;z-index:1}
+.cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:300;color:#fff;margin-bottom:1rem;line-height:1.1}
+.cta h2 em{color:${p};font-style:italic}
+.cta-sub{font-size:.95rem;color:rgba(232,213,163,.5);margin-bottom:2.5rem;font-weight:300}
+
+/* FOOTER */
+.footer{padding:3rem 5%;border-top:1px solid rgba(196,163,90,.12);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{height:26px;filter:brightness(0) invert(1) sepia(1) saturate(0.4)}
+.footer-copy{font-size:.75rem;color:rgba(232,213,163,.3);letter-spacing:.05em}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.72rem;color:rgba(232,213,163,.35);letter-spacing:.08em;text-transform:uppercase;transition:color .3s}.footer-links a:hover{color:${p}}
+
+@media(max-width:768px){
+.nav-links{display:none}
+.hero h1{font-size:2.6rem}
+.experience{grid-template-columns:1fr;gap:3rem}
+.exp-badge{right:.5rem}
+.footer{flex-direction:column;text-align:center}
+}
 </style></head>
 <body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Menu</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Pesan Sekarang</a>
-</div></nav>
+<nav class="nav">
+  <a href="#"><img class="nav-logo" src="assets/logo-placeholder.png" alt="${t.name}"></a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experience">Tentang</a></li>
+    <li><a href="#testi">Ulasan</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/${wa}" class="nav-cta">Reservasi</a>
+</nav>
 
 <section class="hero">
-  <div>
-    <div class="hero-badge">${t.catName}</div>
-    <h1>${t.headline}</h1>
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="hero-eyebrow-line"></div><span class="hero-eyebrow-txt">Fine Dining Experience</span></div>
+    <h1>${t.headline.replace('Menjadi','<em>Menjadi</em>')}</h1>
     <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-fill">Lihat Menu</a><a href="#" class="btn-out">Tentang Kami</a></div>
-    <div class="hero-trust"><div class="trust-av"><span>BS</span><span>SD</span><span>AF</span></div><span>500+ pelanggan puas</span></div>
+    <div class="hero-btns">
+      <a href="https://wa.me/${wa}" class="btn-gold">Buat Reservasi</a>
+      <a href="#menu" class="btn-ghost">Lihat Menu</a>
+    </div>
   </div>
-  <div class="hero-img"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
+  <div class="hero-scroll"><span>Gulir</span><div class="hero-scroll-line"></div></div>
 </section>
 
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pelanggan Puas</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Menu Tersedia</div></div>
-  <div class="stat-item"><div class="stat-num">5 Thn</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating Kepuasan</div></div>
-</div></section>
+<div class="marquee-strip"><div class="marquee-inner">${['Wagyu A5','Lobster Thermidor','Foie Gras','Truffle Risotto','Fine Dining','Chef International','Private Dining','Rooftop Bar'].map(function(x){return '<span class="marquee-item">'+x+'</span><span class="marquee-sep">✦</span>';}).join('').repeat(2)}</div></div>
 
-<section class="about"><div class="about-tag">Tentang Kami</div>
+<section id="menu" class="menu-section">
+  <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-txt">Menu Signature</span></div>
+  <h2 class="sec-title">Kreasi Chef<br><em style="font-style:italic;color:${p}">Berbintang</em></h2>
+  <p class="sec-sub">Setiap hidangan adalah karya seni yang diciptakan dengan presisi dan passion terdalam.</p>
+  <div class="menu-grid">
+    ${mn.slice(0,4).map(function(m,i){return '<div class="menu-item"><span class="menu-num">0'+(i+1)+'</span><div class="menu-name">'+m+'</div><p class="menu-desc">Diracik dari bahan pilihan finest quality dengan teknik memasak bertaraf internasional.</p><span class="menu-price">Market Price</span><span class="menu-arrow">→</span></div>';}).join('')}
+  </div>
+</section>
+
+<section class="gallery"><p>placeholder</p></section>
+
+<section id="experience" class="experience">
+  <div class="exp-img-wrap">
+    <div class="exp-img"><img src="assets/foto-produk-2.png" alt="experience"></div>
+    <div class="exp-badge"><span class="exp-badge-num">10+</span><span class="exp-badge-txt">Tahun Eksklusif</span></div>
+  </div>
   <div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">✓</span>${m}</li>`).join('')}</ul>
+    <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-txt">Tentang Kami</span></div>
+    <h2 class="sec-title" style="font-size:clamp(1.8rem,3vw,2.8rem)">Seni Kuliner<br><em style="font-style:italic;color:${p}">Tak Tertandingi</em></h2>
+    <p style="font-size:.88rem;color:rgba(232,213,163,.5);margin:1rem 0 2rem;font-weight:300;line-height:1.8">Kami bukan sekadar restoran. Kami adalah panggung di mana setiap makan malam menjadi memori yang tak terlupakan.</p>
+    <div class="exp-feats">
+      <div class="exp-feat"><span class="exp-feat-icon">🥩</span><div><div class="exp-feat-title">Bahan Finest Ingredient</div><p class="exp-feat-txt">Import langsung dari farm premium Jepang, Perancis, dan Australia. Kualitas dikontrol ketat setiap hari.</p></div></div>
+      <div class="exp-feat"><span class="exp-feat-icon">👨‍🍳</span><div><div class="exp-feat-title">Chef Bertaraf Internasional</div><p class="exp-feat-txt">Alumni Michelin-starred restaurants di Tokyo, Paris, dan New York. Setiap teknik adalah keahlian.</p></div></div>
+      <div class="exp-feat"><span class="exp-feat-icon">🕯️</span><div><div class="exp-feat-title">Atmosfer Private Dining</div><p class="exp-feat-txt">Ruang privat tersedia untuk acara eksklusif, anniversary, dan business dinner kelas dunia.</p></div></div>
+    </div>
   </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
 </section>
 
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Produk &amp; Layanan Unggulan</h2><p>Pilihan terbaik dengan kualitas terjamin</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">Pesan Sekarang</a>
-      </div>
-    </div>`).join('')}
+<section id="testi" class="testi-section">
+  <div class="testi-inner">
+    <div style="text-align:center">
+      <div class="sec-eyebrow" style="justify-content:center"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-txt">Ulasan Tamu</span><div class="sec-eyebrow-line"></div></div>
+      <h2 class="sec-title">Kata Mereka<br><em style="font-style:italic;color:${p}">Yang Telah Merasakan</em></h2>
+    </div>
+    <div class="testi-grid">${testiHTML()}</div>
   </div>
-</div></section>
-
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Karya dan momen terbaik kami</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Pelanggan</h2><p>Kepercayaan pelanggan adalah prioritas kami</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Harga</h2><p>Pilih paket yang sesuai kebutuhan Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul>
-      <a href="#" class="price-btn price-btn-def">Mulai Gratis</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-badge">TERPOPULER</div>
-      <div class="price-tier">Professional</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul>
-      <a href="#" class="price-btn price-btn-feat">Pilih Paket Ini</a>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Enterprise</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Semua Fitur Pro</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul>
-      <a href="#" class="price-btn price-btn-def">Hubungi Kami</a>
-    </div>
-  </div>
-</div></section>
-
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>Pertanyaan Umum</h2><p>Temukan jawaban atas pertanyaan Anda</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-
-<section class="cta-band">
-  <h2>Siap Memulai Bisnis Online?</h2>
-  <p>Dapatkan website profesional dengan harga terjangkau. Konsultasi gratis!</p>
-  <a href="#" class="cta-btn">Hubungi Kami via WhatsApp ✨</a>
 </section>
 
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Informasi</h4><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Blog</a></li><li><a href="#">Promo</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Lokasi</a></li></ul></div>
+<section id="faq" class="faq-section">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="sec-eyebrow" style="justify-content:center"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-txt">FAQ</span><div class="sec-eyebrow-line"></div></div>
+    <h2 class="sec-title" style="font-size:2rem">Pertanyaan Umum</h2>
   </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}. All rights reserved.</span><span>Dibuat dengan ❤ oleh WebsiteKu</span></div>
-</div></footer>
-</body></html>`;}
+  ${faqHTML().replace(/class="faq-answer"/g,'class="faq-answer"').replace(/<details>/g,'<details class="faq-details">').replace(/<summary>/g,'<summary>')}
+</section>
 
-/* ============================================================ */
-/* 2. CORPORATE                                                   */
-/* ============================================================ */
-function tmplCorporate(t,base){
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <h2 class="cta h2" style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:300;color:#fff;margin-bottom:1rem;line-height:1.1">Siap Merasakan<br><em style="color:${p};font-style:italic">Pengalaman Istimewa?</em></h2>
+    <p style="font-size:.95rem;color:rgba(232,213,163,.5);margin-bottom:2.5rem;font-weight:300">Hubungi kami sekarang untuk reservasi meja terbaik Anda.</p>
+    <a href="https://wa.me/${wa}" class="btn-gold">Hubungi via WhatsApp &rarr;</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-placeholder.png" alt="${t.name}">
+  <span class="footer-copy">© 2025 ${t.name}. All rights reserved.</span>
+  <div class="footer-links"><a href="#">Instagram</a><a href="#">Reservasi</a><a href="https://wa.me/${wa}">WhatsApp</a></div>
+</footer>
+</body></html>`;
+}
+
+/* ── 2. AETHER LIVING — Architectural Property ──────────────── */
+function tmplAether(t,base){
   var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
+  var mn=t.menu||[];while(mn.length<4)mn=mn.concat(mn);
+  var wa='6281234567890';
   return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:#fff;color:#0F1923;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.nav{background:${p};padding:1rem 5%;position:sticky;top:0;z-index:100}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain;filter:brightness(10)}
-.nav-links{display:flex;gap:1.8rem;list-style:none}
-.nav-links a{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.75);transition:color .2s}.nav-links a:hover{color:#fff}
-.nav-cta{padding:.5rem 1.2rem;background:#fff;color:${p};border-radius:6px;font-size:.85rem;font-weight:700}
-.hero{background:linear-gradient(135deg,${p} 0%,${s} 100%);padding:6rem 5%;color:#fff;overflow:hidden;position:relative}
-.hero::before{content:'';position:absolute;right:-5%;top:-20%;width:50%;height:140%;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none}
-.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-badge{display:inline-block;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.3);font-size:.72rem;font-weight:700;padding:.28rem .85rem;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.2rem}
-.hero h1{font-size:clamp(1.9rem,4vw,3.2rem);font-weight:800;line-height:1.12;letter-spacing:-.03em;margin-bottom:1rem}
-.hero-sub{font-size:1rem;opacity:.85;line-height:1.75;margin-bottom:2rem;max-width:500px}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-white{padding:.8rem 1.75rem;background:#fff;color:${p};border-radius:8px;font-weight:700;font-size:.9rem;transition:all .2s}.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
-.btn-ghost-w{padding:.8rem 1.75rem;border:1.5px solid rgba(255,255,255,.5);border-radius:8px;font-weight:500;font-size:.9rem;color:#fff;transition:all .2s}.btn-ghost-w:hover{background:rgba(255,255,255,.1)}
-.trust-row{display:flex;align-items:center;gap:.75rem;font-size:.83rem;opacity:.85}
-.trust-dots{display:flex}.trust-dots span{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;margin-left:-7px}.trust-dots span:first-child{margin-left:0}
-.hero-img-wrap{border-radius:16px;overflow:hidden;aspect-ratio:5/4;box-shadow:0 30px 80px rgba(0,0,0,.3)}.hero-img-wrap img{height:100%;object-fit:cover}
-.stats{background:#F7F8FA;padding:3rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid #E0E4EA}.stat-item:last-child{border-right:none}
-.stat-num{font-size:2.4rem;font-weight:800;color:${p};line-height:1}.stat-label{font-size:.8rem;color:#7A8499;margin-top:.3rem;font-weight:500}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.72rem;font-weight:700;color:${p};letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
-.about h2{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;margin-bottom:1rem;line-height:1.15}
-.about-desc{color:#5A6577;line-height:1.75;margin-bottom:1.5rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.87rem;font-weight:500}
-.ck{width:18px;height:18px;border-radius:50%;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
-.about-img{border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 20px 60px rgba(0,0,0,.1)}.about-img img{height:100%;object-fit:cover}
-.products{padding:5.5rem 5%;background:#F7F8FA}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-size:2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem}.sec-head p{color:#7A8499;font-size:.93rem}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.prod-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);transition:all .22s}
-.prod-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .35s}.prod-card:hover .prod-img img{transform:scale(1.05)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.9rem;margin-bottom:.3rem}
-.prod-price{font-weight:800;font-size:1.05rem;color:${p};margin-bottom:.4rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:#7A8499}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.85rem;padding:.55rem;background:${p};color:#fff;border-radius:8px;font-size:.82rem;font-weight:600;transition:opacity .2s}.prod-btn:hover{opacity:.85}
-.gallery{padding:5.5rem 5%;background:#fff}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
-.gal-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3}.gal-item img{height:100%;object-fit:cover;transition:transform .4s}.gal-item:hover img{transform:scale(1.06)}
-.testimonials{padding:5.5rem 5%;background:#F7F8FA}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{background:#fff;border-radius:16px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
-.testi-stars{color:#F5A623;margin-bottom:.8rem}.testi-text{font-size:.9rem;color:#5A6577;line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border-radius:50%;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
-.testi-name{font-weight:600;font-size:.88rem}.testi-role{font-size:.78rem;color:#7A8499}
-.pricing{padding:5.5rem 5%;background:#fff}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{border:1.5px solid #E0E4EA;border-radius:16px;padding:2.5rem;position:relative;transition:all .2s}
-.price-card.featured{border-color:${p};box-shadow:0 8px 30px ${p}25}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${p};color:#fff;font-size:.72rem;font-weight:700;padding:.28rem .9rem;border-radius:20px;white-space:nowrap}
-.price-tier{font-size:.75rem;font-weight:700;color:${p};letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
-.price-amt{font-size:2.4rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#7A8499;margin-bottom:1.2rem}
-.price-div{height:1px;background:#E0E4EA;margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:#5A6577}
-.price-features li::before{content:'✓';color:${p};font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;border-radius:10px;font-weight:600;font-size:.88rem;transition:all .2s}
-.price-btn-def{border:1.5px solid #E0E4EA;color:#444}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:${p};color:#fff}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:5.5rem 5%;background:#F7F8FA}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.65rem}
-details{background:#fff;border:1.5px solid #E0E4EA;border-radius:12px;overflow:hidden}
-details[open]{border-color:${p}60}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:400;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#5A6577;line-height:1.7}
-.cta-band{padding:5rem 5%;background:linear-gradient(135deg,${p},${s});color:#fff;text-align:center}
-.cta-band h2{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.7rem}
-.cta-band p{font-size:.95rem;opacity:.85;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;background:#fff;color:${p};border-radius:10px;font-weight:700;font-size:.95rem;transition:all .2s}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
-footer{background:#0F1923;color:#fff;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:#6B7A8D;font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${s};margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:#6B7A8D;transition:color .2s}.footer-links a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:#4A5568}
-.f-brand-name{font-size:1.05rem;font-weight:700;color:${s}}
-@media(max-width:900px){.hero-inner,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid #E0E4EA}}
-</style></head>
-<body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Layanan</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Konsultasi Gratis</a>
-</div></nav>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:${s};color:#D4C4A8;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
 
-<section class="hero"><div class="hero-inner">
-  <div>
-    <div class="hero-badge">${t.catName}</div>
-    <h1>${t.headline}</h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-white">Mulai Sekarang</a><a href="#" class="btn-ghost-w">Pelajari Lebih</a></div>
-    <div class="trust-row"><div class="trust-dots"><span>BS</span><span>SD</span><span>AF</span></div><span>Dipercaya 500+ klien profesional</span></div>
-  </div>
-  <div class="hero-img-wrap"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
-</div></section>
-
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Klien Aktif</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Layanan Tersedia</div></div>
-  <div class="stat-item"><div class="stat-num">10 Thn</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating Klien</div></div>
-</div></section>
-
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Perusahaan</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">✓</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Layanan Unggulan</h2><p>Solusi profesional untuk kebutuhan bisnis Anda</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} klien</span></div>
-        <a href="#" class="prod-btn">Pilih Layanan</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Portfolio Kami</h2><p>Hasil kerja terbaik yang kami banggakan</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="portfolio ${i+1}"></div>`).join('')}</div>
-</div></section>
-
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Testimonial Klien</h2><p>Apa kata klien kami yang telah merasakan manfaatnya</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Layanan</h2><p>Investasi tepat untuk pertumbuhan bisnis Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul>
-      <a href="#" class="price-btn price-btn-def">Mulai Gratis</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-badge">TERPOPULER</div>
-      <div class="price-tier">Professional</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul>
-      <a href="#" class="price-btn price-btn-feat">Pilih Paket Ini</a>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Enterprise</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Semua Fitur Pro</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul>
-      <a href="#" class="price-btn price-btn-def">Hubungi Kami</a>
-    </div>
-  </div>
-</div></section>
-
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>FAQ</h2><p>Pertanyaan yang sering ditanyakan</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-
-<section class="cta-band">
-  <h2>Siap Bertumbuh Bersama Kami?</h2>
-  <p>Konsultasi gratis dengan tim profesional kami dan dapatkan solusi terbaik untuk bisnis Anda.</p>
-  <a href="#" class="cta-btn">Jadwalkan Konsultasi</a>
-</section>
-
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Perusahaan</h4><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Tim</a></li><li><a href="#">Karir</a></li><li><a href="#">Blog</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Email</a></li><li><a href="#">Kantor</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}. All rights reserved.</span><span>Solusi Profesional untuk Bisnis Anda</span></div>
-</div></footer>
-</body></html>`;}
-
-/* ============================================================ */
-/* 3. LUXURY                                                     */
-/* ============================================================ */
-function tmplLuxury(t,base){
-  var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
-  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Jost',sans-serif;background:#0A0A0A;color:#E8E0D5;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.gold{color:${s}}.serif{font-family:'Cormorant Garamond',serif}
-.nav{position:sticky;top:0;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);border-bottom:1px solid ${s}22;z-index:100;padding:1.2rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.2rem 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(26,29,38,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,168,124,.08)}
+.nav-logo{height:30px;filter:brightness(0) invert(1) sepia(1) saturate(0.4)}
 .nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.8rem;font-weight:400;color:rgba(232,224,213,.6);letter-spacing:.12em;text-transform:uppercase;transition:color .2s}.nav-links a:hover{color:${s}}
-.nav-cta{padding:.5rem 1.4rem;border:1px solid ${s};color:${s};border-radius:2px;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}.nav-cta:hover{background:${s};color:#000}
-.hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:5rem;padding:6rem 5%;max-width:1200px;margin:0 auto}
-.hero-decor{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:${s};margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
-.hero-decor::before{content:'';display:block;width:40px;height:1px;background:${s}}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;letter-spacing:-.01em;margin-bottom:1.5rem;color:#fff}
-.hero h1 em{color:${s};font-style:italic}
-.hero-sub{font-size:.93rem;color:rgba(232,224,213,.65);line-height:1.8;margin-bottom:2.5rem;font-weight:300}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.btn-gold{padding:.85rem 2rem;background:${s};color:#000;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.btn-gold:hover{opacity:.85;transform:translateY(-1px)}
-.btn-ghost-g{padding:.85rem 2rem;border:1px solid ${s}55;color:${s};font-size:.82rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.btn-ghost-g:hover{background:${s}15}
-.trust-lux{display:flex;align-items:center;gap:.75rem;font-size:.78rem;color:rgba(232,224,213,.5);letter-spacing:.06em}
-.trust-lux-dots{display:flex}.trust-lux-dots span{width:28px;height:28px;border-radius:50%;background:${s}20;border:1px solid ${s}44;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:500;color:${s};margin-left:-6px}.trust-lux-dots span:first-child{margin-left:0}
-.hero-img-lux{position:relative}.hero-img-lux::before{content:'';position:absolute;inset:-8px;border:1px solid ${s}22;pointer-events:none;z-index:1}
-.hero-img-lux img{width:100%;aspect-ratio:4/5;object-fit:cover}
-.stats{border-top:1px solid ${s}20;border-bottom:1px solid ${s}20;padding:3rem 5%;background:#0D0D0D}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid ${s}15}.stat-item:last-child{border-right:none}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:${s};line-height:1}.stat-label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,224,213,.4);margin-top:.4rem}
-.about{padding:6rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:${s};margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem}
-.about-tag::before{content:'';display:block;width:30px;height:1px;background:${s}}
-.about h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;line-height:1.2;margin-bottom:1.2rem;color:#fff}
-.about-desc{font-size:.9rem;color:rgba(232,224,213,.65);line-height:1.8;margin-bottom:1.5rem;font-weight:300}
-.about-checks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
-.about-checks li{display:flex;align-items:center;gap:.6rem;font-size:.87rem;color:rgba(232,224,213,.75)}
-.ck{width:16px;height:16px;border:1px solid ${s};display:flex;align-items:center;justify-content:center;font-size:.55rem;color:${s};flex-shrink:0}
-.about-img{position:relative}.about-img::before{content:'';position:absolute;inset:-6px;border:1px solid ${s}20;pointer-events:none;z-index:1}
-.about-img img{width:100%;aspect-ratio:4/3;object-fit:cover}
-.products{padding:6rem 5%;background:#0D0D0D}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:4rem}.sec-head h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#fff;margin-bottom:.5rem}.sec-head p{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(232,224,213,.4)}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.prod-card{background:#111;border:1px solid ${s}18;overflow:hidden;transition:all .25s}.prod-card:hover{border-color:${s}50;transform:translateY(-4px)}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .4s;filter:brightness(.9)}.prod-card:hover .prod-img img{transform:scale(1.05);filter:brightness(1)}
-.prod-body{padding:1.25rem}.prod-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.05rem;margin-bottom:.35rem;color:#fff}
-.prod-price{font-weight:400;font-size:.88rem;color:${s};margin-bottom:.45rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:rgba(232,224,213,.4)}.prod-stars{color:${s}}
-.prod-btn{display:block;text-align:center;margin-top:1rem;padding:.6rem;border:1px solid ${s}44;color:${s};font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.prod-btn:hover{background:${s};color:#000}
-.gallery{padding:6rem 5%;background:#080808}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
-.gal-item{overflow:hidden;aspect-ratio:4/3}.gal-item img{height:100%;object-fit:cover;filter:brightness(.85);transition:all .4s}.gal-item:hover img{transform:scale(1.06);filter:brightness(1)}
-.testimonials{padding:6rem 5%;background:#0D0D0D}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
-.testi-card{border:1px solid ${s}18;padding:2rem;background:#111}
-.testi-stars{color:${s};margin-bottom:1rem;font-size:.85rem}.testi-text{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(232,224,213,.7);line-height:1.7;margin-bottom:1.5rem;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border:1px solid ${s}44;background:${s}15;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:500;color:${s};flex-shrink:0}
-.testi-name{font-size:.85rem;color:#fff}.testi-role{font-size:.75rem;color:rgba(232,224,213,.4);letter-spacing:.05em}
-.pricing{padding:6rem 5%;background:#080808}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
-.price-card{border:1px solid ${s}18;padding:2.5rem;background:#0D0D0D;position:relative}
-.price-card.featured{border-color:${s}60;background:#111}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${s};color:#000;font-size:.68rem;font-weight:500;padding:.28rem .9rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-.price-tier{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:${s};margin-bottom:.6rem}
-.price-amt{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#fff;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.8rem;color:rgba(232,224,213,.4);margin-bottom:1.2rem}
-.price-div{height:1px;background:${s}18;margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem}
-.price-features li{display:flex;align-items:center;gap:.55rem;font-size:.85rem;color:rgba(232,224,213,.65)}
-.price-features li::before{content:'◆';color:${s};font-size:.5rem;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.85rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}
-.price-btn-def{border:1px solid ${s}33;color:rgba(232,224,213,.5)}.price-btn-def:hover{border-color:${s};color:${s}}
-.price-btn-feat{background:${s};color:#000}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:6rem 5%;background:#0A0A0A}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.5rem}
-details{border:1px solid ${s}18;overflow:hidden}
-details[open]{border-color:${s}40}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-size:.9rem;font-weight:400;color:rgba(232,224,213,.85);list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.1rem;font-weight:300;color:${s};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.85rem;color:rgba(232,224,213,.5);line-height:1.75}
-.cta-band{padding:5.5rem 5%;border-top:1px solid ${s}20;border-bottom:1px solid ${s}20;text-align:center;background:radial-gradient(ellipse at 50% 0%,${s}08 0%,transparent 70%)}
-.cta-band h2{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:#fff;margin-bottom:.75rem}
-.cta-band p{font-size:.9rem;color:rgba(232,224,213,.55);margin-bottom:2.5rem}
-.cta-btn{display:inline-block;padding:1rem 3rem;background:${s};color:#000;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}.cta-btn:hover{opacity:.88}
-footer{background:#080808;border-top:1px solid ${s}15;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:rgba(232,224,213,.4);font-size:.82rem;line-height:1.75;margin-top:.7rem;font-weight:300}
-.footer-col h4{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:${s};margin-bottom:1.2rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.footer-links a{font-size:.82rem;color:rgba(232,224,213,.4);transition:color .2s}.footer-links a:hover{color:${s}}
-.footer-bottom{border-top:1px solid ${s}10;padding-top:2rem;display:flex;justify-content:space-between;font-size:.75rem;color:rgba(232,224,213,.25);letter-spacing:.06em}
-.f-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:${s}}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:3rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid ${s}15}}
+.nav-links a{font-size:.75rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(212,196,168,.5);transition:color .3s}
+.nav-links a:hover{color:${p}}
+.nav-cta{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.3rem;border:1px solid ${p}55;color:${p};transition:all .3s}
+.nav-cta:hover{background:${p};color:${s}}
+
+.hero{position:relative;height:100vh;min-height:680px;display:grid;grid-template-columns:1fr 1fr}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem 8%;background:${s};position:relative;z-index:1}
+.hero-right{position:relative;overflow:hidden}
+.hero-right img{position:absolute;inset:0;height:100%;object-fit:cover;filter:contrast(1.05) brightness(.9)}
+.hero-right::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,${s} 0%,transparent 30%)}
+.hero-pretitle{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:${p};margin-bottom:1.5rem;display:flex;align-items:center;gap:.7rem}
+.hero-pretitle::before{content:'';width:30px;height:1px;background:${p}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:400;line-height:1.12;color:#fff;margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:${p}}
+.hero-sub{font-size:.9rem;color:rgba(212,196,168,.55);line-height:1.85;max-width:420px;margin-bottom:2.5rem;font-weight:300}
+.hero-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,124,.12)}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;color:${p};display:block;line-height:1}
+.hero-stat-lbl{font-size:.68rem;color:rgba(212,196,168,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-champagne{padding:.85rem 2rem;background:${p};color:${s};font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:all .35s}
+.btn-champagne:hover{background:#D4B48C;transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,168,124,.25)}
+.btn-outline{padding:.85rem 2rem;border:1px solid rgba(212,196,168,.2);color:rgba(212,196,168,.7);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;transition:all .3s}
+.btn-outline:hover{border-color:${p}66;color:${p}}
+
+.marquee-strip{background:${p};padding:.65rem 0;overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-flex;animation:marquee 25s linear infinite}
+.marquee-item{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${s};padding:0 2.5rem}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.properties{padding:7rem 5%;max-width:1300px;margin:0 auto}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem;gap:2rem;flex-wrap:wrap}
+.sec-pre{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:${p};margin-bottom:.6rem}
+.sec-h{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:400;color:#fff;line-height:1.2}
+.sec-h em{font-style:italic;color:${p}}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5px;background:rgba(201,168,124,.12)}
+.menu-item{background:${s};padding:0;overflow:hidden;cursor:pointer;position:relative;group:true}
+.prop-img{aspect-ratio:4/3;overflow:hidden;position:relative}
+.prop-img img{height:100%;object-fit:cover;transition:transform .6s ease}
+.menu-item:hover .prop-img img{transform:scale(1.04)}
+.prop-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(26,29,38,.8) 0%,transparent 50%)}
+.prop-badge{position:absolute;top:1rem;left:1rem;background:${p};color:${s};font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem}
+.prop-body{padding:1.6rem}
+.prop-type{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:${a};margin-bottom:.5rem}
+.prop-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:400;color:#fff;margin-bottom:.4rem}
+.prop-loc{font-size:.8rem;color:rgba(212,196,168,.5);margin-bottom:1rem;display:flex;align-items:center;gap:.4rem}
+.prop-price{font-family:'Playfair Display',serif;font-size:1.1rem;color:${p};margin-bottom:.8rem}
+.prop-feats{display:flex;gap:1rem;font-size:.75rem;color:rgba(212,196,168,.4)}
+
+section.gallery{display:none}
+
+.about{padding:7rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:7rem;max-width:1200px;margin:0 auto;align-items:center}
+.about-imgs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:1.5px;position:relative}
+.about-img-main{grid-column:1/3;aspect-ratio:16/9;overflow:hidden}.about-img-main img{height:100%;object-fit:cover}
+.about-img-s{aspect-ratio:1;overflow:hidden}.about-img-s img{height:100%;object-fit:cover;filter:brightness(.85)}
+.about-cert{background:${p};padding:1.2rem;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.3rem;aspect-ratio:1}
+.about-cert-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:${s};line-height:1}
+.about-cert-txt{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:${s}88}
+.about-feats{margin-top:2rem;display:flex;flex-direction:column;gap:1.2rem}
+.about-feat-item{display:flex;gap:.8rem;padding:1rem;border:1px solid rgba(201,168,124,.1)}
+.about-feat-icon{font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+.about-feat-title{font-size:.88rem;font-weight:500;color:rgba(212,196,168,.85);margin-bottom:.2rem}
+.about-feat-txt{font-size:.78rem;color:rgba(212,196,168,.4);line-height:1.65}
+
+.testi-section{padding:7rem 5%;background:rgba(0,0,0,.2)}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;background:rgba(201,168,124,.08);margin-top:4rem}
+.testi-card{background:${s};padding:2rem}
+.testi-stars{color:${p};font-size:.9rem;letter-spacing:.1em;margin-bottom:1rem}
+.testi-text{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;font-style:italic;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:1.5rem}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-av{width:36px;height:36px;background:${p}22;border:1px solid ${p}33;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:${p}}
+.testi-name{font-size:.85rem;color:rgba(212,196,168,.8)}.testi-role{font-size:.7rem;color:rgba(212,196,168,.35);margin-top:.1rem}
+
+.faq-section{padding:7rem 5%;max-width:800px;margin:0 auto}
+.faq-details{border-bottom:1px solid rgba(201,168,124,.12)}
+.faq-details summary{padding:1.3rem 0;font-size:.88rem;color:rgba(212,196,168,.7);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+.faq-details summary:hover{color:#fff}
+.faq-details summary::after{content:'+';font-size:1.1rem;color:${p};font-weight:300}
+.faq-details[open] summary::after{content:'−'}
+.faq-answer{padding:.5rem 0 1.3rem;font-size:.83rem;color:rgba(212,196,168,.45);line-height:1.75}
+
+.cta-section{padding:8rem 5%;text-align:center;background:linear-gradient(180deg,${s} 0%,rgba(0,0,0,.4) 100%);position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:400px;background:radial-gradient(ellipse,${p}12 0%,transparent 65%);pointer-events:none}
+
+.footer{padding:2.5rem 5%;border-top:1px solid rgba(201,168,124,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{height:26px;filter:brightness(0) invert(1) sepia(1) saturate(0.3)}
+.footer-copy{font-size:.72rem;color:rgba(212,196,168,.25)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.7rem;color:rgba(212,196,168,.3);letter-spacing:.08em;text-transform:uppercase;transition:color .3s}.footer-links a:hover{color:${p}}
+
+@media(max-width:768px){.nav-links{display:none}.hero{grid-template-columns:1fr;height:auto}.hero-left{padding:6rem 5% 3rem}.hero-right{height:50vw}.about{grid-template-columns:1fr;gap:3rem}.section-header{flex-direction:column}}
 </style></head>
 <body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Menu</a></li><li><a href="#">Galeri</a></li><li><a href="#">Reservasi</a></li></ul>
-  <a href="#" class="nav-cta">Reservasi</a>
-</div></nav>
+<nav class="nav">
+  <a href="#"><img class="nav-logo" src="assets/logo-placeholder.png" alt="${t.name}"></a>
+  <ul class="nav-links"><li><a href="#properties">Properti</a></li><li><a href="#about">Tentang</a></li><li><a href="#testi">Ulasan</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a href="https://wa.me/${wa}" class="nav-cta">Konsultasi</a>
+</nav>
 
 <section class="hero">
-  <div>
-    <div class="hero-decor">${t.catName}</div>
-    <h1><em>${t.headline}</em></h1>
+  <div class="hero-left">
+    <p class="hero-pretitle">Premium Living</p>
+    <h1>${t.headline.replace('Kemewahan','<em>Kemewahan</em>')}</h1>
     <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-gold">Reservasi Meja</a><a href="#" class="btn-ghost-g">Lihat Menu</a></div>
-    <div class="trust-lux"><div class="trust-lux-dots"><span>BS</span><span>SD</span><span>AF</span></div><span>500+ tamu puas setiap bulan</span></div>
+    <div class="hero-stats">
+      <div><span class="hero-stat-num">500+</span><span class="hero-stat-lbl">Unit Terjual</span></div>
+      <div><span class="hero-stat-num">98%</span><span class="hero-stat-lbl">Kepuasan Klien</span></div>
+      <div><span class="hero-stat-num">15+</span><span class="hero-stat-lbl">Tahun Pengalaman</span></div>
+    </div>
+    <div class="hero-btns">
+      <a href="https://wa.me/${wa}" class="btn-champagne">Konsultasi Gratis</a>
+      <a href="#properties" class="btn-outline">Lihat Properti</a>
+    </div>
   </div>
-  <div class="hero-img-lux"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
+  <div class="hero-right"><img src="assets/foto-produk-1.png" alt="property"></div>
 </section>
 
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Tamu per Bulan</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Menu Eksklusif</div></div>
-  <div class="stat-item"><div class="stat-num">8 Thn</div><div class="stat-label">Keunggulan</div></div>
-  <div class="stat-item"><div class="stat-num">5★</div><div class="stat-label">Rating Premium</div></div>
-</div></section>
+<div class="marquee-strip"><div class="marquee-inner">${['Penthouse Suite','Garden Villa','Sky Residence','Duplex Tower','Luxury Living','Premium Property','Exclusive Location','Investment Grade'].map(function(x){return '<span class="marquee-item">'+x+'</span><span style="color:'+s+'66;padding:0 1rem">◆</span>';}).join('').repeat(2)}</div></div>
 
-<section class="about">
+<section id="properties" class="properties">
+  <div class="section-header">
+    <div><p class="sec-pre">Pilihan Eksklusif</p><h2 class="sec-h">Properti <em>Premium</em><br>Pilihan Kami</h2></div>
+    <a href="https://wa.me/${wa}" class="btn-outline" style="white-space:nowrap">Lihat Semua →</a>
+  </div>
+  <div class="prop-grid">
+    ${mn.slice(0,4).map(function(m,i){var prices=['Mulai Rp 2,5M','Mulai Rp 5M','Mulai Rp 3,8M','Mulai Rp 8,5M'];return '<div class="menu-item"><div class="prop-img"><img src="assets/foto-produk-'+((i%4)+1)+'.png" alt="'+m+'"><div class="prop-overlay"></div><span class="prop-badge">Premium</span></div><div class="prop-body"><p class="prop-type">'+['Penthouse','Villa','Apartemen','Duplex'][i%4]+'</p><h3 class="prop-name">'+m+'</h3><p class="prop-loc">📍 Jakarta Selatan</p><p class="prop-price">'+prices[i%4]+'</p><div class="prop-feats"><span>🛏 '+[3,4,3,5][i%4]+'BR</span><span>🚿 '+[2,3,2,4][i%4]+'Bath</span><span>📐 '+[120,240,140,320][i%4]+'m²</span></div></div></div>';}).join('')}
+  </div>
+</section>
+
+<section class="gallery"><p>placeholder</p></section>
+
+<section id="about" class="about">
+  <div class="about-imgs">
+    <div class="about-img-main"><img src="assets/foto-produk-2.png" alt="about"></div>
+    <div class="about-img-s"><img src="assets/foto-produk-3.png" alt="detail"></div>
+    <div class="about-cert"><span class="about-cert-num">A+</span><span class="about-cert-txt">Rating</span></div>
+  </div>
   <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">◆</span>${m}</li>`).join('')}</ul>
+    <p class="sec-pre">Tentang Kami</p>
+    <h2 class="sec-h">Developer <em>Terpercaya</em><br>Selama 15 Tahun</h2>
+    <p style="font-size:.88rem;color:rgba(212,196,168,.45);line-height:1.85;margin:1.2rem 0 2rem;font-weight:300">${t.sub}</p>
+    <div class="about-feats">
+      <div class="about-feat-item"><span class="about-feat-icon">📋</span><div><div class="about-feat-title">Legalitas 100% Aman</div><p class="about-feat-txt">SHM, IMB, dan semua dokumen legal lengkap. Due diligence ketat oleh tim hukum independen.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">🏗️</span><div><div class="about-feat-title">Konstruksi Berstandar Internasional</div><p class="about-feat-txt">Material SNI dan import. Garansi struktur 10 tahun. Dikerjakan kontraktor bersertifikat.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">🤝</span><div><div class="about-feat-title">After Sales Komprehensif</div><p class="about-feat-txt">Pendampingan KPR, balik nama, dan konsultasi renovasi 2 tahun penuh setelah serah terima.</p></div></div>
+    </div>
   </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
 </section>
 
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Menu Signature</h2><p>Kreasi eksklusif chef kami yang tak tertandingi</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} pesanan</span></div>
-        <a href="#" class="prod-btn">Pesan</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Keindahan kuliner dan suasana eksklusif kami</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Tamu Kami</h2><p>Pengalaman yang tak terlupakan</p></div>
+<section id="testi" class="testi-section"><div class="testi-inner">
+  <div style="text-align:center"><p class="sec-pre" style="margin-bottom:.5rem">Ulasan Klien</p><h2 class="sec-h">Kata Mereka <em>Yang Telah</em><br>Memiliki Properti Kami</h2></div>
   <div class="testi-grid">${testiHTML()}</div>
 </div></section>
 
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Eksklusif</h2><p>Pengalaman premium yang disesuaikan untuk Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Klasik</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul>
-      <a href="#" class="price-btn price-btn-def">Mulai</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-badge">PALING POPULER</div>
-      <div class="price-tier">Premium</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul>
-      <a href="#" class="price-btn price-btn-feat">Pilih Paket</a>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Eksklusif</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div>
-      <div class="price-div"></div>
-      <ul class="price-features"><li>Semua Fitur Premium</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul>
-      <a href="#" class="price-btn price-btn-def">Hubungi Kami</a>
-    </div>
-  </div>
-</div></section>
-
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>Pertanyaan Umum</h2><p>Kami siap menjawab setiap pertanyaan Anda</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-
-<section class="cta-band">
-  <h2>Rasakan Pengalaman <span class="gold">Eksklusif</span></h2>
-  <p>Hubungi kami untuk reservasi dan penawaran yang disesuaikan dengan kebutuhan Anda.</p>
-  <a href="#" class="cta-btn">Reservasi Sekarang</a>
+<section id="faq" class="faq-section">
+  <div style="text-align:center;margin-bottom:3rem"><p class="sec-pre">FAQ</p><h2 class="sec-h">Pertanyaan Umum</h2></div>
+  ${faqHTML().replace(/<details>/g,'<details class="faq-details">').replace(/<summary>/g,'<summary>')}
 </section>
 
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Menu</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Informasi</h4><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Chef</a></li><li><a href="#">Acara</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Hubungi</h4><ul class="footer-links"><li><a href="#">Reservasi</a></li><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Lokasi</a></li></ul></div>
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div style="position:relative;z-index:1">
+    <p class="sec-pre" style="margin-bottom:1rem">Mulai Perjalanan Anda</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:400;color:#fff;margin-bottom:1rem;line-height:1.15">Temukan Hunian <em style="font-style:italic;color:${p}">Impian Anda</em><br>Bersama Kami</h2>
+    <p style="font-size:.9rem;color:rgba(212,196,168,.45);margin-bottom:2.5rem;font-weight:300">Konsultasi gratis. Tanpa tekanan. Kami memandu setiap langkah.</p>
+    <a href="https://wa.me/${wa}" class="btn-champagne">Konsultasi via WhatsApp →</a>
   </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}. All rights reserved.</span><span>Excellence in Every Detail</span></div>
-</div></footer>
-</body></html>`;}
+</section>
 
-/* ============================================================ */
-/* 4. DARK                                                       */
-/* ============================================================ */
-function tmplDark(t,base){
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-placeholder.png" alt="${t.name}">
+  <span class="footer-copy">© 2025 ${t.name}. All rights reserved.</span>
+  <div class="footer-links"><a href="#">Instagram</a><a href="#">Proyek</a><a href="https://wa.me/${wa}">WhatsApp</a></div>
+</footer>
+</body></html>`;
+}
+
+/* ── 3. LUMINA CLINIC — Glassmorphism Medical Beauty ────────── */
+function tmplLumina(t,base){
   var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
+  var mn=t.menu||[];while(mn.length<4)mn=mn.concat(mn);
+  var wa='6281234567890';
   return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#0D0D0D;color:#E2E2E2;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.nav{position:sticky;top:0;background:rgba(13,13,13,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06);z-index:100;padding:1rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.83rem;font-weight:500;color:#7A8A99;letter-spacing:.04em;transition:color .2s}.nav-links a:hover{color:#fff}
-.nav-cta{padding:.5rem 1.2rem;background:${p};color:#fff;border-radius:6px;font-size:.83rem;font-weight:600}
-.hero{padding:6rem 5% 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:${p}20;border:1px solid ${p}50;color:${p};font-size:.72rem;font-weight:600;padding:.28rem .85rem;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.3rem}
-.hero h1{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:1rem;color:#fff}
-.hero h1 span{color:${p}}
-.hero-sub{font-size:.97rem;color:#7A8A99;line-height:1.75;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-accent{padding:.8rem 1.75rem;background:${p};color:#fff;border-radius:8px;font-weight:600;font-size:.9rem;transition:all .2s}.btn-accent:hover{opacity:.88;transform:translateY(-2px)}
-.btn-dark-out{padding:.8rem 1.75rem;border:1px solid rgba(255,255,255,.15);border-radius:8px;font-weight:500;font-size:.9rem;color:#ccc;transition:all .2s}.btn-dark-out:hover{border-color:rgba(255,255,255,.4);color:#fff}
-.trust-dark{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:#7A8A99}
-.trust-dark-av{display:flex}.trust-dark-av span{width:28px;height:28px;border-radius:50%;background:${p}25;border:2px solid ${p}50;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:${p};margin-left:-7px}.trust-dark-av span:first-child{margin-left:0}
-.hero-img-dk{border-radius:16px;overflow:hidden;aspect-ratio:5/4;box-shadow:0 0 60px ${p}20,0 20px 60px rgba(0,0,0,.5)}.hero-img-dk img{height:100%;object-fit:cover}
-.stats{background:#111;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);padding:2.5rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid rgba(255,255,255,.05)}.stat-item:last-child{border-right:none}
-.stat-num{font-size:2.3rem;font-weight:700;color:${p};line-height:1}.stat-label{font-size:.78rem;color:#7A8A99;margin-top:.3rem;letter-spacing:.04em}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.72rem;font-weight:600;color:${p};letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
-.about h2{font-size:2.1rem;font-weight:700;letter-spacing:-.03em;margin-bottom:1rem;line-height:1.15;color:#fff}
-.about-desc{color:#7A8A99;line-height:1.75;margin-bottom:1.5rem;font-size:.93rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.87rem;color:#B0BEC5}
-.ck{width:18px;height:18px;border-radius:4px;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
-.about-img{border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 0 40px ${p}15,0 20px 60px rgba(0,0,0,.5)}.about-img img{height:100%;object-fit:cover}
-.products{padding:5.5rem 5%;background:#111}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-size:2rem;font-weight:700;letter-spacing:-.03em;color:#fff;margin-bottom:.4rem}.sec-head p{color:#7A8A99;font-size:.9rem}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.prod-card{background:#161616;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;transition:all .22s}
-.prod-card:hover{border-color:${p}60;transform:translateY(-4px);box-shadow:0 8px 30px ${p}20}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .35s}.prod-card:hover .prod-img img{transform:scale(1.05)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.9rem;color:#E2E2E2;margin-bottom:.3rem}
-.prod-price{font-weight:700;font-size:1rem;color:${p};margin-bottom:.4rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:#7A8A99}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.85rem;padding:.55rem;background:${p}20;color:${p};border-radius:8px;font-size:.82rem;font-weight:600;border:1px solid ${p}40;transition:all .2s}.prod-btn:hover{background:${p};color:#fff}
-.gallery{padding:5.5rem 5%;background:#0D0D0D}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:3rem}
-.gal-item{border-radius:10px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(255,255,255,.04)}.gal-item img{height:100%;object-fit:cover;transition:transform .4s;filter:brightness(.8)}.gal-item:hover img{transform:scale(1.06);filter:brightness(1)}
-.testimonials{padding:5.5rem 5%;background:#111}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{background:#161616;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem}
-.testi-stars{color:#F5A623;margin-bottom:.8rem}.testi-text{font-size:.9rem;color:#7A8A99;line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border-radius:50%;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
-.testi-name{font-weight:600;font-size:.88rem;color:#E2E2E2}.testi-role{font-size:.77rem;color:#7A8A99}
-.pricing{padding:5.5rem 5%;background:#0D0D0D}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:2.5rem;background:#111;position:relative}
-.price-card.featured{border-color:${p}70;box-shadow:0 0 30px ${p}15}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${p};color:#fff;font-size:.72rem;font-weight:700;padding:.28rem .9rem;border-radius:20px;white-space:nowrap}
-.price-tier{font-size:.75rem;font-weight:600;color:${p};letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
-.price-amt{font-size:2.4rem;font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#7A8A99;margin-bottom:1.2rem}
-.price-div{height:1px;background:rgba(255,255,255,.06);margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:#B0BEC5}
-.price-features li::before{content:'✓';color:${p};font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;border-radius:10px;font-weight:600;font-size:.88rem;transition:all .2s}
-.price-btn-def{border:1px solid rgba(255,255,255,.1);color:#B0BEC5}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:${p};color:#fff}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:5.5rem 5%;background:#111}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.6rem}
-details{background:#161616;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
-details[open]{border-color:${p}55}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.9rem;color:#E2E2E2;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:300;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#7A8A99;line-height:1.7}
-.cta-band{padding:5rem 5%;background:linear-gradient(135deg,${p}20 0%,transparent 60%);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);text-align:center}
-.cta-band h2{font-size:2.2rem;font-weight:700;letter-spacing:-.03em;color:#fff;margin-bottom:.7rem}
-.cta-band p{font-size:.95rem;color:#7A8A99;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;background:${p};color:#fff;border-radius:10px;font-weight:700;font-size:.95rem;transition:all .2s}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${p}60}
-footer{background:#080808;border-top:1px solid rgba(255,255,255,.05);padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:#4A5568;font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:${p};margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:#4A5568;transition:color .2s}.footer-links a:hover{color:#E2E2E2}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.04);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:#2D3748}
-.f-brand-name{font-size:1.05rem;font-weight:700;color:#fff}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}}
-</style></head>
-<body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Menu</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Pesan Sekarang</a>
-</div></nav>
-<section class="hero">
-  <div>
-    <div class="hero-badge">✦ ${t.catName}</div>
-    <h1>${t.headline.split(' ').map((w,i)=>i===0?`<span>${w}</span>`:w).join(' ')}</h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-accent">Mulai Sekarang</a><a href="#" class="btn-dark-out">Pelajari Lebih</a></div>
-    <div class="trust-dark"><div class="trust-dark-av"><span>BS</span><span>SD</span><span>AF</span></div><span>500+ pelanggan aktif</span></div>
-  </div>
-  <div class="hero-img-dk"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
-</section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pelanggan</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Menu / Layanan</div></div>
-  <div class="stat-item"><div class="stat-num">5 Thn</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">✓</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Produk &amp; Layanan</h2><p>Pilihan terbaik untuk kebutuhan Anda</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">Pesan Sekarang</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Karya terbaik kami</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Pelanggan</h2><p>Kepercayaan adalah prioritas kami</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Harga</h2><p>Pilih yang terbaik untuk Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Starter</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">Mulai</a></div>
-    <div class="price-card featured"><div class="price-badge">TERPOPULER</div><div class="price-tier">Professional</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">Pilih Ini</a></div>
-    <div class="price-card"><div class="price-tier">Enterprise</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Pro</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul><a href="#" class="price-btn price-btn-def">Hubungi</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>FAQ</h2><p>Pertanyaan yang sering ditanyakan</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>Siap Bergabung?</h2>
-  <p>Hubungi kami sekarang dan dapatkan konsultasi gratis untuk kebutuhan Anda.</p>
-  <a href="#" class="cta-btn">Mulai via WhatsApp</a>
-</section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Info</h4><ul class="footer-links"><li><a href="#">Tentang</a></li><li><a href="#">Blog</a></li><li><a href="#">Promo</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Lokasi</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}.</span><span>Dibuat dengan ❤ WebsiteKu</span></div>
-</div></footer>
-</body></html>`;}
-
-/* ============================================================ */
-/* 5. GLASSMORPHISM                                              */
-/* ============================================================ */
-function tmplGlassmorphism(t,base){
-  var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
-  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(135deg,#0F0520 0%,#0A1030 50%,#050D28 100%);min-height:100vh;color:#E0E0F0;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.glass{background:rgba(255,255,255,.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1)}
-.nav{position:sticky;top:0;background:rgba(10,5,28,.7);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);z-index:100;padding:1rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(135deg,#050A1A 0%,#0A0520 40%,#020B18 100%);color:#E0F9FF;line-height:1.6;overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.1rem 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(5,10,26,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,197,215,.08)}
+.nav-logo{height:30px;filter:brightness(0) invert(1)}
 .nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.83rem;font-weight:500;color:rgba(224,224,240,.6);transition:color .2s}.nav-links a:hover{color:#fff}
-.nav-cta{padding:.5rem 1.2rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:8px;font-size:.83rem;font-weight:600}
-.hero{padding:6rem 5% 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative}
-.hero::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,${p}22 0%,transparent 70%);top:-100px;left:-100px;pointer-events:none;border-radius:50%}
-.hero-badge{display:inline-block;background:linear-gradient(135deg,${p}33,${s}22);border:1px solid ${p}55;color:${p};font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:1.3rem}
-.hero h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:1rem;color:#fff}
-.hero h1 .grad{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:.97rem;color:rgba(224,224,240,.65);line-height:1.75;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-grad{padding:.8rem 1.75rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:10px;font-weight:700;font-size:.9rem;transition:all .2s}.btn-grad:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${p}50}
-.btn-glass{padding:.8rem 1.75rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;font-weight:500;font-size:.9rem;color:#fff;transition:all .2s}.btn-glass:hover{background:rgba(255,255,255,.12)}
-.trust-gl{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:rgba(224,224,240,.5)}
-.trust-gl-av{display:flex}.trust-gl-av span{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,${p}50,${s}50);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;margin-left:-7px}.trust-gl-av span:first-child{margin-left:0}
-.hero-img-gl{border-radius:20px;overflow:hidden;aspect-ratio:5/4;box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px ${p}20}.hero-img-gl img{height:100%;object-fit:cover}
-.stats{padding:2.5rem 5%;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid rgba(255,255,255,.05)}.stat-item:last-child{border-right:none}
-.stat-num{font-size:2.3rem;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}.stat-label{font-size:.78rem;color:rgba(224,224,240,.4);margin-top:.3rem}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.72rem;font-weight:700;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
-.about h2{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;margin-bottom:1rem;line-height:1.15;color:#fff}
-.about-desc{color:rgba(224,224,240,.6);line-height:1.75;margin-bottom:1.5rem;font-size:.93rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.87rem;color:rgba(224,224,240,.75)}
-.ck{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,${p},${s});color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
-.about-img{border-radius:20px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 30px ${s}15}.about-img img{height:100%;object-fit:cover}
-.products{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-size:2rem;font-weight:800;color:#fff;letter-spacing:-.03em;margin-bottom:.4rem}.sec-head p{color:rgba(224,224,240,.5);font-size:.9rem}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.prod-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;transition:all .25s}
-.prod-card:hover{border-color:${p}70;transform:translateY(-4px);box-shadow:0 12px 40px ${p}20}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .35s}.prod-card:hover .prod-img img{transform:scale(1.05)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.9rem;color:#fff;margin-bottom:.3rem}
-.prod-price{font-weight:700;font-size:1rem;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.4rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:rgba(224,224,240,.4)}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.85rem;padding:.55rem;background:linear-gradient(135deg,${p}30,${s}20);border:1px solid ${p}50;color:${p};border-radius:10px;font-size:.82rem;font-weight:600;transition:all .2s}.prod-btn:hover{background:linear-gradient(135deg,${p},${s});color:#fff;border-color:transparent}
-.gallery{padding:5.5rem 5%;background:rgba(0,0,0,.2)}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:3rem}
-.gal-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(255,255,255,.08)}.gal-item img{height:100%;object-fit:cover;transition:transform .4s;filter:brightness(.8)}.gal-item:hover img{transform:scale(1.06);filter:brightness(1)}
-.testimonials{padding:5.5rem 5%}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:2rem}
-.testi-stars{color:#F5A623;margin-bottom:.8rem}.testi-text{font-size:.9rem;color:rgba(224,224,240,.6);line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,${p},${s});color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
-.testi-name{font-weight:600;font-size:.88rem;color:#fff}.testi-role{font-size:.77rem;color:rgba(224,224,240,.4)}
-.pricing{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:2.5rem;position:relative}
-.price-card.featured{border-color:${p}80;box-shadow:0 0 30px ${p}20}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,${p},${s});color:#fff;font-size:.72rem;font-weight:700;padding:.28rem .9rem;border-radius:20px;white-space:nowrap}
-.price-tier{font-size:.75rem;font-weight:700;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
-.price-amt{font-size:2.4rem;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:rgba(224,224,240,.4);margin-bottom:1.2rem}
-.price-div{height:1px;background:rgba(255,255,255,.07);margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:rgba(224,224,240,.65)}
-.price-features li::before{content:'✓';color:${p};font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;border-radius:10px;font-weight:600;font-size:.88rem;transition:all .2s}
-.price-btn-def{border:1px solid rgba(255,255,255,.1);color:rgba(224,224,240,.6)}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:linear-gradient(135deg,${p},${s});color:#fff}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:5.5rem 5%}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.6rem}
-details{background:rgba(255,255,255,.05);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
-details[open]{border-color:${p}60}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.9rem;color:rgba(224,224,240,.85);list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:300;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:rgba(224,224,240,.5);line-height:1.7}
-.cta-band{padding:5rem 5%;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.05);text-align:center;position:relative;overflow:hidden}
-.cta-band::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,${p}15 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.cta-band h2{font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-.03em;margin-bottom:.7rem;position:relative}
-.cta-band p{font-size:.95rem;color:rgba(224,224,240,.55);margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto;position:relative}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:10px;font-weight:700;font-size:.95rem;transition:all .2s;position:relative}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${p}50}
-footer{background:rgba(0,0,0,.4);border-top:1px solid rgba(255,255,255,.05);padding:5rem 5% 2rem;backdrop-filter:blur(10px)}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:rgba(224,224,240,.35);font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:rgba(224,224,240,.35);transition:color .2s}.footer-links a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:rgba(224,224,240,.2)}
-.f-brand-name{font-size:1.05rem;font-weight:700;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}}
+.nav-links a{font-size:.78rem;font-weight:500;color:rgba(224,249,255,.45);transition:color .3s}.nav-links a:hover{color:${p}}
+.nav-cta{padding:.5rem 1.3rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:50px;font-size:.75rem;font-weight:600;transition:all .3s}
+.nav-cta:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,197,215,.3)}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:80px}
+.hero-orbs{position:absolute;inset:0;pointer-events:none}
+.hero-orb1{position:absolute;top:-200px;right:-100px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,${p}20 0%,transparent 65%)}
+.hero-orb2{position:absolute;bottom:-300px;left:-150px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,${s}18 0%,transparent 65%)}
+.hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(0,197,215,.025) 60px,rgba(0,197,215,.025) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,197,215,.025) 60px,rgba(0,197,215,.025) 61px)}
+.hero-content{position:relative;z-index:2;padding:0 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-left{}
+.hero-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,197,215,.1);border:1px solid rgba(0,197,215,.2);border-radius:50px;padding:.35rem 1rem .35rem .6rem;font-size:.7rem;color:${p};font-weight:600;margin-bottom:2rem}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:${p};animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:800;line-height:1.1;color:#fff;margin-bottom:1.3rem;letter-spacing:-.03em}
+.hero h1 span{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:.92rem;color:rgba(224,249,255,.5);line-height:1.85;max-width:460px;margin-bottom:2.5rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.btn-primary{padding:.85rem 2rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:50px;font-size:.82rem;font-weight:600;transition:all .35s;box-shadow:0 4px 20px rgba(0,197,215,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,197,215,.4)}
+.btn-glass{padding:.85rem 2rem;background:rgba(255,255,255,.05);border:1px solid rgba(0,197,215,.2);border-radius:50px;color:rgba(224,249,255,.7);font-size:.82rem;font-weight:500;backdrop-filter:blur(8px);transition:all .3s}
+.btn-glass:hover{background:rgba(0,197,215,.1);border-color:${p}55;color:${p}}
+.hero-trust{display:flex;align-items:center;gap:.8rem;font-size:.8rem;color:rgba(224,249,255,.35)}
+.hero-right{position:relative}
+.hero-img-wrap{border-radius:24px;overflow:hidden;aspect-ratio:4/5;position:relative;border:1px solid rgba(0,197,215,.1)}
+.hero-img-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(5,10,26,.6) 100%);z-index:1}
+.hero-img-wrap img{height:100%;object-fit:cover}
+.hero-float-card{position:absolute;bottom:2rem;left:-2rem;background:rgba(5,10,26,.85);backdrop-filter:blur(20px);border:1px solid rgba(0,197,215,.15);border-radius:16px;padding:1rem 1.2rem;z-index:2}
+.hero-float-num{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.hero-float-lbl{font-size:.7rem;color:rgba(224,249,255,.4);margin-top:.2rem}
+.hero-float-card2{position:absolute;top:2rem;right:-1.5rem;background:rgba(128,85,192,.15);backdrop-filter:blur(20px);border:1px solid rgba(128,85,192,.2);border-radius:16px;padding:.8rem 1rem;z-index:2}
+
+.services-section{padding:7rem 5%;max-width:1200px;margin:0 auto}
+.services-header{text-align:center;margin-bottom:4rem}
+.sec-pill{display:inline-block;background:rgba(0,197,215,.1);border:1px solid rgba(0,197,215,.18);border-radius:50px;padding:.28rem .9rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${p};margin-bottom:1rem}
+.sec-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.02em}
+.sec-title span{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub2{font-size:.9rem;color:rgba(224,249,255,.4);margin-top:.8rem;font-weight:300}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.menu-item{background:rgba(255,255,255,.03);backdrop-filter:blur(8px);border:1px solid rgba(0,197,215,.1);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:all .4s;cursor:pointer}
+.menu-item::before{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(0,197,215,.08),rgba(128,85,192,.08));opacity:0;transition:opacity .4s}
+.menu-item:hover{transform:translateY(-6px);border-color:rgba(0,197,215,.25);box-shadow:0 20px 40px rgba(0,197,215,.1)}
+.menu-item:hover::before{opacity:1}
+.svc-icon{width:48px;height:48px;background:linear-gradient(135deg,${p}22,${s}22);border:1px solid ${p}33;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem}
+.svc-name{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.svc-desc{font-size:.8rem;color:rgba(224,249,255,.4);line-height:1.65;margin-bottom:1.2rem}
+.svc-tag{display:inline-block;background:${p}15;color:${p};border-radius:50px;padding:.2rem .7rem;font-size:.67rem;font-weight:600}
+
+section.gallery{display:none}
+
+.process{padding:7rem 5%;background:rgba(0,0,0,.2)}
+.process-inner{max-width:1200px;margin:0 auto}
+.proses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:4rem}
+.proses-step{position:relative;text-align:center;padding:2rem 1.5rem}
+.proses-num{font-size:4rem;font-weight:800;background:linear-gradient(180deg,${p}20 0%,transparent 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.5rem}
+.proses-title{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.proses-txt{font-size:.8rem;color:rgba(224,249,255,.4);line-height:1.65}
+
+.testi-section{padding:7rem 5%}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:4rem}
+.testi-card{background:rgba(255,255,255,.03);backdrop-filter:blur(8px);border:1px solid rgba(0,197,215,.1);border-radius:20px;padding:1.8rem}
+.testi-stars{color:${p};font-size:.9rem;margin-bottom.9rem}
+.testi-text{font-size:.88rem;color:rgba(224,249,255,.6);line-height:1.8;margin-bottom:1.2rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-av{width:36px;height:36px;background:linear-gradient(135deg,${p}33,${s}33);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:${p}}
+.testi-name{font-size:.85rem;font-weight:600;color:rgba(224,249,255,.8)}.testi-role{font-size:.72rem;color:rgba(224,249,255,.35)}
+
+.faq-section{padding:7rem 5%;max-width:800px;margin:0 auto}
+.faq-details{border-bottom:1px solid rgba(0,197,215,.1)}
+.faq-details summary{padding:1.3rem 0;font-size:.88rem;color:rgba(224,249,255,.65);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+.faq-details summary:hover{color:#fff}
+.faq-details summary::after{content:'+';color:${p};font-size:1.1rem;font-weight:300}
+.faq-details[open] summary::after{content:'−'}
+.faq-answer{padding:.5rem 0 1.3rem;font-size:.83rem;color:rgba(224,249,255,.4);line-height:1.75}
+
+.cta-section{padding:8rem 5%;text-align:center;position:relative;overflow:hidden}
+.cta-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,${p}15 0%,transparent 65%);pointer-events:none}
+
+.footer{padding:2.5rem 5%;border-top:1px solid rgba(0,197,215,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{height:26px;filter:brightness(0) invert(1)}
+.footer-copy{font-size:.72rem;color:rgba(224,249,255,.2)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.7rem;color:rgba(224,249,255,.25);transition:color .3s}.footer-links a:hover{color:${p}}
+
+@media(max-width:768px){.nav-links{display:none}.hero-content{grid-template-columns:1fr}.hero-right{display:none}.hero-float-card,.hero-float-card2{display:none}}
 </style></head>
 <body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Layanan</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Mulai Sekarang</a>
-</div></nav>
+<nav class="nav">
+  <a href="#"><img class="nav-logo" src="assets/logo-placeholder.png" alt="${t.name}"></a>
+  <ul class="nav-links"><li><a href="#services">Layanan</a></li><li><a href="#process">Proses</a></li><li><a href="#testi">Ulasan</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a href="https://wa.me/${wa}" class="nav-cta">Konsultasi Gratis</a>
+</nav>
+
 <section class="hero">
-  <div>
-    <div class="hero-badge">${t.catName}</div>
-    <h1><span class="grad">${t.headline}</span></h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-grad">Mulai Sekarang</a><a href="#" class="btn-glass">Pelajari Lebih</a></div>
-    <div class="trust-gl"><div class="trust-gl-av"><span>BS</span><span>SD</span><span>AF</span></div><span>500+ pengguna aktif</span></div>
-  </div>
-  <div class="hero-img-gl"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
-</section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pengguna Aktif</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Layanan</div></div>
-  <div class="stat-item"><div class="stat-num">5 Thn</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">✓</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Layanan Unggulan</h2><p>Solusi terbaik dengan teknologi terkini</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">Pesan Sekarang</a>
+  <div class="hero-orbs"><div class="hero-orb1"></div><div class="hero-orb2"></div></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-pill"><span class="hero-pill-dot"></span>Klinik Kecantikan Premium #1</div>
+      <h1>${t.headline.replace('Keindahan','<span>Keindahan</span>')}</h1>
+      <p class="hero-sub">${t.sub}</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/${wa}" class="btn-primary">Konsultasi Sekarang</a>
+        <a href="#services" class="btn-glass">Lihat Layanan</a>
       </div>
-    </div>`).join('')}
+      <div class="hero-trust">✓ Dokter Tersertifikasi &nbsp;·&nbsp; ✓ 5.000+ Klien Puas &nbsp;·&nbsp; ✓ BPOM Approved</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap"><img src="assets/foto-produk-1.png" alt="clinic"></div>
+      <div class="hero-float-card"><div class="hero-float-num">5K+</div><div class="hero-float-lbl">Klien Puas</div></div>
+      <div class="hero-float-card2" style="font-size:.75rem;color:rgba(224,249,255,.6)">⭐ 4.9/5<br><span style="font-size:.65rem;color:rgba(224,249,255,.3)">Rating Klien</span></div>
+    </div>
   </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Karya dan hasil terbaik kami</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Mereka</h2><p>Ribuan pengguna puas bersama kami</p></div>
+</section>
+
+<section id="services" class="services-section">
+  <div class="services-header">
+    <div class="sec-pill">Layanan Unggulan</div>
+    <h2 class="sec-title">Perawatan <span>Premium</span><br>Berbasis Sains</h2>
+    <p class="sec-sub2">Teknologi medis terkini, ditangani dokter spesialis. Hasil nyata, aman, terukur.</p>
+  </div>
+  <div class="services-grid">
+    ${mn.slice(0,4).map(function(m,i){var icons=['💫','💉','✨','💧'];var descs=['Teknologi laser terbaru tersertifikasi. Aman untuk semua jenis kulit. Hasil terlihat setelah 1 sesi.','Filler premium dan botox oleh dokter spesialis. Alami dan tahan lama hingga 18 bulan.','Formula brightening medis eksklusif. Mencerahkan, meratakan, dan meregenerasi.','Infus vitamin premium langsung ke aliran darah. Hasilkan glow dari dalam.'];return '<div class="menu-item"><div class="svc-icon">'+icons[i%4]+'</div><h3 class="svc-name">'+m+'</h3><p class="svc-desc">'+descs[i%4]+'</p><span class="svc-tag">Tersedia</span></div>';}).join('')}
+  </div>
+</section>
+
+<section class="gallery"><p>placeholder</p></section>
+
+<section id="process" class="process">
+  <div class="process-inner">
+    <div style="text-align:center">
+      <div class="sec-pill">Cara Kerja</div>
+      <h2 class="sec-title">Proses Perawatan <span>Aman & Nyaman</span></h2>
+    </div>
+    <div class="proses-grid">
+      <div class="proses-step"><div class="proses-num">01</div><div class="proses-title">Konsultasi Gratis</div><p class="proses-txt">Analisa kondisi kulit mendalam oleh dokter spesialis. 100% tanpa biaya dan tekanan.</p></div>
+      <div class="proses-step"><div class="proses-num">02</div><div class="proses-title">Rencana Personal</div><p class="proses-txt">Program perawatan dirancang khusus sesuai kondisi, target, dan anggaran Anda.</p></div>
+      <div class="proses-step"><div class="proses-num">03</div><div class="proses-title">Perawatan Premium</div><p class="proses-txt">Teknisi berpengalaman dengan alat tersertifikasi. Proses aman, nyaman, dan presisi.</p></div>
+      <div class="proses-step"><div class="proses-num">04</div><div class="proses-title">Hasil & Follow-up</div><p class="proses-txt">Pantau perkembangan, follow-up rutin, dan program maintenance jangka panjang.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="testi" class="testi-section"><div class="testi-inner">
+  <div style="text-align:center">
+    <div class="sec-pill">Ulasan Klien</div>
+    <h2 class="sec-title">Ribuan Klien <span>Sudah Merasakan</span><br>Manfaatnya</h2>
+  </div>
   <div class="testi-grid">${testiHTML()}</div>
 </div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Harga</h2><p>Transparan, terjangkau, tanpa biaya tersembunyi</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Starter</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">Mulai</a></div>
-    <div class="price-card featured"><div class="price-badge">TERPOPULER</div><div class="price-tier">Professional</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">Pilih Ini</a></div>
-    <div class="price-card"><div class="price-tier">Enterprise</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Pro</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul><a href="#" class="price-btn price-btn-def">Hubungi</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>FAQ</h2><p>Semua yang perlu Anda ketahui</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>Mulai Perjalanan Digital Anda</h2>
-  <p>Bergabunglah dengan ratusan bisnis yang telah berkembang bersama kami.</p>
-  <a href="#" class="cta-btn">Hubungi via WhatsApp ✨</a>
-</section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Info</h4><ul class="footer-links"><li><a href="#">Tentang</a></li><li><a href="#">Blog</a></li><li><a href="#">Promo</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Lokasi</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}.</span><span>Dibuat dengan ❤ WebsiteKu</span></div>
-</div></footer>
-</body></html>`;}
 
-/* ============================================================ */
-/* 6. NEON                                                       */
-/* ============================================================ */
-function tmplNeon(t,base){
-  var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
-  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Rajdhani',sans-serif;background:#030305;color:#D0D0E8;line-height:1.5}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.nav{position:sticky;top:0;background:rgba(3,3,5,.92);backdrop-filter:blur(12px);border-bottom:1px solid ${p}30;z-index:100;padding:.9rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.88rem;font-weight:500;color:${p};letter-spacing:.1em;text-transform:uppercase;transition:all .2s;text-shadow:0 0 8px ${p}50}.nav-links a:hover{color:#fff;text-shadow:0 0 12px ${p}}
-.nav-cta{padding:.5rem 1.2rem;border:1px solid ${p};color:${p};font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:all .2s;text-shadow:0 0 8px ${p}50;box-shadow:0 0 10px ${p}20}.nav-cta:hover{background:${p}20;box-shadow:0 0 20px ${p}50}
-.hero{padding:6rem 5% 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-badge{display:inline-block;border:1px solid ${p}60;color:${p};font-size:.72rem;font-weight:600;padding:.28rem .85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.3rem;text-shadow:0 0 8px ${p}60;box-shadow:inset 0 0 10px ${p}10,0 0 10px ${p}20}
-.hero-label{font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:${p}80;margin-bottom:.5rem}
-.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:700;line-height:1.15;letter-spacing:.02em;margin-bottom:1rem;color:${p};text-shadow:0 0 20px ${p}60,0 0 40px ${p}30}
-.hero-sub{font-size:1rem;color:#7A8A9A;line-height:1.7;margin-bottom:2rem;font-weight:400}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-neon{padding:.8rem 1.75rem;border:1px solid ${p};color:${p};font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;text-shadow:0 0 8px ${p}50;box-shadow:0 0 15px ${p}20}.btn-neon:hover{background:${p}15;box-shadow:0 0 30px ${p}50}
-.btn-neon-s{padding:.8rem 1.75rem;border:1px solid ${s}60;color:${s};font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;text-shadow:0 0 8px ${s}40}.btn-neon-s:hover{background:${s}15}
-.trust-neon{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:#7A8A9A;letter-spacing:.04em}
-.trust-neon-av{display:flex}.trust-neon-av span{width:28px;height:28px;border:1px solid ${p}50;background:${p}10;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:${p};margin-left:-6px;text-shadow:0 0 6px ${p}}.trust-neon-av span:first-child{margin-left:0}
-.hero-img-n{aspect-ratio:5/4;overflow:hidden;border:1px solid ${p}30;box-shadow:0 0 40px ${p}15,inset 0 0 30px ${p}05}.hero-img-n img{height:100%;object-fit:cover;filter:brightness(.85) saturate(1.1)}
-.stats{background:#050508;border-top:1px solid ${p}25;border-bottom:1px solid ${p}25;padding:2.5rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid ${p}15}.stat-item:last-child{border-right:none}
-.stat-num{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:700;color:${p};line-height:1;text-shadow:0 0 15px ${p}60}.stat-label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:#7A8A9A;margin-top:.4rem}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:${p};margin-bottom:.75rem;text-shadow:0 0 8px ${p}50}
-.about h2{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:.02em;margin-bottom:1rem;line-height:1.2;color:#fff}
-.about-desc{color:#7A8A9A;line-height:1.7;margin-bottom:1.5rem;font-size:.93rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.88rem;color:#B0C0D0}
-.ck{width:16px;height:16px;border:1px solid ${p};display:flex;align-items:center;justify-content:center;font-size:.6rem;color:${p};flex-shrink:0;text-shadow:0 0 6px ${p}}
-.about-img{aspect-ratio:4/3;overflow:hidden;border:1px solid ${p}30;box-shadow:0 0 40px ${p}10}.about-img img{height:100%;object-fit:cover;filter:brightness(.85)}
-.products{padding:5.5rem 5%;background:#050508}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:${p};letter-spacing:.05em;text-shadow:0 0 20px ${p}50;margin-bottom:.5rem}.sec-head p{color:#7A8A9A;font-size:.88rem;letter-spacing:.06em}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.prod-card{background:#080810;border:1px solid ${p}25;overflow:hidden;transition:all .25s}.prod-card:hover{border-color:${p}80;box-shadow:0 0 25px ${p}25}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .35s;filter:brightness(.8)}.prod-card:hover .prod-img img{transform:scale(1.05);filter:brightness(1)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.9rem;color:#D0D0E8;margin-bottom:.3rem;letter-spacing:.04em}
-.prod-price{font-weight:600;font-size:.95rem;color:${p};margin-bottom:.4rem;text-shadow:0 0 8px ${p}40}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:#7A8A9A}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.85rem;padding:.55rem;border:1px solid ${p}50;color:${p};font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.prod-btn:hover{background:${p}15;box-shadow:0 0 15px ${p}30}
-.gallery{padding:5.5rem 5%;background:#030305}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
-.gal-item{overflow:hidden;aspect-ratio:4/3;border:1px solid ${p}20}.gal-item img{height:100%;object-fit:cover;filter:brightness(.75) saturate(1.2);transition:all .4s}.gal-item:hover img{transform:scale(1.06);filter:brightness(1) saturate(1.3)}
-.testimonials{padding:5.5rem 5%;background:#050508}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{background:#080810;border:1px solid ${p}25;padding:2rem}
-.testi-stars{color:#F5A623;margin-bottom:.8rem;text-shadow:0 0 6px #F5A623}.testi-text{font-size:.9rem;color:#7A8A9A;line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border:1px solid ${p}50;background:${p}15;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;color:${p};flex-shrink:0;text-shadow:0 0 6px ${p}}
-.testi-name{font-weight:600;font-size:.88rem;color:#D0D0E8;letter-spacing:.04em}.testi-role{font-size:.77rem;color:#7A8A9A}
-.pricing{padding:5.5rem 5%;background:#030305}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{background:#050508;border:1px solid ${p}25;padding:2.5rem;position:relative}
-.price-card.featured{border-color:${p};box-shadow:0 0 30px ${p}25}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${p};color:#000;font-size:.72rem;font-weight:700;padding:.28rem .9rem;letter-spacing:.1em;white-space:nowrap}
-.price-tier{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;color:${p};letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem;text-shadow:0 0 8px ${p}50}
-.price-amt{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#7A8A9A;margin-bottom:1.2rem}
-.price-div{height:1px;background:${p}20;margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:#B0C0D0}
-.price-features li::before{content:'►';color:${p};font-size:.55rem;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
-.price-btn-def{border:1px solid ${p}35;color:${p}80}.price-btn-def:hover{border-color:${p};color:${p};box-shadow:0 0 15px ${p}30}
-.price-btn-feat{background:${p};color:#000;font-weight:700}.price-btn-feat:hover{box-shadow:0 0 25px ${p}60}
-.faq-sec{padding:5.5rem 5%;background:#050508}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.5rem}
-details{background:#080810;border:1px solid ${p}20;overflow:hidden}
-details[open]{border-color:${p}60;box-shadow:0 0 15px ${p}15}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.9rem;color:#D0D0E8;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none;letter-spacing:.04em}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-family:'Orbitron',sans-serif;font-size:1rem;color:${p};flex-shrink:0;text-shadow:0 0 8px ${p}}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#7A8A9A;line-height:1.7}
-.cta-band{padding:5rem 5%;border-top:1px solid ${p}25;border-bottom:1px solid ${p}25;text-align:center;background:radial-gradient(ellipse at 50% 50%,${p}08 0%,transparent 70%)}
-.cta-band h2{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:700;color:${p};text-shadow:0 0 30px ${p}60,0 0 60px ${p}30;margin-bottom:.7rem;letter-spacing:.05em}
-.cta-band p{font-size:.95rem;color:#7A8A9A;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;border:1px solid ${p};color:${p};font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s;text-shadow:0 0 10px ${p}50}.cta-btn:hover{background:${p}15;box-shadow:0 0 30px ${p}50}
-footer{background:#020204;border-top:1px solid ${p}20;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:#3A4A5A;font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:${p};margin-bottom:1.1rem;text-shadow:0 0 8px ${p}40}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:#3A4A5A;transition:color .2s}.footer-links a:hover{color:${p};text-shadow:0 0 6px ${p}40}
-.footer-bottom{border-top:1px solid ${p}15;padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:#2A3A4A}
-.f-brand-name{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:700;color:${p};text-shadow:0 0 10px ${p}50}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid ${p}15}}
-</style></head>
-<body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">HOME</a></li><li><a href="#">TENTANG</a></li><li><a href="#">LAYANAN</a></li><li><a href="#">GALERI</a></li><li><a href="#">KONTAK</a></li></ul>
-  <a href="#" class="nav-cta">MULAI</a>
-</div></nav>
-<section class="hero">
-  <div>
-    <div class="hero-badge">// ${t.catName} //</div>
-    <h1>${t.headline}</h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-neon">PESAN SEKARANG</a><a href="#" class="btn-neon-s">PELAJARI</a></div>
-    <div class="trust-neon"><div class="trust-neon-av"><span>BS</span><span>SD</span><span>AF</span></div><span>500+ PENGGUNA AKTIF</span></div>
-  </div>
-  <div class="hero-img-n"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
+<section id="faq" class="faq-section">
+  <div style="text-align:center;margin-bottom:3rem"><div class="sec-pill">FAQ</div><h2 class="sec-title">Pertanyaan Umum</h2></div>
+  ${faqHTML().replace(/<details>/g,'<details class="faq-details">').replace(/<summary>/g,'<summary>')}
 </section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pengguna</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Layanan</div></div>
-  <div class="stat-item"><div class="stat-num">5Y</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">// TENTANG KAMI //</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">►</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>LAYANAN UNGGULAN</h2><p>// sistem berteknologi tinggi untuk kebutuhan Anda //</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">PESAN</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>GALERI</h2><p>// dokumentasi karya terbaik //</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>TESTIMONI</h2><p>// apa kata pengguna kami //</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>PAKET HARGA</h2><p>// pilih level akses Anda //</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Basic</div><div class="price-amt">Rp 199<span style="font-size:1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">MULAI</a></div>
-    <div class="price-card featured"><div class="price-badge">// POPULER //</div><div class="price-tier">Advanced</div><div class="price-amt">Rp 499<span style="font-size:1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">PILIH INI</a></div>
-    <div class="price-card"><div class="price-tier">Elite</div><div class="price-amt">Rp 999<span style="font-size:1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Advanced</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul><a href="#" class="price-btn price-btn-def">KONTAK</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>FAQ</h2><p>// pertanyaan yang sering ditanyakan //</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>SIAP MEMULAI?</h2>
-  <p>Hubungi kami dan bergabunglah dengan komunitas pelanggan puas kami.</p>
-  <a href="#" class="cta-btn">// HUBUNGI SEKARANG //</a>
-</section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Info</h4><ul class="footer-links"><li><a href="#">Tentang</a></li><li><a href="#">Blog</a></li><li><a href="#">Promo</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Lokasi</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}.</span><span>// WebsiteKu //</span></div>
-</div></footer>
-</body></html>`;}
 
-/* ============================================================ */
-/* 7. STARTUP                                                    */
-/* ============================================================ */
-function tmplStartup(t,base){
-  var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
-  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:#050510;color:#C8D0E0;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.nav{position:sticky;top:0;background:rgba(5,5,16,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06);z-index:100;padding:1rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.83rem;font-weight:500;color:#8892A4;transition:color .2s}.nav-links a:hover{color:#fff}
-.nav-cta{padding:.5rem 1.2rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:8px;font-size:.83rem;font-weight:600}
-.hero{padding:6rem 5% 5rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative}
-.hero-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,${p}20 0%,transparent 70%);top:-100px;left:-50px;pointer-events:none;border-radius:50%}
-.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:${p}20;border:1px solid ${p}40;color:${p};font-size:.72rem;font-weight:600;padding:.3rem .9rem;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.2rem}
-.hero-badge::before{content:'●';font-size:.5rem}
-.hero h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;margin-bottom:1rem;color:#fff}
-.hero h1 .hi{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:.97rem;color:#8892A4;line-height:1.75;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-grad{padding:.8rem 1.75rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:10px;font-weight:700;font-size:.9rem;transition:all .2s}.btn-grad:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${p}40}
-.btn-dark-b{padding:.8rem 1.75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;font-weight:500;font-size:.9rem;color:#C8D0E0;transition:all .2s}.btn-dark-b:hover{background:rgba(255,255,255,.1)}
-.trust-s{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:#8892A4}
-.trust-s-av{display:flex}.trust-s-av span{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,${p}60,${s}60);border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:#fff;margin-left:-7px}.trust-s-av span:first-child{margin-left:0}
-.hero-img-s{border-radius:20px;overflow:hidden;aspect-ratio:5/4;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px ${p}15}.hero-img-s img{height:100%;object-fit:cover}
-.stats{background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);padding:2.5rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid rgba(255,255,255,.05)}.stat-item:last-child{border-right:none}
-.stat-num{font-size:2.3rem;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}.stat-label{font-size:.78rem;color:#8892A4;margin-top:.3rem}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.72rem;font-weight:700;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
-.about h2{font-size:2.1rem;font-weight:800;letter-spacing:-.04em;margin-bottom:1rem;line-height:1.15;color:#fff}
-.about-desc{color:#8892A4;line-height:1.75;margin-bottom:1.5rem;font-size:.93rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.87rem;color:#C8D0E0}
-.ck{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,${p},${s});color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
-.about-img{border-radius:20px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 30px ${s}10}.about-img img{height:100%;object-fit:cover}
-.products{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-size:2rem;font-weight:800;color:#fff;letter-spacing:-.04em;margin-bottom:.4rem}.sec-head p{color:#8892A4;font-size:.9rem}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.prod-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;transition:all .25s}
-.prod-card:hover{border-color:${p}60;transform:translateY(-4px);box-shadow:0 12px 35px ${p}20}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .35s}.prod-card:hover .prod-img img{transform:scale(1.05)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.9rem;color:#fff;margin-bottom:.3rem}
-.prod-price{font-weight:700;font-size:1rem;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.4rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:#8892A4}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.85rem;padding:.55rem;background:linear-gradient(135deg,${p}25,${s}15);border:1px solid ${p}40;color:${p};border-radius:10px;font-size:.82rem;font-weight:600;transition:all .2s}.prod-btn:hover{background:linear-gradient(135deg,${p},${s});color:#fff;border-color:transparent}
-.gallery{padding:5.5rem 5%;background:#030308}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:3rem}
-.gal-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(255,255,255,.05)}.gal-item img{height:100%;object-fit:cover;transition:transform .4s;filter:brightness(.8)}.gal-item:hover img{transform:scale(1.06);filter:brightness(1)}
-.testimonials{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:2rem}
-.testi-stars{color:#F5A623;margin-bottom:.8rem}.testi-text{font-size:.9rem;color:#8892A4;line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,${p},${s});color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
-.testi-name{font-weight:600;font-size:.88rem;color:#fff}.testi-role{font-size:.77rem;color:#8892A4}
-.pricing{padding:5.5rem 5%;background:#030308}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:2.5rem;position:relative}
-.price-card.featured{border-color:${p}80;box-shadow:0 0 30px ${p}15}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,${p},${s});color:#fff;font-size:.72rem;font-weight:700;padding:.28rem .9rem;border-radius:20px;white-space:nowrap}
-.price-tier{font-size:.75rem;font-weight:700;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
-.price-amt{font-size:2.4rem;font-weight:800;color:#fff;letter-spacing:-.04em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#8892A4;margin-bottom:1.2rem}
-.price-div{height:1px;background:rgba(255,255,255,.06);margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:#C8D0E0}
-.price-features li::before{content:'✓';color:${p};font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;border-radius:10px;font-weight:600;font-size:.88rem;transition:all .2s}
-.price-btn-def{border:1px solid rgba(255,255,255,.1);color:#8892A4}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:linear-gradient(135deg,${p},${s});color:#fff}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.6rem}
-details{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
-details[open]{border-color:${p}60}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.9rem;color:#C8D0E0;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:300;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#8892A4;line-height:1.7}
-.cta-band{padding:5rem 5%;text-align:center;background:linear-gradient(135deg,${p}15 0%,${s}10 50%,transparent 100%);border-top:1px solid rgba(255,255,255,.05)}
-.cta-band h2{font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-.04em;margin-bottom:.7rem}
-.cta-band p{font-size:.95rem;color:#8892A4;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;background:linear-gradient(135deg,${p},${s});color:#fff;border-radius:10px;font-weight:700;font-size:.95rem;transition:all .2s}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${p}50}
-footer{background:#030308;border-top:1px solid rgba(255,255,255,.04);padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:#3A4455;font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:#3A4455;transition:color .2s}.footer-links a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.04);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:#1E2A3A}
-.f-brand-name{font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}}
-</style></head>
-<body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Layanan</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Mulai Gratis</a>
-</div></nav>
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div style="position:relative">
-    <div class="hero-badge">${t.catName}</div>
-    <h1><span class="hi">${t.headline}</span></h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-grad">Mulai Sekarang</a><a href="#" class="btn-dark-b">Demo Gratis</a></div>
-    <div class="trust-s"><div class="trust-s-av"><span>BS</span><span>SD</span><span>AF</span></div><span>Dipercaya 500+ pengguna</span></div>
+<section class="cta-section">
+  <div class="cta-orb"></div>
+  <div style="position:relative;z-index:1">
+    <div class="sec-pill" style="margin-bottom:1.5rem">Mulai Sekarang</div>
+    <h2 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:#fff;margin-bottom:1rem;letter-spacing:-.02em;line-height:1.15">Wujudkan Kulit <span style="background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Impian Anda</span><br>Bersama Kami</h2>
+    <p style="font-size:.92rem;color:rgba(224,249,255,.4);margin-bottom:2.5rem;font-weight:300">Konsultasi gratis. Tanpa biaya. Tanpa tekanan. Kami di sini untuk Anda.</p>
+    <a href="https://wa.me/${wa}" class="btn-primary" style="font-size:.85rem;padding:1rem 2.5rem">Hubungi via WhatsApp →</a>
   </div>
-  <div class="hero-img-s"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
 </section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pengguna Aktif</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Fitur Tersedia</div></div>
-  <div class="stat-item"><div class="stat-num">5 Thn</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating Pengguna</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">✓</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Produk &amp; Layanan</h2><p>Solusi lengkap untuk kebutuhan bisnis Anda</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">Pesan Sekarang</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Karya dan momen terbaik kami</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Pengguna</h2><p>Bergabunglah dengan ribuan pelanggan puas</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Harga</h2><p>Mulai gratis, upgrade kapan saja</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Starter</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">Coba Gratis</a></div>
-    <div class="price-card featured"><div class="price-badge">TERPOPULER</div><div class="price-tier">Growth</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">Pilih Paket</a></div>
-    <div class="price-card"><div class="price-tier">Scale</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Growth</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul><a href="#" class="price-btn price-btn-def">Kontak Sales</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>FAQ</h2><p>Semua yang perlu Anda ketahui</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>Mulai Perjalanan Anda Hari Ini</h2>
-  <p>Bergabunglah dengan ratusan bisnis yang sudah berkembang bersama kami.</p>
-  <a href="#" class="cta-btn">Hubungi via WhatsApp 🚀</a>
-</section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Perusahaan</h4><ul class="footer-links"><li><a href="#">Tentang</a></li><li><a href="#">Blog</a></li><li><a href="#">Karir</a></li><li><a href="#">Press</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Lokasi</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}.</span><span>Dibuat dengan ❤ WebsiteKu</span></div>
-</div></footer>
-</body></html>`;}
 
-/* ============================================================ */
-/* 8. ELEGANT                                                    */
-/* ============================================================ */
-function tmplElegant(t,base){
-  var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
-  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:#FAFAF6;color:#2A1E1A;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.serif{font-family:'Playfair Display',serif}
-.nav{position:sticky;top:0;background:rgba(250,250,246,.97);backdrop-filter:blur(8px);border-bottom:1px solid #EDE8E3;z-index:100;padding:1.1rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.83rem;font-weight:400;color:#8A7A72;letter-spacing:.04em;transition:color .2s}.nav-links a:hover{color:${p}}
-.nav-cta{padding:.5rem 1.4rem;background:${p};color:#fff;font-size:.83rem;font-weight:500;letter-spacing:.04em}
-.hero{padding:6rem 5% 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:500;color:${p};letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem}
-.hero-badge::before{content:'';display:block;width:24px;height:1px;background:${p}}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:400;line-height:1.2;margin-bottom:1rem;color:#2A1E1A}
-.hero h1 em{color:${p};font-style:italic}
-.hero-sub{font-size:.97rem;color:#8A7A72;line-height:1.8;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-warm{padding:.85rem 2rem;background:${p};color:#fff;font-size:.88rem;font-weight:500;letter-spacing:.04em;transition:all .2s}.btn-warm:hover{opacity:.88;transform:translateY(-1px)}
-.btn-warm-out{padding:.85rem 2rem;border:1px solid ${p}60;color:${p};font-size:.88rem;font-weight:400;letter-spacing:.04em;transition:all .2s}.btn-warm-out:hover{background:${p}08}
-.trust-e{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:#8A7A72}
-.trust-e-av{display:flex}.trust-e-av span{width:28px;height:28px;border-radius:50%;background:${p}20;border:2px solid ${s};display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:500;color:${p};margin-left:-6px}.trust-e-av span:first-child{margin-left:0}
-.hero-img-e{overflow:hidden;aspect-ratio:4/5;box-shadow:20px 20px 60px rgba(42,30,26,.12)}.hero-img-e img{height:100%;object-fit:cover}
-.stats{background:${s}40;border-top:1px solid #EDE8E3;border-bottom:1px solid #EDE8E3;padding:3rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid #EDE8E3}.stat-item:last-child{border-right:none}
-.stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:400;color:${p};line-height:1}.stat-label{font-size:.78rem;color:#8A7A72;margin-top:.35rem;letter-spacing:.06em}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.72rem;font-weight:500;color:${p};letter-spacing:.14em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
-.about-tag::before{content:'';display:block;width:20px;height:1px;background:${p}}
-.about h2{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;margin-bottom:1rem;line-height:1.25;color:#2A1E1A}
-.about-desc{color:#8A7A72;line-height:1.8;margin-bottom:1.5rem;font-size:.93rem}
-.about-checks{list-style:none;display:flex;flex-direction:column;gap:.55rem}
-.about-checks li{display:flex;align-items:center;gap:.5rem;font-size:.88rem;color:#5A4A42}
-.ck{width:16px;height:16px;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0}
-.about-img{overflow:hidden;aspect-ratio:4/3;box-shadow:20px 20px 60px rgba(42,30,26,.1)}.about-img img{height:100%;object-fit:cover}
-.products{padding:5.5rem 5%;background:#fff}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;color:#2A1E1A;margin-bottom:.5rem}.sec-head p{color:#8A7A72;font-size:.88rem;letter-spacing:.06em}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.prod-card{border:1px solid #EDE8E3;overflow:hidden;transition:all .25s;background:#FAFAF6}
-.prod-card:hover{border-color:${p}50;transform:translateY(-3px);box-shadow:0 12px 40px rgba(42,30,26,.08)}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .4s}.prod-card:hover .prod-img img{transform:scale(1.04)}
-.prod-body{padding:1.25rem}.prod-name{font-family:'Playfair Display',serif;font-weight:400;font-size:1rem;margin-bottom:.35rem;color:#2A1E1A}
-.prod-price{font-weight:500;font-size:.9rem;color:${p};margin-bottom:.45rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:#8A7A72}.prod-stars{color:#D4A017}
-.prod-btn{display:block;text-align:center;margin-top:.9rem;padding:.6rem;background:${p}12;color:${p};font-size:.82rem;font-weight:500;letter-spacing:.04em;transition:all .2s}.prod-btn:hover{background:${p};color:#fff}
-.gallery{padding:5.5rem 5%;background:${s}30}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
-.gal-item{overflow:hidden;aspect-ratio:4/3}.gal-item img{height:100%;object-fit:cover;transition:transform .4s}.gal-item:hover img{transform:scale(1.05)}
-.testimonials{padding:5.5rem 5%;background:#fff}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{border:1px solid #EDE8E3;padding:2rem;background:#FAFAF6}
-.testi-stars{color:#D4A017;margin-bottom:.8rem}.testi-text{font-family:'Playfair Display',serif;font-size:.95rem;color:#5A4A42;line-height:1.7;margin-bottom:1.5rem;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;background:${p};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:.82rem;flex-shrink:0}
-.testi-name{font-weight:500;font-size:.88rem;color:#2A1E1A}.testi-role{font-size:.78rem;color:#8A7A72;letter-spacing:.04em}
-.pricing{padding:5.5rem 5%;background:${s}20}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{border:1px solid #EDE8E3;padding:2.5rem;background:#fff;position:relative}
-.price-card.featured{border-color:${p};box-shadow:0 8px 30px rgba(42,30,26,.08)}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${p};color:#fff;font-size:.72rem;font-weight:500;padding:.28rem .9rem;letter-spacing:.06em;white-space:nowrap}
-.price-tier{font-size:.72rem;font-weight:500;color:${p};letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem}
-.price-amt{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:400;color:#2A1E1A;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#8A7A72;margin-bottom:1.2rem}
-.price-div{height:1px;background:#EDE8E3;margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem}
-.price-features li{display:flex;align-items:center;gap:.55rem;font-size:.87rem;color:#5A4A42}
-.price-features li::before{content:'✓';color:${p};font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.85rem;font-size:.85rem;font-weight:500;letter-spacing:.04em;transition:all .2s}
-.price-btn-def{border:1px solid #EDE8E3;color:#8A7A72}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:${p};color:#fff}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:5.5rem 5%;background:#fff}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.6rem}
-details{border:1px solid #EDE8E3;overflow:hidden}
-details[open]{border-color:${p}55}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:500;font-size:.9rem;color:#2A1E1A;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-family:'Playfair Display',serif;font-size:1.2rem;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#8A7A72;line-height:1.8}
-.cta-band{padding:5rem 5%;background:${p};color:#fff;text-align:center}
-.cta-band h2{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:400;margin-bottom:.75rem}
-.cta-band p{font-size:.95rem;opacity:.85;margin-bottom:2.5rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:1rem 2.75rem;background:#fff;color:${p};font-size:.9rem;font-weight:500;letter-spacing:.04em;transition:all .2s}.cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
-footer{background:#1A0F0A;color:#E8D8C8;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:rgba(232,216,200,.45);font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:${s};margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.footer-links a{font-size:.83rem;color:rgba(232,216,200,.4);transition:color .2s}.footer-links a:hover{color:${s}}
-.footer-bottom{border-top:1px solid rgba(232,216,200,.1);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:rgba(232,216,200,.25)}
-.f-brand-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:400;color:${s}}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid #EDE8E3}}
-</style></head>
-<body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Koleksi</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Hubungi Kami</a>
-</div></nav>
-<section class="hero">
-  <div>
-    <div class="hero-badge">${t.catName}</div>
-    <h1><em>${t.headline}</em></h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-warm">Lihat Koleksi</a><a href="#" class="btn-warm-out">Tentang Kami</a></div>
-    <div class="trust-e"><div class="trust-e-av"><span>BS</span><span>SD</span><span>AF</span></div><span>Dipercaya 500+ pelanggan</span></div>
-  </div>
-  <div class="hero-img-e"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
-</section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pelanggan Setia</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Koleksi</div></div>
-  <div class="stat-item"><div class="stat-num">8 Thn</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">✓</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Koleksi Unggulan</h2><p>Dipilih dengan cermat untuk Anda</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">Pesan Sekarang</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Keindahan dalam setiap detail</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Pelanggan</h2><p>Kepuasan yang berbicara sendiri</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Layanan</h2><p>Pilih yang sesuai dengan impian Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Dasar</div><div class="price-amt">Rp 199<span style="font-size:1.2rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">Mulai</a></div>
-    <div class="price-card featured"><div class="price-badge">PALING DIMINATI</div><div class="price-tier">Pilihan</div><div class="price-amt">Rp 499<span style="font-size:1.2rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">Pilih Paket</a></div>
-    <div class="price-card"><div class="price-tier">Premium</div><div class="price-amt">Rp 999<span style="font-size:1.2rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Pilihan</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Konsultan Pribadi</li></ul><a href="#" class="price-btn price-btn-def">Hubungi Kami</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>Pertanyaan Umum</h2><p>Kami siap membantu Anda</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>Wujudkan Impian Anda</h2>
-  <p>Hubungi kami untuk konsultasi personal dan temukan solusi terbaik untuk Anda.</p>
-  <a href="#" class="cta-btn">Hubungi via WhatsApp</a>
-</section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Koleksi</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Informasi</h4><ul class="footer-links"><li><a href="#">Tentang</a></li><li><a href="#">Blog</a></li><li><a href="#">Event</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Toko</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}.</span><span>Keindahan dalam Setiap Detail</span></div>
-</div></footer>
-</body></html>`;}
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-placeholder.png" alt="${t.name}">
+  <span class="footer-copy">© 2025 ${t.name}. All rights reserved.</span>
+  <div class="footer-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="https://wa.me/${wa}">WhatsApp</a></div>
+</footer>
+</body></html>`;
+}
 
-/* ============================================================ */
-/* 9. FUTURISTIC                                                 */
-/* ============================================================ */
-function tmplFuturistic(t,base){
+/* ── 4. NEXUS DIGITAL — Cyberpunk Tech Agency ───────────────── */
+function tmplNexus(t,base){
   var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
+  var mn=t.menu||[];while(mn.length<4)mn=mn.concat(mn);
+  var wa='6281234567890';
   return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Exo 2',sans-serif;background:#050910;color:#B0C8D8;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.nav{position:sticky;top:0;background:rgba(5,9,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid ${a}18;z-index:100;padding:.9rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.83rem;font-weight:500;color:${a};letter-spacing:.06em;transition:all .2s;opacity:.65}.nav-links a:hover{opacity:1}
-.nav-cta{padding:.5rem 1.2rem;border:1px solid ${a}60;color:${a};font-size:.82rem;font-weight:600;letter-spacing:.06em;transition:all .2s}.nav-cta:hover{background:${a}15;border-color:${a}}
-.hero{padding:6rem 5% 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative}
-.hero::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,${a}12 0%,transparent 70%);top:-50px;right:0;pointer-events:none;border-radius:50%}
-.hero-badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid ${a}50;color:${a};font-size:.72rem;font-weight:600;padding:.28rem .85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.3rem}
-.hero h1{font-size:clamp(1.9rem,4vw,3.3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;color:#fff}
-.hero h1 .acc{color:${a}}
-.hero-sub{font-size:.97rem;color:#7A8A9A;line-height:1.75;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-fut{padding:.8rem 1.75rem;background:${a};color:#000;font-weight:700;font-size:.9rem;letter-spacing:.04em;transition:all .2s}.btn-fut:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${a}50}
-.btn-fut-out{padding:.8rem 1.75rem;border:1px solid ${a}50;color:${a};font-weight:500;font-size:.9rem;transition:all .2s}.btn-fut-out:hover{background:${a}10;border-color:${a}}
-.trust-f{display:flex;align-items:center;gap:.7rem;font-size:.82rem;color:#7A8A9A}
-.trust-f-av{display:flex}.trust-f-av span{width:28px;height:28px;background:${a}20;border:1px solid ${a}50;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:${a};margin-left:-6px}.trust-f-av span:first-child{margin-left:0}
-.hero-img-f{aspect-ratio:5/4;overflow:hidden;border:1px solid ${a}25;box-shadow:0 0 50px ${a}10,0 20px 60px rgba(0,0,0,.5)}.hero-img-f img{height:100%;object-fit:cover;filter:brightness(.85) saturate(1.1)}
-.stats{background:rgba(255,255,255,.02);border-top:1px solid ${a}12;border-bottom:1px solid ${a}12;padding:2.5rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid ${a}10}.stat-item:last-child{border-right:none}
-.stat-num{font-size:2.3rem;font-weight:800;color:${a};line-height:1}.stat-label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#7A8A9A;margin-top:.3rem}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.7rem;font-weight:700;color:${a};letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
-.about h2{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:1rem;line-height:1.15;color:#fff}
-.about-desc{color:#7A8A9A;line-height:1.75;margin-bottom:1.5rem;font-size:.93rem}
-.about-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.about-checks li{display:flex;align-items:center;gap:.45rem;font-size:.87rem;color:#B0C8D8}
-.ck{width:16px;height:16px;background:${a}25;border:1px solid ${a}70;display:flex;align-items:center;justify-content:center;font-size:.55rem;color:${a};flex-shrink:0}
-.about-img{aspect-ratio:4/3;overflow:hidden;border:1px solid ${a}20;box-shadow:0 0 30px ${a}08}.about-img img{height:100%;object-fit:cover;filter:brightness(.85)}
-.products{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:3.5rem}.sec-head h2{font-size:2rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:.4rem}.sec-head p{color:#7A8A9A;font-size:.88rem;letter-spacing:.05em}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.prod-card{background:rgba(255,255,255,.03);border:1px solid ${a}15;overflow:hidden;transition:all .25s}
-.prod-card:hover{border-color:${a}60;transform:translateY(-4px);box-shadow:0 8px 30px ${a}15}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .35s;filter:brightness(.85)}.prod-card:hover .prod-img img{transform:scale(1.05);filter:brightness(1)}
-.prod-body{padding:1.2rem}.prod-name{font-weight:600;font-size:.9rem;color:#B0C8D8;margin-bottom:.3rem;letter-spacing:.02em}
-.prod-price{font-weight:700;font-size:.95rem;color:${a};margin-bottom:.4rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.77rem;color:#7A8A9A}.prod-stars{color:#F5A623}
-.prod-btn{display:block;text-align:center;margin-top:.85rem;padding:.55rem;background:${a}15;border:1px solid ${a}40;color:${a};font-size:.8rem;font-weight:600;letter-spacing:.04em;transition:all .2s}.prod-btn:hover{background:${a};color:#000}
-.gallery{padding:5.5rem 5%;background:#030608}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:3rem}
-.gal-item{overflow:hidden;aspect-ratio:4/3;border:1px solid ${a}12}.gal-item img{height:100%;object-fit:cover;filter:brightness(.75) saturate(1.1);transition:all .4s}.gal-item:hover img{transform:scale(1.06);filter:brightness(1) saturate(1.2)}
-.testimonials{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.testi-card{background:rgba(255,255,255,.03);border:1px solid ${a}15;padding:2rem}
-.testi-stars{color:#F5A623;margin-bottom:.8rem}.testi-text{font-size:.9rem;color:#7A8A9A;line-height:1.7;margin-bottom:1.5rem}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;background:${a}25;border:1px solid ${a}60;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;color:${a};flex-shrink:0}
-.testi-name{font-weight:600;font-size:.88rem;color:#B0C8D8}.testi-role{font-size:.77rem;color:#7A8A9A}
-.pricing{padding:5.5rem 5%;background:#030608}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.price-card{background:rgba(255,255,255,.03);border:1px solid ${a}15;padding:2.5rem;position:relative}
-.price-card.featured{border-color:${a};box-shadow:0 0 25px ${a}20}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:${a};color:#000;font-size:.72rem;font-weight:700;padding:.28rem .9rem;letter-spacing:.06em;white-space:nowrap}
-.price-tier{font-size:.73rem;font-weight:700;color:${a};letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem}
-.price-amt{font-size:2.3rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.82rem;color:#7A8A9A;margin-bottom:1.2rem}
-.price-div{height:1px;background:${a}12;margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.price-features li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:#B0C8D8}
-.price-features li::before{content:'›';color:${a};font-size:1rem;font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.8rem;font-weight:600;font-size:.87rem;letter-spacing:.04em;transition:all .2s}
-.price-btn-def{border:1px solid ${a}25;color:${a}70}.price-btn-def:hover{border-color:${a};color:${a}}
-.price-btn-feat{background:${a};color:#000}.price-btn-feat:hover{box-shadow:0 0 20px ${a}50}
-.faq-sec{padding:5.5rem 5%;background:rgba(255,255,255,.02)}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:.6rem}
-details{background:rgba(255,255,255,.02);border:1px solid ${a}12;overflow:hidden}
-details[open]{border-color:${a}55}
-summary{padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:.9rem;color:#B0C8D8;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none;letter-spacing:.02em}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:300;color:${a};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.2rem;font-size:.88rem;color:#7A8A9A;line-height:1.7}
-.cta-band{padding:5rem 5%;border-top:1px solid ${a}15;text-align:center;background:radial-gradient(ellipse at 50% 50%,${a}08 0%,transparent 70%)}
-.cta-band h2{font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:.7rem}
-.cta-band p{font-size:.95rem;color:#7A8A9A;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btn{display:inline-block;padding:.95rem 2.5rem;background:${a};color:#000;font-weight:700;font-size:.95rem;letter-spacing:.04em;transition:all .2s}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px ${a}50}
-footer{background:#030608;border-top:1px solid ${a}10;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:#2A3845;font-size:.83rem;line-height:1.7;margin-top:.6rem}
-.footer-col h4{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:${a};margin-bottom:1.1rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.footer-links a{font-size:.83rem;color:#2A3845;transition:color .2s}.footer-links a:hover{color:${a}}
-.footer-bottom{border-top:1px solid ${a}08;padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.78rem;color:#1A2530}
-.f-brand-name{font-size:1.05rem;font-weight:800;color:${a}}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:2.5rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid ${a}10}}
-</style></head>
-<body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">Home</a></li><li><a href="#">Tentang</a></li><li><a href="#">Layanan</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
-  <a href="#" class="nav-cta">Get Started</a>
-</div></nav>
-<section class="hero">
-  <div style="position:relative">
-    <div class="hero-badge">${t.catName}</div>
-    <h1>${t.headline.split(' ').slice(0,2).join(' ')} <span class="acc">${t.headline.split(' ').slice(2).join(' ')}</span></h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-fut">Mulai Sekarang</a><a href="#" class="btn-fut-out">Pelajari Lebih</a></div>
-    <div class="trust-f"><div class="trust-f-av"><span>BS</span><span>SD</span><span>AF</span></div><span>500+ pengguna terpercaya</span></div>
-  </div>
-  <div class="hero-img-f"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
-</section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Pengguna</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Layanan</div></div>
-  <div class="stat-item"><div class="stat-num">5Y+</div><div class="stat-label">Pengalaman</div></div>
-  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">›</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Layanan Unggulan</h2><p>Teknologi mutakhir untuk kebutuhan Anda</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} terjual</span></div>
-        <a href="#" class="prod-btn">Pesan</a>
-      </div>
-    </div>`).join('')}
-  </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>Visualisasi karya terbaik kami</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Testimoni</h2><p>Cerita sukses pengguna kami</p></div>
-  <div class="testi-grid">${testiHTML()}</div>
-</div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Harga</h2><p>Investasi tepat untuk masa depan bisnis Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Basic</div><div class="price-amt">Rp 199<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">Mulai</a></div>
-    <div class="price-card featured"><div class="price-badge">TERPOPULER</div><div class="price-tier">Pro</div><div class="price-amt">Rp 499<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">Pilih Pro</a></div>
-    <div class="price-card"><div class="price-tier">Enterprise</div><div class="price-amt">Rp 999<span style="font-size:1.1rem;font-weight:400">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Pro</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Dedikasi</li></ul><a href="#" class="price-btn price-btn-def">Kontak</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>FAQ</h2><p>Pertanyaan yang sering ditanyakan</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>Siap Melangkah ke Masa Depan?</h2>
-  <p>Hubungi kami dan mulai transformasi digital bisnis Anda hari ini.</p>
-  <a href="#" class="cta-btn">Hubungi via WhatsApp</a>
-</section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Info</h4><ul class="footer-links"><li><a href="#">Tentang</a></li><li><a href="#">Blog</a></li><li><a href="#">Karir</a></li><li><a href="#">Update</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Lokasi</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}.</span><span>Dibuat dengan ❤ WebsiteKu</span></div>
-</div></footer>
-</body></html>`;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:#030711;color:#CBD5E1;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
 
-/* ============================================================ */
-/* 10. PREMIUM                                                   */
-/* ============================================================ */
-function tmplPremium(t,base){
-  var p=t.primary,s=t.secondary,a=t.accent;
-  var mn=t.menu||[];while(mn.length<8)mn=mn.concat(mn);
-  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:#0B0F1E;color:#C8C0B0;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
-.cinzel{font-family:'Cinzel',serif}.garamond{font-family:'Cormorant Garamond',serif}
-.nav{position:sticky;top:0;background:rgba(11,15,30,.97);backdrop-filter:blur(16px);border-bottom:1px solid ${p}18;z-index:100;padding:1.1rem 5%}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{height:30px;width:auto;object-fit:contain}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.1rem 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(3,7,17,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(34,211,238,.08)}
+.nav-logo{height:28px;filter:brightness(0) invert(1)}
 .nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.75rem;font-weight:400;color:rgba(200,192,176,.5);letter-spacing:.1em;text-transform:uppercase;transition:color .2s}.nav-links a:hover{color:${p}}
-.nav-cta{padding:.5rem 1.4rem;background:linear-gradient(135deg,${p},${s});color:#000;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.nav-cta:hover{opacity:.88}
-.hero{padding:6rem 5% 5rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative}
-.hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,${s}08 0%,transparent 65%);top:-100px;right:-100px;pointer-events:none;border-radius:50%}
-.hero-decor{display:flex;align-items:center;gap:.75rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:${p};margin-bottom:1.5rem}
-.hero-decor::before{content:'';display:block;width:35px;height:1px;background:linear-gradient(90deg,${p},${s})}
-.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.8vw,3.2rem);font-weight:400;line-height:1.2;margin-bottom:1.2rem;color:#fff;letter-spacing:.03em}
-.hero h1 .gold{background:linear-gradient(135deg,${p},${s},${p});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(200,192,176,.65);line-height:1.8;margin-bottom:2.5rem;font-style:italic}
+.nav-links a{font-size:.78rem;font-weight:500;color:rgba(203,213,225,.45);transition:color .3s}.nav-links a:hover{color:${p}}
+.nav-cta{padding:.48rem 1.2rem;background:transparent;border:1px solid ${p}55;color:${p};font-size:.75rem;font-weight:600;border-radius:4px;transition:all .3s;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:${p}15;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav-cta:hover::before{transform:scaleX(1)}
+.nav-cta span{position:relative;z-index:1}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:70px}
+.hero-grid-bg{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(34,211,238,.03) 40px,rgba(34,211,238,.03) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(34,211,238,.03) 40px,rgba(34,211,238,.03) 41px)}
+.hero-glow-tl{position:absolute;top:-300px;left:-200px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,${s}25 0%,transparent 60%)}
+.hero-glow-br{position:absolute;bottom:-200px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,${p}15 0%,transparent 65%)}
+.hero-inner{position:relative;z-index:2;padding:0 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.15);border-radius:4px;padding:.3rem .8rem;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${p};margin-bottom:1.8rem}
+.hero-tag-dot{width:5px;height:5px;background:${p};border-radius:50%;animation:blink 1.5s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;line-height:1.08;color:#fff;letter-spacing:-.04em;margin-bottom:1.3rem}
+.hero h1 .neon{color:${p};text-shadow:0 0 30px ${p}66,0 0 60px ${p}33}
+.hero-sub{font-size:.92rem;color:rgba(203,213,225,.5);line-height:1.85;max-width:460px;margin-bottom:2.5rem;font-weight:400}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.btn-prem{padding:.9rem 2.25rem;background:linear-gradient(135deg,${p},${s});color:#000;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.btn-prem:hover{transform:translateY(-1px);box-shadow:0 8px 25px ${p}40}
-.btn-prem-out{padding:.9rem 2.25rem;border:1px solid ${p}40;color:${p};font-size:.8rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.btn-prem-out:hover{background:${p}10;border-color:${p}}
-.trust-p{display:flex;align-items:center;gap:.75rem;font-size:.78rem;color:rgba(200,192,176,.45);letter-spacing:.06em}
-.trust-p-av{display:flex}.trust-p-av span{width:28px;height:28px;background:${p}15;border:1px solid ${p}40;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:500;color:${p};margin-left:-6px}.trust-p-av span:first-child{margin-left:0}
-.hero-img-p{position:relative}.hero-img-p::before{content:'';position:absolute;inset:-10px;background:linear-gradient(135deg,${p}15,transparent,${s}10);pointer-events:none;z-index:1}
-.hero-img-p img{width:100%;aspect-ratio:4/5;object-fit:cover}
-.stats{background:#0E1220;border-top:1px solid ${p}15;border-bottom:1px solid ${p}15;padding:3rem 5%}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat-item{text-align:center;padding:1.5rem;border-right:1px solid ${p}10}.stat-item:last-child{border-right:none}
-.stat-num{font-family:'Cinzel',serif;font-size:2.3rem;font-weight:400;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}.stat-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,192,176,.35);margin-top:.4rem}
-.about{padding:5.5rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem}
-.about-tag::before{content:'';display:block;width:25px;height:1px;background:linear-gradient(90deg,${p},${s})}
-.about h2{font-family:'Cinzel',serif;font-size:2rem;font-weight:400;letter-spacing:.03em;margin-bottom:1rem;line-height:1.25;color:#fff}
-.about-desc{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(200,192,176,.6);line-height:1.8;margin-bottom:1.5rem;font-style:italic}
-.about-checks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
-.about-checks li{display:flex;align-items:center;gap:.5rem;font-size:.87rem;color:rgba(200,192,176,.7)}
-.ck{width:16px;height:16px;background:linear-gradient(135deg,${p},${s});display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#000;flex-shrink:0}
-.about-img{position:relative}.about-img::before{content:'';position:absolute;inset:-6px;border:1px solid ${p}15;pointer-events:none;z-index:1}
-.about-img img{width:100%;aspect-ratio:4/3;object-fit:cover}
-.products{padding:5.5rem 5%;background:#0E1220}.products-inner{max-width:1200px;margin:0 auto}
-.sec-head{text-align:center;margin-bottom:4rem}.sec-head h2{font-family:'Cinzel',serif;font-size:2rem;font-weight:400;color:#fff;letter-spacing:.05em;margin-bottom:.5rem}.sec-head p{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,192,176,.35)}
-.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
-.prod-card{background:#111520;border:1px solid ${p}15;overflow:hidden;transition:all .25s}
-.prod-card:hover{border-color:${p}50;transform:translateY(-4px);box-shadow:0 0 30px ${p}15}
-.prod-img{aspect-ratio:4/3;overflow:hidden}.prod-img img{height:100%;object-fit:cover;transition:transform .4s;filter:brightness(.85)}.prod-card:hover .prod-img img{transform:scale(1.05);filter:brightness(1)}
-.prod-body{padding:1.25rem}.prod-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1rem;margin-bottom:.35rem;color:#fff}
-.prod-price{font-weight:400;font-size:.85rem;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.45rem}
-.prod-meta{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:rgba(200,192,176,.4)}.prod-stars{color:${p}}
-.prod-btn{display:block;text-align:center;margin-top:1rem;padding:.6rem;border:1px solid ${p}30;color:${p};font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}.prod-btn:hover{background:linear-gradient(135deg,${p},${s});color:#000;border-color:transparent}
-.gallery{padding:5.5rem 5%;background:#090C18}.gallery-inner{max-width:1200px;margin:0 auto}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:3.5rem}
-.gal-item{overflow:hidden;aspect-ratio:4/3}.gal-item img{height:100%;object-fit:cover;filter:brightness(.8) saturate(.9);transition:all .4s}.gal-item:hover img{transform:scale(1.05);filter:brightness(1) saturate(1)}
-.testimonials{padding:5.5rem 5%;background:#0E1220}.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
-.testi-card{border:1px solid ${p}15;padding:2rem;background:#111520}
-.testi-stars{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem;font-size:.9rem}
-.testi-text{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(200,192,176,.65);line-height:1.7;margin-bottom:1.5rem;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-av{width:40px;height:40px;background:linear-gradient(135deg,${p},${s});display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;color:#000;flex-shrink:0}
-.testi-name{font-size:.85rem;color:#fff;font-weight:500}.testi-role{font-size:.75rem;color:rgba(200,192,176,.35);letter-spacing:.05em}
-.pricing{padding:5.5rem 5%;background:#090C18}.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
-.price-card{background:#0E1220;border:1px solid ${p}15;padding:2.5rem;position:relative}
-.price-card.featured{border-color:${p}60;background:#111520}
-.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,${p},${s});color:#000;font-size:.68rem;font-weight:600;padding:.28rem .9rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-.price-tier{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.6rem}
-.price-amt{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#fff;line-height:1;margin-bottom:.2rem}
-.price-period{font-size:.8rem;color:rgba(200,192,176,.35);margin-bottom:1.2rem}
-.price-div{height:1px;background:linear-gradient(90deg,${p}20,${s}15,transparent);margin:1.2rem 0}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem}
-.price-features li{display:flex;align-items:center;gap:.55rem;font-size:.85rem;color:rgba(200,192,176,.6)}
-.price-features li::before{content:'◆';background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.45rem;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:.85rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
-.price-btn-def{border:1px solid ${p}25;color:rgba(200,192,176,.45)}.price-btn-def:hover{border-color:${p};color:${p}}
-.price-btn-feat{background:linear-gradient(135deg,${p},${s});color:#000}.price-btn-feat:hover{opacity:.88}
-.faq-sec{padding:5.5rem 5%;background:#0B0F1E}.faq-inner{max-width:800px;margin:0 auto}
-.faq-list{margin-top:3.5rem;display:flex;flex-direction:column;gap:.5rem}
-details{background:#0E1220;border:1px solid ${p}15;overflow:hidden}
-details[open]{border-color:${p}45;box-shadow:0 0 15px ${p}08}
-summary{padding:1.25rem 1.5rem;cursor:pointer;font-weight:500;font-size:.9rem;color:rgba(200,192,176,.8);list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none;letter-spacing:.02em}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-family:'Cinzel',serif;font-size:1rem;color:${p};flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-answer{padding:0 1.5rem 1.25rem;font-size:.88rem;color:rgba(200,192,176,.45);line-height:1.8}
-.cta-band{padding:5.5rem 5%;text-align:center;background:radial-gradient(ellipse at 50% 0%,${s}08 0%,transparent 60%);border-top:1px solid ${p}12;border-bottom:1px solid ${p}12}
-.cta-band h2{font-family:'Cinzel',serif;font-size:2.3rem;font-weight:400;color:#fff;letter-spacing:.05em;margin-bottom:.75rem}
-.cta-band p{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(200,192,176,.55);margin-bottom:2.5rem;max-width:480px;margin-left:auto;margin-right:auto;font-style:italic}
-.cta-btn{display:inline-block;padding:1rem 3rem;background:linear-gradient(135deg,${p},${s});color:#000;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}.cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 25px ${p}40}
-footer{background:#07090F;border-top:1px solid ${p}10;padding:5rem 5% 2rem}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:rgba(200,192,176,.3);font-size:.83rem;line-height:1.7;margin-top:.7rem;font-weight:300}
-.footer-col h4{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.2rem}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.footer-links a{font-size:.83rem;color:rgba(200,192,176,.28);transition:color .2s}.footer-links a:hover{color:${p}}
-.footer-bottom{border-top:1px solid ${p}08;padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.75rem;color:rgba(200,192,176,.18);letter-spacing:.06em}
-.f-brand-name{font-family:'Cinzel',serif;font-size:1rem;font-weight:400;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-@media(max-width:900px){.hero,.about{grid-template-columns:1fr;gap:3rem}.stats-inner,.prod-grid{grid-template-columns:repeat(2,1fr)}.testi-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid ${p}10}}
+.btn-neon{padding:.85rem 2rem;background:${p};color:#030711;font-size:.82rem;font-weight:700;border-radius:4px;transition:all .35s;box-shadow:0 0 20px ${p}44}
+.btn-neon:hover{box-shadow:0 0 40px ${p}77;transform:translateY(-2px)}
+.btn-outline{padding:.85rem 2rem;border:1px solid rgba(34,211,238,.25);color:rgba(203,213,225,.7);font-size:.82rem;font-weight:500;border-radius:4px;transition:all .3s}
+.btn-outline:hover{border-color:${p}66;color:${p};background:rgba(34,211,238,.05)}
+.hero-metrics{display:flex;gap:2rem;flex-wrap:wrap}
+.hero-metric{border-left:1px solid ${p}33;padding-left:1rem}
+.hero-metric-num{font-size:1.5rem;font-weight:700;color:${p};line-height:1}
+.hero-metric-lbl{font-size:.7rem;color:rgba(203,213,225,.35);margin-top:.2rem;letter-spacing:.05em}
+.hero-right{position:relative}
+.hero-terminal{background:rgba(3,7,17,.95);border:1px solid rgba(34,211,238,.15);border-radius:8px;padding:1.5rem;font-family:'Space Grotesk',monospace}
+.terminal-bar{display:flex;align-items:center;gap:.5rem;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid rgba(34,211,238,.08)}
+.terminal-dot{width:8px;height:8px;border-radius:50%}
+.terminal-line{font-size:.82rem;color:rgba(203,213,225,.4);margin-bottom:.6rem;line-height:1.6}
+.terminal-line .cmd{color:${p}}
+.terminal-line .val{color:${a}}
+.terminal-line .str{color:#86EFAC}
+.terminal-cursor{display:inline-block;width:2px;height:.85em;background:${p};animation:cursor 1.2s step-end infinite;vertical-align:middle;margin-left:2px}
+@keyframes cursor{0%,100%{opacity:1}50%{opacity:0}}
+
+.services-section{padding:7rem 5%;max-width:1200px;margin:0 auto}
+.services-header{margin-bottom:4rem}
+.sec-badge{display:inline-block;background:${p}12;border:1px solid ${p}25;border-radius:4px;padding:.22rem .7rem;font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${p};margin-bottom:1rem}
+.sec-h2{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.15}
+.sec-h2 span{color:${p};text-shadow:0 0 20px ${p}44}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(34,211,238,.08)}
+.menu-item{background:#030711;padding:2rem;position:relative;overflow:hidden;cursor:pointer;transition:background .4s}
+.menu-item::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${p},${s});transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.menu-item:hover{background:rgba(34,211,238,.04)}
+.menu-item:hover::after{transform:scaleX(1)}
+.svc-num{font-size:.65rem;font-weight:700;letter-spacing:.2em;color:${p}55;margin-bottom:1.2rem;text-transform:uppercase}
+.svc-icon-box{width:44px;height:44px;border:1px solid ${p}22;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.2rem;background:${p}08}
+.svc-name{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:.5rem;letter-spacing:-.02em}
+.svc-desc{font-size:.8rem;color:rgba(203,213,225,.4);line-height:1.7;margin-bottom:1.2rem}
+.svc-link{font-size:.75rem;font-weight:600;color:${p};letter-spacing:.08em;display:flex;align-items:center;gap:.4rem;transition:gap .3s}
+.menu-item:hover .svc-link{gap:.7rem}
+
+section.gallery{display:none}
+
+.tech-section{padding:5rem 5%;background:rgba(34,211,238,.02);border-top:1px solid rgba(34,211,238,.06);border-bottom:1px solid rgba(34,211,238,.06)}
+.tech-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:4rem;flex-wrap:wrap}
+.tech-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(203,213,225,.3);white-space:nowrap}
+.tech-tags{display:flex;gap:.8rem;flex-wrap:wrap}
+.tech-tag{background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.1);border-radius:4px;padding:.3rem .8rem;font-size:.75rem;font-weight:500;color:rgba(203,213,225,.55);transition:all .3s}
+.tech-tag:hover{border-color:${p}44;color:${p};background:${p}08}
+
+.testi-section{padding:7rem 5%}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(34,211,238,.06);margin-top:4rem}
+.testi-card{background:#030711;padding:2rem}
+.testi-stars{color:${p};font-size:.9rem;margin-bottom:1rem;text-shadow:0 0 10px ${p}55}
+.testi-text{font-size:.88rem;color:rgba(203,213,225,.55);line-height:1.8;margin-bottom:1.3rem}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-av{width:34px;height:34px;background:${p}15;border:1px solid ${p}22;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:${p}}
+.testi-name{font-size:.83rem;font-weight:600;color:rgba(203,213,225,.8)}.testi-role{font-size:.7rem;color:rgba(203,213,225,.3)}
+
+.faq-section{padding:7rem 5%;max-width:800px;margin:0 auto}
+.faq-details{border-bottom:1px solid rgba(34,211,238,.08)}
+.faq-details summary{padding:1.3rem 0;font-size:.88rem;color:rgba(203,213,225,.6);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+.faq-details summary:hover{color:#fff}
+.faq-details summary::after{content:'+';color:${p};font-size:1.1rem}
+.faq-details[open] summary::after{content:'−'}
+.faq-answer{padding:.5rem 0 1.3rem;font-size:.83rem;color:rgba(203,213,225,.4);line-height:1.75}
+
+.cta-section{padding:8rem 5%;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(34,211,238,.08)}
+.cta-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(34,211,238,.02) 40px,rgba(34,211,238,.02) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(34,211,238,.02) 40px,rgba(34,211,238,.02) 41px)}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,${s}20 0%,transparent 65%)}
+
+.footer{padding:2.5rem 5%;border-top:1px solid rgba(34,211,238,.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{height:24px;filter:brightness(0) invert(1)}
+.footer-copy{font-size:.72rem;color:rgba(203,213,225,.2)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.7rem;color:rgba(203,213,225,.25);transition:color .3s}.footer-links a:hover{color:${p}}
+
+@media(max-width:768px){.nav-links{display:none}.hero-inner{grid-template-columns:1fr}.hero-right{display:none}.tech-inner{flex-direction:column;gap:1.5rem}}
 </style></head>
 <body>
-<nav class="nav"><div class="nav-inner">
-  <img src="assets/logo-placeholder.png" class="nav-logo" alt="logo">
-  <ul class="nav-links"><li><a href="#">HOME</a></li><li><a href="#">TENTANG</a></li><li><a href="#">LAYANAN</a></li><li><a href="#">GALERI</a></li><li><a href="#">KONTAK</a></li></ul>
-  <a href="#" class="nav-cta">KONSULTASI</a>
-</div></nav>
+<nav class="nav">
+  <a href="#"><img class="nav-logo" src="assets/logo-placeholder.png" alt="${t.name}"></a>
+  <ul class="nav-links"><li><a href="#services">Layanan</a></li><li><a href="#tech">Tech Stack</a></li><li><a href="#testi">Klien</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a href="https://wa.me/${wa}" class="nav-cta"><span>Konsultasi →</span></a>
+</nav>
+
 <section class="hero">
-  <div style="position:relative">
-    <div class="hero-decor">${t.catName}</div>
-    <h1><span class="gold">${t.headline}</span></h1>
-    <p class="hero-sub">${t.sub}</p>
-    <div class="hero-btns"><a href="#" class="btn-prem">Mulai Sekarang</a><a href="#" class="btn-prem-out">Pelajari Lebih</a></div>
-    <div class="trust-p"><div class="trust-p-av"><span>BS</span><span>SD</span><span>AF</span></div><span>DIPERCAYA 500+ KLIEN EKSKLUSIF</span></div>
-  </div>
-  <div class="hero-img-p"><img src="assets/foto-bisnis-anda.png" alt="bisnis"></div>
-</section>
-<section class="stats"><div class="stats-inner">
-  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Klien Eksklusif</div></div>
-  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Layanan Premium</div></div>
-  <div class="stat-item"><div class="stat-num">10 Thn</div><div class="stat-label">Keunggulan</div></div>
-  <div class="stat-item"><div class="stat-num">5★</div><div class="stat-label">Rating</div></div>
-</div></section>
-<section class="about">
-  <div>
-    <div class="about-tag">Tentang Kami</div>
-    <h2>${t.name}</h2>
-    <p class="about-desc">${t.description||t.sub}</p>
-    <ul class="about-checks">${mn.slice(0,6).map(m=>`<li><span class="ck">◆</span>${m}</li>`).join('')}</ul>
-  </div>
-  <div class="about-img"><img src="assets/foto-bisnis-anda.png" alt="tentang"></div>
-</section>
-<section class="products"><div class="products-inner">
-  <div class="sec-head"><h2>Layanan Unggulan</h2><p>Excellence curated for the discerning client</p></div>
-  <div class="prod-grid">${mn.slice(0,4).map((name,i)=>`
-    <div class="prod-card">
-      <div class="prod-img"><img src="${fImg(i)}" alt="${name}"></div>
-      <div class="prod-body">
-        <div class="prod-name">${name}</div>
-        <div class="prod-price">${fPrice(t.cat,i)}</div>
-        <div class="prod-meta"><span class="prod-stars">★★★★★</span><span>${fStar(i)}</span><span>·</span><span>${fBuy(i)} klien</span></div>
-        <a href="#" class="prod-btn">Pesan</a>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-tl"></div>
+  <div class="hero-glow-br"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag"><span class="hero-tag-dot"></span>Digital Agency · Est. 2018</div>
+      <h1>Kami Membangun<br><span class="neon">Masa Depan</span><br>Digital Anda</h1>
+      <p class="hero-sub">${t.sub}</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/${wa}" class="btn-neon">Mulai Project →</a>
+        <a href="#services" class="btn-outline">Lihat Layanan</a>
       </div>
-    </div>`).join('')}
+      <div class="hero-metrics">
+        <div class="hero-metric"><div class="hero-metric-num">150+</div><div class="hero-metric-lbl">Project Selesai</div></div>
+        <div class="hero-metric"><div class="hero-metric-num">98%</div><div class="hero-metric-lbl">On-Time Delivery</div></div>
+        <div class="hero-metric"><div class="hero-metric-num">5★</div><div class="hero-metric-lbl">Rating Klien</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-terminal">
+        <div class="terminal-bar"><div class="terminal-dot" style="background:#FF5F57"></div><div class="terminal-dot" style="background:#FEBC2E"></div><div class="terminal-dot" style="background:#28C840"></div><span style="font-size:.72rem;color:rgba(203,213,225,.3);margin-left:.5rem">nexus_digital.sh</span></div>
+        <div class="terminal-line"><span class="cmd">$ </span><span class="str">init_project</span> <span class="val">--client="YourBrand"</span></div>
+        <div class="terminal-line" style="color:#86EFAC">✓ Repository created</div>
+        <div class="terminal-line" style="color:#86EFAC">✓ Tech stack configured</div>
+        <div class="terminal-line" style="color:#86EFAC">✓ AI modules loaded</div>
+        <div class="terminal-line"><span class="cmd">$ </span><span class="str">deploy</span> <span class="val">--env=production</span></div>
+        <div class="terminal-line" style="color:${a}">⚡ Build: 1.2s · Perf: 99/100</div>
+        <div class="terminal-line"><span class="cmd">$ </span><span class="cmd">_</span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
   </div>
-</div></section>
-<section class="gallery"><div class="gallery-inner">
-  <div class="sec-head"><h2>Galeri</h2><p>A curated collection of our finest work</p></div>
-  <div class="gallery-grid">${[0,1,2,3,4,5].map(i=>`<div class="gal-item"><img src="${fImg(i)}" alt="galeri ${i+1}"></div>`).join('')}</div>
-</div></section>
-<section class="testimonials"><div class="testi-inner">
-  <div class="sec-head"><h2>Kata Klien</h2><p>Pengalaman yang berbicara sendiri</p></div>
+</section>
+
+<section id="services" class="services-section">
+  <div class="services-header">
+    <div class="sec-badge">Layanan Utama</div>
+    <h2 class="sec-h2">Solusi Digital<br><span>End-to-End</span></h2>
+  </div>
+  <div class="services-grid">
+    ${mn.slice(0,4).map(function(m,i){var icons=['🌐','🤖','☁️','🎨'];var nums=['01','02','03','04'];var descs=['Web & mobile app dengan performance score 95+. React, Next.js, Flutter. Scalable dari hari pertama.','Machine learning, NLP, dan automation pipeline. Solusi AI custom untuk kebutuhan bisnis spesifik Anda.','AWS, GCP, Azure architecture. CI/CD pipeline, containerization, monitoring 24/7 real-time.','UX research, design system, prototyping. Desain yang mengkonversi dan mencerminkan brand premium.'];return '<div class="menu-item"><div class="svc-num">'+nums[i%4]+'</div><div class="svc-icon-box">'+icons[i%4]+'</div><h3 class="svc-name">'+m+'</h3><p class="svc-desc">'+descs[i%4]+'</p><span class="svc-link">Pelajari lebih →</span></div>';}).join('')}
+  </div>
+</section>
+
+<section class="gallery"><p>placeholder</p></section>
+
+<div id="tech" class="tech-section"><div class="tech-inner">
+  <span class="tech-label">Tech Stack</span>
+  <div class="tech-tags">
+    ${['React','Next.js','Node.js','Python','TensorFlow','AWS','Docker','PostgreSQL','Redis','Figma','TypeScript','GraphQL'].map(function(t){return '<span class="tech-tag">'+t+'</span>';}).join('')}
+  </div>
+</div></div>
+
+<section id="testi" class="testi-section"><div class="testi-inner">
+  <div><div class="sec-badge">Klien Kami</div><h2 class="sec-h2">Dipercaya <span>150+</span><br>Klien Enterprise</h2></div>
   <div class="testi-grid">${testiHTML()}</div>
 </div></section>
-<section class="pricing"><div class="pricing-inner">
-  <div class="sec-head"><h2>Paket Eksklusif</h2><p>Investasi terbaik untuk bisnis Anda</p></div>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Klasik</div><div class="price-amt">Rp 199<span style="font-size:1.2rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Hingga 10 Produk</li><li>Galeri 5 Foto</li><li>Formulir Kontak</li><li>Mobile Friendly</li><li>Support 30 Hari</li></ul><a href="#" class="price-btn price-btn-def">Mulai</a></div>
-    <div class="price-card featured"><div class="price-badge">PALING POPULER</div><div class="price-tier">Premium</div><div class="price-amt">Rp 499<span style="font-size:1.2rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Produk Tidak Terbatas</li><li>Galeri 20 Foto</li><li>Pemesanan Online</li><li>SEO Optimization</li><li>Support 24/7</li><li>Analitik Website</li></ul><a href="#" class="price-btn price-btn-feat">Pilih Premium</a></div>
-    <div class="price-card"><div class="price-tier">Eksklusif</div><div class="price-amt">Rp 999<span style="font-size:1.2rem;font-weight:300">.000</span></div><div class="price-period">per bulan</div><div class="price-div"></div><ul class="price-features"><li>Semua Fitur Premium</li><li>Domain Custom</li><li>Integrasi Payment</li><li>Multi-bahasa</li><li>API Access</li><li>Manajer Pribadi</li></ul><a href="#" class="price-btn price-btn-def">Hubungi Kami</a></div>
-  </div>
-</div></section>
-<section class="faq-sec"><div class="faq-inner">
-  <div class="sec-head"><h2>Pertanyaan Umum</h2><p>Kami siap memberikan jawaban terbaik</p></div>
-  <div class="faq-list">${faqHTML()}</div>
-</div></section>
-<section class="cta-band">
-  <h2>Mulai Pengalaman Premium</h2>
-  <p>Hubungi tim kami untuk konsultasi eksklusif dan penawaran yang disesuaikan khusus untuk Anda.</p>
-  <a href="#" class="cta-btn">HUBUNGI KAMI SEKARANG</a>
+
+<section id="faq" class="faq-section">
+  <div style="margin-bottom:3rem"><div class="sec-badge">FAQ</div><h2 class="sec-h2">Pertanyaan Umum</h2></div>
+  ${faqHTML().replace(/<details>/g,'<details class="faq-details">').replace(/<summary>/g,'<summary>')}
 </section>
-<footer><div class="footer-inner">
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-brand-name">${t.name}</div><p>${(t.sub||'').substring(0,100)}</p></div>
-    <div class="footer-col"><h4>Layanan</h4><ul class="footer-links">${mn.slice(0,4).map(m=>`<li><a href="#">${m}</a></li>`).join('')}</ul></div>
-    <div class="footer-col"><h4>Informasi</h4><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Portfolio</a></li><li><a href="#">Promo</a></li><li><a href="#">Karir</a></li></ul></div>
-    <div class="footer-col"><h4>Kontak</h4><ul class="footer-links"><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li><li><a href="#">Kantor</a></li></ul></div>
+
+<section class="cta-section">
+  <div class="cta-grid"></div>
+  <div class="cta-glow"></div>
+  <div style="position:relative;z-index:1">
+    <div class="sec-badge" style="margin-bottom:1.5rem">Mulai Sekarang</div>
+    <h2 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:#fff;margin-bottom:1rem;letter-spacing:-.03em;line-height:1.15">Siap <span style="color:${p};text-shadow:0 0 30px ${p}66">Mendominasi</span><br>Era Digital?</h2>
+    <p style="font-size:.9rem;color:rgba(203,213,225,.4);margin-bottom:2.5rem">Brief project Anda. Kami siap dalam 24 jam.</p>
+    <a href="https://wa.me/${wa}" class="btn-neon">Hubungi via WhatsApp →</a>
   </div>
-  <div class="footer-bottom"><span>© 2025 ${t.name}. ALL RIGHTS RESERVED.</span><span>EXCELLENCE IN EVERY DETAIL</span></div>
-</div></footer>
-</body></html>`;}
+</section>
 
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-placeholder.png" alt="${t.name}">
+  <span class="footer-copy">© 2025 ${t.name}. All rights reserved.</span>
+  <div class="footer-links"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="https://wa.me/${wa}">WhatsApp</a></div>
+</footer>
+</body></html>`;
+}
 
-/* ============================================================ */
-/* MINI CARD PREVIEW RENDERER                                    */
-/* ============================================================ */
-function getCardPreviewStyle(tpl){
-  var styles={
-    minimalist:{bg:'#FAFAFA',navBg:'#fff',navBorder:'1px solid #E5E5E5',navColor:'#333',heroGrad:'linear-gradient(135deg,'+tpl.secondary+' 0%,'+tpl.primary+'22 100%)',h1Color:'#1A1A1A',btnBg:tpl.primary,btnColor:'#fff',font:'DM Sans'},
-    corporate:{bg:tpl.primary,navBg:tpl.primary,navBorder:'none',navColor:'#fff',heroGrad:'linear-gradient(135deg,'+tpl.primary+','+tpl.secondary+')',h1Color:'#fff',btnBg:'#fff',btnColor:tpl.primary,font:'Inter'},
-    luxury:{bg:'#0A0A0A',navBg:'rgba(10,10,10,.95)',navBorder:'1px solid '+tpl.secondary+'33',navColor:tpl.secondary,heroGrad:'radial-gradient(ellipse at 50% 30%,'+tpl.primary+'22 0%,transparent 65%)',h1Color:'#fff',btnBg:tpl.secondary,btnColor:'#000',font:'serif'},
-    dark:{bg:'#0D0D0D',navBg:'#111',navBorder:'1px solid rgba(255,255,255,.08)',navColor:'#888',heroGrad:'linear-gradient(160deg,#0D0D0D 50%,'+tpl.primary+'11 100%)',h1Color:'#fff',btnBg:tpl.primary,btnColor:'#fff',font:'Space Grotesk'},
-    glassmorphism:{bg:'linear-gradient(135deg,#0F0520,#1A0635,#0E1B3D)',navBg:'rgba(10,5,20,.6)',navBorder:'1px solid rgba(255,255,255,.08)',navColor:'rgba(255,255,255,.7)',heroGrad:'radial-gradient(ellipse at 50%,-10%,'+tpl.primary+'33 0%,'+tpl.secondary+'11 40%,transparent)',h1Color:'#fff',btnBg:'linear-gradient(135deg,'+tpl.primary+','+tpl.secondary+')',btnColor:'#fff',font:'Plus Jakarta Sans'},
-    neon:{bg:'#030305',navBg:'rgba(3,3,5,.9)',navBorder:'1px solid '+tpl.primary+'44',navColor:tpl.primary,heroGrad:'#030305',h1Color:tpl.primary,btnBg:'transparent',btnColor:tpl.primary,font:'Rajdhani'},
-    startup:{bg:'#050510',navBg:'rgba(5,5,16,.85)',navBorder:'1px solid rgba(255,255,255,.07)',navColor:'#8892A4',heroGrad:'radial-gradient(ellipse at 50% -10%,'+tpl.primary+'33 0%,transparent 70%)',h1Color:'#fff',btnBg:'linear-gradient(135deg,'+tpl.primary+','+tpl.secondary+')',btnColor:'#fff',font:'Inter'},
-    elegant:{bg:'#FAFAF6',navBg:'#fff',navBorder:'1px solid #EDE8E3',navColor:'#888',heroGrad:'linear-gradient(135deg,'+tpl.secondary+','+tpl.primary+'22)',h1Color:'#2A1E1A',btnBg:tpl.primary,btnColor:'#fff',font:'Libre Baskerville'},
-    futuristic:{bg:'#050910',navBg:'rgba(5,9,16,.9)',navBorder:'1px solid '+tpl.accent+'22',navColor:tpl.accent,heroGrad:'#050910',h1Color:'#fff',btnBg:'transparent',btnColor:tpl.accent,font:'Exo 2'},
-    premium:{bg:'#0B0F1E',navBg:'rgba(11,15,30,.95)',navBorder:'1px solid '+tpl.primary+'22',navColor:tpl.primary,heroGrad:'radial-gradient(ellipse at 50% 30%,'+tpl.secondary+'18 0%,transparent 70%)',h1Color:'#fff',btnBg:'linear-gradient(135deg,'+tpl.primary+',#FFF3B0)',btnColor:'#000',font:'Cinzel'},
-  };
-  return styles[tpl.style]||styles.startup;
+/* ── 5. ZENITH BUSINESS — Editorial Bold ────────────────────── */
+function tmplZenith(t,base){
+  var p=t.primary,s=t.secondary,a=t.accent;
+  var mn=t.menu||[];while(mn.length<4)mn=mn.concat(mn);
+  var wa='6281234567890';
+  return `<!DOCTYPE html><html lang="id"><head><base href="${base}"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${t.name}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#060609;color:#D4D4D8;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{display:block;width:100%;object-fit:cover}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.1rem 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,9,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(139,92,246,.08)}
+.nav-logo{height:28px;filter:brightness(0) invert(1)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:500;color:rgba(212,212,216,.4);transition:color .3s}.nav-links a:hover{color:#fff}
+.nav-cta{padding:.48rem 1.2rem;background:linear-gradient(135deg,${p},${s});color:#fff;font-size:.75rem;font-weight:700;border-radius:6px;font-family:'Syne',sans-serif;transition:all .3s}
+.nav-cta:hover{opacity:.9;transform:translateY(-1px)}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:70px}
+.hero-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4}
+.hero-grad{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,${p}18 0%,transparent 65%)}
+.hero-inner{position:relative;z-index:2;padding:0 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.hero-label{font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:${p};margin-bottom:1.5rem;display:flex;align-items:center;gap:.7rem}
+.hero-label::before{content:'';width:24px;height:1px;background:${p}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5.5vw,4.8rem);font-weight:800;line-height:1.02;color:#fff;letter-spacing:-.04em;margin-bottom:1.5rem}
+.hero h1 .grad{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:.95rem;color:rgba(212,212,216,.45);line-height:1.9;max-width:440px;margin-bottom:2.5rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-grad{padding:.88rem 2.2rem;background:linear-gradient(135deg,${p},${s});color:#fff;font-size:.82rem;font-weight:700;border-radius:8px;transition:all .35s;font-family:'Syne',sans-serif}
+.btn-grad:hover{transform:translateY(-2px);box-shadow:0 16px 40px ${p}40}
+.btn-border{padding:.88rem 2.2rem;border:1px solid rgba(139,92,246,.25);color:rgba(212,212,216,.65);font-size:.82rem;font-weight:500;border-radius:8px;transition:all .3s}
+.btn-border:hover{border-color:${p}66;color:${p};background:${p}08}
+.hero-proof{display:flex;gap:2rem;padding-top:1.5rem;border-top:1px solid rgba(139,92,246,.1)}
+.hero-proof-item{}
+.hero-proof-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;line-height:1}
+.hero-proof-num span{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-proof-lbl{font-size:.7rem;color:rgba(212,212,216,.35);margin-top:.2rem;letter-spacing:.05em}
+.hero-right{position:relative}
+.hero-img-frame{border-radius:16px;overflow:hidden;aspect-ratio:4/5;position:relative;border:1px solid rgba(139,92,246,.12)}
+.hero-img-frame img{height:100%;object-fit:cover}
+.hero-img-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,${p}15,${s}10)}
+.hero-card-float{position:absolute;bottom:-1rem;left:-2rem;background:rgba(6,6,9,.95);border:1px solid rgba(139,92,246,.2);border-radius:12px;padding:1rem 1.2rem;backdrop-filter:blur(16px)}
+.hero-card-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:#fff;margin-bottom:.2rem}
+.hero-card-sub{font-size:.72rem;color:rgba(212,212,216,.4)}
+.hero-card-bar{height:3px;background:rgba(139,92,246,.15);border-radius:2px;margin-top:.7rem;overflow:hidden}
+.hero-card-fill{height:100%;background:linear-gradient(90deg,${p},${s});border-radius:2px;width:78%;animation:fillBar 2s ease-out .5s both}
+@keyframes fillBar{from{width:0}to{width:78%}}
+
+.services-section{padding:7rem 5%;max-width:1200px;margin:0 auto}
+.sec-eyebrow{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:${p};margin-bottom:1rem}
+.sec-h3{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15;margin-bottom:.8rem}
+.sec-h3 span{background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:4rem}
+.menu-item{background:rgba(255,255,255,.025);border:1px solid rgba(139,92,246,.1);border-radius:16px;padding:2rem;position:relative;overflow:hidden;cursor:pointer;transition:all .4s}
+.menu-item::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,${p}08,${s}08);opacity:0;transition:opacity .4s;border-radius:16px}
+.menu-item:hover{border-color:rgba(139,92,246,.3);transform:translateY(-4px);box-shadow:0 20px 50px ${p}15}
+.menu-item:hover::before{opacity:1}
+.svc-icon2{font-size:1.8rem;margin-bottom:1.2rem}
+.svc-name2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.5rem;letter-spacing:-.02em}
+.svc-desc2{font-size:.82rem;color:rgba(212,212,216,.4);line-height:1.7;margin-bottom:1.3rem}
+.svc-link2{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;color:${p};display:flex;align-items:center;gap:.4rem;transition:gap .3s}
+.menu-item:hover .svc-link2{gap:.7rem}
+
+section.gallery{display:none}
+
+.about-section{padding:7rem 5%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-img-stack{position:relative}
+.about-img-main{border-radius:16px;overflow:hidden;aspect-ratio:5/4}
+.about-img-main img{height:100%;object-fit:cover}
+.about-stat-card{position:absolute;bottom:-1.5rem;right:-1.5rem;background:linear-gradient(135deg,${p},${s});border-radius:12px;padding:1.2rem 1.5rem;text-align:center}
+.about-stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:#fff;line-height:1}
+.about-stat-lbl{font-size:.68rem;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem}
+.about-feats{margin-top:2.5rem;display:flex;flex-direction:column;gap:1.2rem}
+.about-feat-item{display:flex;gap:.8rem;padding:1.1rem;border:1px solid rgba(139,92,246,.1);border-radius:12px;transition:border-color .3s}
+.about-feat-item:hover{border-color:rgba(139,92,246,.3)}
+.about-feat-icon{font-size:1.2rem;flex-shrink:0}
+.about-feat-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.2rem}
+.about-feat-txt{font-size:.8rem;color:rgba(212,212,216,.4);line-height:1.65}
+
+.testi-section{padding:7rem 5%;background:rgba(139,92,246,.03);border-top:1px solid rgba(139,92,246,.08)}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:4rem}
+.testi-card{background:rgba(255,255,255,.025);border:1px solid rgba(139,92,246,.1);border-radius:16px;padding:1.8rem}
+.testi-stars{color:${a};font-size:.9rem;margin-bottom:.9rem}
+.testi-text{font-size:.88rem;color:rgba(212,212,216,.55);line-height:1.8;margin-bottom:1.3rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-av{width:36px;height:36px;background:linear-gradient(135deg,${p}33,${s}33);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:${p};font-family:'Syne',sans-serif}
+.testi-name{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:600;color:rgba(212,212,216,.8)}.testi-role{font-size:.7rem;color:rgba(212,212,216,.3)}
+
+.faq-section{padding:7rem 5%;max-width:800px;margin:0 auto}
+.faq-details{border-bottom:1px solid rgba(139,92,246,.1)}
+.faq-details summary{padding:1.3rem 0;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:500;color:rgba(212,212,216,.6);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+.faq-details summary:hover{color:#fff}
+.faq-details summary::after{content:'+';color:${p};font-size:1.1rem}
+.faq-details[open] summary::after{content:'−'}
+.faq-answer{padding:.5rem 0 1.3rem;font-size:.83rem;color:rgba(212,212,216,.4);line-height:1.75}
+
+.cta-section{padding:9rem 5%;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,${p}12 0%,transparent 65%)}
+.cta-noise{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.footer{padding:2.5rem 5%;border-top:1px solid rgba(139,92,246,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{height:26px;filter:brightness(0) invert(1)}
+.footer-copy{font-size:.72rem;color:rgba(212,212,216,.2)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'Syne',sans-serif;font-size:.7rem;color:rgba(212,212,216,.25);transition:color .3s}.footer-links a:hover{color:${p}}
+
+@media(max-width:768px){.nav-links{display:none}.hero-inner{grid-template-columns:1fr}.hero-right{display:none}.about-section{grid-template-columns:1fr;gap:3rem}.hero-proof{gap:1.5rem}}
+</style></head>
+<body>
+<nav class="nav">
+  <a href="#"><img class="nav-logo" src="assets/logo-placeholder.png" alt="${t.name}"></a>
+  <ul class="nav-links"><li><a href="#services">Layanan</a></li><li><a href="#about">Tentang</a></li><li><a href="#testi">Klien</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a href="https://wa.me/${wa}" class="nav-cta">Konsultasi →</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Premium Business Solutions</p>
+      <h1>${t.headline.replace('Tertinggi','<span class="grad">Tertinggi</span>')}</h1>
+      <p class="hero-sub">${t.sub}</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/${wa}" class="btn-grad">Konsultasi Gratis</a>
+        <a href="#services" class="btn-border">Lihat Layanan</a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-proof-item"><div class="hero-proof-num"><span>500+</span></div><div class="hero-proof-lbl">Klien Aktif</div></div>
+        <div class="hero-proof-item"><div class="hero-proof-num"><span>8M+</span></div><div class="hero-proof-lbl">Revenue Generated</div></div>
+        <div class="hero-proof-item"><div class="hero-proof-num"><span>4.9★</span></div><div class="hero-proof-lbl">Rating Rata-rata</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-frame"><img src="assets/foto-produk-1.png" alt="business"></div>
+      <div class="hero-card-float">
+        <div class="hero-card-title">Business Growth</div>
+        <div class="hero-card-sub">Q4 2025 · ROI +240%</div>
+        <div class="hero-card-bar"><div class="hero-card-fill"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services-section">
+  <div class="sec-eyebrow">Layanan Unggulan</div>
+  <h2 class="sec-h3">Solusi Bisnis <span>Premium</span><br>untuk Brand Anda</h2>
+  <div class="services-grid">
+    ${mn.slice(0,4).map(function(m,i){var icons=['💡','📣','📊','🚀'];var descs=['Identitas brand yang kuat, positioning tepat sasaran, dan strategi yang membuat Anda unggul dari kompetitor.','Kampanye digital multi-channel yang terukur. SEO, paid ads, content, dan social media dalam satu ekosistem.','Analitik mendalam, KPI tracking, dan laporan pertumbuhan real-time. Keputusan berdasarkan data akurat.','Skalakan bisnis 3-10x dalam 12 bulan dengan roadmap strategis yang telah terbukti menghasilkan ROI tinggi.'];return '<div class="menu-item"><div class="svc-icon2">'+icons[i%4]+'</div><h3 class="svc-name2">'+m+'</h3><p class="svc-desc2">'+descs[i%4]+'</p><span class="svc-link2">Pelajari →</span></div>';}).join('')}
+  </div>
+</section>
+
+<section class="gallery"><p>placeholder</p></section>
+
+<section id="about" class="about-section">
+  <div class="about-img-stack">
+    <div class="about-img-main"><img src="assets/foto-produk-2.png" alt="team"></div>
+    <div class="about-stat-card"><div class="about-stat-num">500+</div><div class="about-stat-lbl">Bisnis Sukses</div></div>
+  </div>
+  <div>
+    <div class="sec-eyebrow">Tentang Kami</div>
+    <h2 class="sec-h3">Partner Bisnis<br>yang <span>Anda Percaya</span></h2>
+    <p style="font-size:.88rem;color:rgba(212,212,216,.4);line-height:1.85;margin:1rem 0 2rem;font-weight:300">${t.sub}</p>
+    <div class="about-feats">
+      <div class="about-feat-item"><span class="about-feat-icon">💡</span><div><div class="about-feat-title">Solusi Tepat Sasaran</div><p class="about-feat-txt">Kami memahami tantangan UMKM dan bisnis Indonesia. Solusi bukan teori — langsung menghasilkan.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">📱</span><div><div class="about-feat-title">Ekosistem Digital Lengkap</div><p class="about-feat-txt">Terintegrasi dengan semua platform digital populer Indonesia. Satu atap, satu solusi.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">💬</span><div><div class="about-feat-title">Dukungan 7 Hari Penuh</div><p class="about-feat-txt">Tim support dedicated via WhatsApp, telepon, email, dan kunjungan langsung ke bisnis Anda.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="testi" class="testi-section"><div class="testi-inner">
+  <div class="sec-eyebrow">Klien Kami</div>
+  <h2 class="sec-h3">500+ Bisnis <span>Telah Berkembang</span><br>Bersama Kami</h2>
+  <div class="testi-grid">${testiHTML()}</div>
+</div></section>
+
+<section id="faq" class="faq-section">
+  <div style="margin-bottom:3rem"><div class="sec-eyebrow">FAQ</div><h2 class="sec-h3">Pertanyaan Umum</h2></div>
+  ${faqHTML().replace(/<details>/g,'<details class="faq-details">').replace(/<summary>/g,'<summary>')}
+</section>
+
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-noise"></div>
+  <div style="position:relative;z-index:1">
+    <div class="sec-eyebrow" style="margin-bottom:1.5rem;display:block">Mulai Hari Ini</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:800;color:#fff;margin-bottom:1rem;letter-spacing:-.04em;line-height:1.05">Saatnya Bisnis Anda<br>Tampil di <span style="background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Level Tertinggi</span></h2>
+    <p style="font-size:.95rem;color:rgba(212,212,216,.4);margin-bottom:2.5rem;font-weight:300;max-width:500px;margin-left:auto;margin-right:auto">Konsultasi gratis. Tidak ada komitmen. Kami buktikan nilai kami dulu.</p>
+    <a href="https://wa.me/${wa}" class="btn-grad" style="font-size:.88rem;padding:1rem 2.8rem">Hubungi via WhatsApp →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-placeholder.png" alt="${t.name}">
+  <span class="footer-copy">© 2025 ${t.name}. All rights reserved.</span>
+  <div class="footer-links"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="https://wa.me/${wa}">WhatsApp</a></div>
+</footer>
+</body></html>`;
 }
