@@ -79,18 +79,15 @@ function generatePremiumInjection(t){
   return '<style id="__prem">'+
   'html{scroll-behavior:smooth}'+
   '::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:'+ac+'55;border-radius:2px}::-webkit-scrollbar-thumb:hover{background:'+ac+'}'+
-  '.product-card,.menu-item,.prod-card,.pkg-card,.item-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease!important}'+
-  '.product-card:hover,.menu-item:hover,.prod-card:hover,.pkg-card:hover,.item-card:hover{transform:translateY(-6px)!important}'+
   '.btn-fill,.btn-primary,.btn-cta,.order-btn,[class*="btn-p"]{position:relative!important;overflow:hidden!important}'+
   '.btn-fill::before,.btn-primary::before,.btn-cta::before,.order-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent);transform:translateX(-110%);transition:transform .55s ease}'+
   '.btn-fill:hover::before,.btn-primary:hover::before,.btn-cta:hover::before,.order-btn:hover::before{transform:translateX(110%)}'+
   '</style>'+
   '<script>(function(){'+
-  'var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add("__v");obs.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -30px 0px"});'+
+  'var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){var el=e.target;el.style.opacity="1";el.style.transform="translateY(0)";obs.unobserve(el);setTimeout(function(){el.style.opacity="";el.style.transform="";el.style.transition="";},700);}})},{threshold:.05});'+
   'document.querySelectorAll(".product-card,.menu-item,.prod-card,.testi-card,.faq-details,.about-feat-item,.proses-step,.ki-item,.service-item,.pkg-card").forEach(function(el,i){'+
-  'el.style.opacity="0";el.style.transform="translateY(22px)";el.style.transition="opacity .65s cubic-bezier(.22,1,.36,1) "+(i%4*.09)+"s,transform .65s cubic-bezier(.22,1,.36,1) "+(i%4*.09)+"s";'+
+  'el.style.opacity="0";el.style.transform="translateY(20px)";el.style.transition="opacity .6s ease "+(i%4*.08)+"s,transform .6s cubic-bezier(.22,1,.36,1) "+(i%4*.08)+"s";'+
   'obs.observe(el);});'+
-  'document.querySelectorAll(".__v").forEach(function(el){el.style.opacity="1";el.style.transform="none"});'+
   '})();<\/script>';
 }
 
