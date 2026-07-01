@@ -135,8 +135,8 @@
             <div style="font-size:12px;color:${p};letter-spacing:.28em;text-transform:uppercase;margin-bottom:26px;display:flex;align-items:center;gap:12px"><div style="width:28px;height:1px;background:${p}"></div>Premium Living</div>
             <div style="font-size:66px;font-weight:400;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:22px;font-family:Georgia,serif">Ruang Hidup<br>yang <span style="color:${p};font-style:italic">Mendefinisikan</span><br>Kemewahan</div>
             <div style="display:flex;gap:32px;margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid ${p}14">
-              <div><div style="font-size:34px;font-weight:400;color:${p};font-family:Georgia,serif">500+</div><div style="font-size:11px;color:rgba(212,196,168,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:3px">Unit Terjual</div></div>
-              <div><div style="font-size:34px;font-weight:400;color:${p};font-family:Georgia,serif">98%</div><div style="font-size:11px;color:rgba(212,196,168,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:3px">Kepuasan</div></div>
+              <div><div style="font-size:34px;font-weight:400;color:${p};font-family:Georgia,serif">—</div><div style="font-size:11px;color:rgba(212,196,168,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:3px">Diisi sesuai data</div></div>
+              <div><div style="font-size:34px;font-weight:400;color:${p};font-family:Georgia,serif">—</div><div style="font-size:11px;color:rgba(212,196,168,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:3px">Diisi sesuai data</div></div>
               <div><div style="font-size:34px;font-weight:400;color:${p};font-family:Georgia,serif">15+</div><div style="font-size:11px;color:rgba(212,196,168,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:3px">Tahun</div></div>
             </div>
             <div style="display:flex;gap:12px">
@@ -212,7 +212,7 @@
             </div>
             <div style="display:flex;gap:22px">
               <div style="border-left:1px solid ${p}33;padding-left:13px"><div style="font-size:20px;font-weight:700;color:${p}">150+</div><div style="font-size:10px;color:rgba(203,213,225,.3);letter-spacing:.05em">Project</div></div>
-              <div style="border-left:1px solid ${p}33;padding-left:13px"><div style="font-size:20px;font-weight:700;color:${p}">98%</div><div style="font-size:10px;color:rgba(203,213,225,.3);letter-spacing:.05em">On-time</div></div>
+              <div style="border-left:1px solid ${p}33;padding-left:13px"><div style="font-size:20px;font-weight:700;color:${p}">—</div><div style="font-size:10px;color:rgba(203,213,225,.3);letter-spacing:.05em">Diisi sesuai data</div></div>
               <div style="border-left:1px solid ${p}33;padding-left:13px"><div style="font-size:20px;font-weight:700;color:${p}">5★</div><div style="font-size:10px;color:rgba(203,213,225,.3);letter-spacing:.05em">Rating</div></div>
             </div>
           </div>
@@ -257,9 +257,9 @@
               <div style="border:1px solid rgba(139,92,246,.25);color:rgba(212,212,216,.6);font-size:13px;padding:13px 30px;border-radius:8px">Lihat Layanan</div>
             </div>
             <div style="display:flex;gap:24px;padding-top:18px;border-top:1px solid rgba(139,92,246,.1)">
-              <div><div style="font-size:24px;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">500+</div><div style="font-size:10px;color:rgba(212,212,216,.28);margin-top:2px">Klien Aktif</div></div>
+              <div><div style="font-size:24px;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">—</div><div style="font-size:10px;color:rgba(212,212,216,.28);margin-top:2px">Diisi sesuai data</div></div>
               <div><div style="font-size:24px;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">8M+</div><div style="font-size:10px;color:rgba(212,212,216,.28);margin-top:2px">Revenue</div></div>
-              <div><div style="font-size:24px;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">4.9★</div><div style="font-size:10px;color:rgba(212,212,216,.28);margin-top:2px">Rating</div></div>
+              <div><div style="font-size:24px;font-weight:800;background:linear-gradient(135deg,${p},${s});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">—</div><div style="font-size:10px;color:rgba(212,212,216,.28);margin-top:2px">Diisi sesuai data</div></div>
             </div>
           </div>
           <div>

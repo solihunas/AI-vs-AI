@@ -4,8 +4,8 @@
 
 const _RATES=[4.8,4.9,4.9,5.0,4.8,5.0,4.9,4.8,4.9,5.0];
 const _BUYS=[523,1247,891,672,1089,543,2134,734,956,1423];
-function fStar(i){return _RATES[i%_RATES.length].toFixed(1);}
-function fBuy(i){var n=_BUYS[i%_BUYS.length];return n>=1000?(n/1000).toFixed(1).replace('.',',')+'rb':''+n;}
+function fStar(i){return '—';}
+function fBuy(i){return '—';}
 function fImg(i){return 'assets/foto-produk-'+((i%7)+1)+'.png';}
 function fPrice(cat,i){
   var p=[[25,49,75,99],[850,1200,2500,5000],[85,150,250,399],[299,599,999,1999],[199,349,599,899]];
@@ -17,17 +17,17 @@ function fPrice(cat,i){
 
 /* Shared FAQ HTML (same content all templates) */
 function faqHTML(){return `
-  <details><summary>Berapa lama proses pengerjaan?</summary><div class="faq-answer">Umumnya 3–7 hari kerja tergantung kompleksitas desain. Kami mengutamakan ketepatan waktu tanpa mengorbankan kualitas.</div></details>
-  <details><summary>Apakah saya bisa request revisi desain?</summary><div class="faq-answer">Tentu! Setiap paket mencakup revisi gratis hingga 3 kali. Revisi tambahan tersedia dengan biaya sangat terjangkau.</div></details>
-  <details><summary>Apakah website mobile-friendly?</summary><div class="faq-answer">Ya, semua website yang kami buat sudah responsive dan tampil sempurna di smartphone, tablet, maupun komputer desktop.</div></details>
-  <details><summary>Bagaimana cara melakukan pemesanan?</summary><div class="faq-answer">Pilih paket yang sesuai, klik tombol "Pesan Sekarang", isi form kebutuhan Anda. Tim kami menghubungi dalam 1×24 jam.</div></details>
-  <details><summary>Apakah ada garansi dan dukungan purna jual?</summary><div class="faq-answer">Ya! Setiap pembelian dilengkapi garansi kepuasan dan dukungan teknis sesuai paket yang dipilih.</div></details>`;}
+  <details><summary>Berapa lama proses pengerjaan?</summary><div class="faq-answer">Tergantung scope dan kesiapan konten (teks/foto). Setelah brief jelas, kami berikan estimasi yang realistis.</div></details>
+  <details><summary>Apakah bisa revisi?</summary><div class="faq-answer">Bisa. Jumlah revisi mengikuti paket yang dipilih. Kami sarankan feedback dikumpulkan dalam satu list agar revisi efisien.</div></details>
+  <details><summary>Apakah website mobile-friendly?</summary><div class="faq-answer">Ya. Tampilan dirancang responsif untuk mobile dan desktop, dengan fokus pada navigasi yang jelas.</div></details>
+  <details><summary>Bagaimana proses pemesanan?</summary><div class="faq-answer">Mulai dari konsultasi singkat → brief & konten → desain awal → revisi → publish. Semua tahap dijelaskan di awal supaya tidak membingungkan.</div></details>
+  <details><summary>Apakah ada garansi?</summary><div class="faq-answer">Ada garansi bug teknis sesuai paket yang dipilih. Perubahan fitur baru di luar scope dikerjakan sebagai pengembangan terpisah.</div></details>`;}
 
 /* Shared testimonials HTML */
 function testiHTML(){return `
-  <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Pelayanan sangat memuaskan! Kualitas produk jauh melebihi ekspektasi saya. Pasti akan kembali lagi."</p><div class="testi-author"><div class="testi-av">BS</div><div><div class="testi-name">Budi Santoso</div><div class="testi-role">Pelanggan Setia</div></div></div></div>
-  <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Sudah 2 tahun berlangganan, tidak pernah kecewa. Tim sangat ramah dan profesional dalam setiap layanan."</p><div class="testi-author"><div class="testi-av">SD</div><div><div class="testi-name">Sari Dewi</div><div class="testi-role">Member VIP</div></div></div></div>
-  <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Rekomendasi terbaik! Hasil kerja rapi, tepat waktu, dan harga sangat terjangkau untuk kualitas sebagus ini."</p><div class="testi-author"><div class="testi-av">AF</div><div><div class="testi-name">Ahmad Fauzi</div><div class="testi-role">Mitra Bisnis</div></div></div></div>`;}
+  <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Contoh testimoni. Konten bisa diganti sesuai data dan pengalaman customer bisnis Anda."</p><div class="testi-author"><div class="testi-av">KF</div><div><div class="testi-name">Klien F&amp;B</div><div class="testi-role">Landing Page</div></div></div></div>
+  <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Contoh testimoni. Fokus pada hal yang benar-benar dicari customer: jelas, rapi, dan mudah dihubungi."</p><div class="testi-author"><div class="testi-av">KC</div><div><div class="testi-name">Klien Corporate</div><div class="testi-role">Company Profile</div></div></div></div>
+  <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Contoh testimoni. Tampilkan manfaat spesifik, misalnya proses yang jelas dan hasil yang lebih profesional."</p><div class="testi-author"><div class="testi-av">KR</div><div><div class="testi-name">Klien Retail</div><div class="testi-role">Toko Online</div></div></div></div>`;}
 
 function generateSplash(t){
   var s=t.style;
@@ -118,11 +118,11 @@ function generateWhyUs(t){
   var sbg=sbgs[s]||'rgba(0,0,0,.1)';var cbg=cbgs[s]||'rgba(255,255,255,.04)';var bdr=bdrs[s]||'rgba(255,255,255,.06)';
   var p=t.primary;var bn=t.name.replace('WebsiteKu ','');
   var feats={
-    1:[['🌿','Bahan Segar Premium','Bahan pilihan langsung dari petani lokal terpercaya. Kesegaran dan kualitas tertinggi dijamin dalam setiap hidangan.'],['👨‍🍳','Chef Berpengalaman','Tim chef dengan pengalaman 10+ tahun di industri kuliner nasional dan internasional.'],['⚡','Pelayanan Cepat','Pesanan diproses dalam 15 menit. Waktu Anda sangat berharga bagi kami.'],['🏆','Terpercaya & Berpengalaman','Dipercaya 5.000+ pelanggan setia sejak 2015. Penghargaan restoran terbaik versi majalah kuliner nasional.']],
-    2:[['📍','Lokasi Strategis','Properti di kawasan premium dengan akses mudah ke pusat bisnis, sekolah internasional, dan fasilitas kota.'],['📋','Legalitas 100% Aman','SHM, IMB lengkap, dan telah melalui due diligence ketat oleh tim hukum independen kami.'],['🏗️','Konstruksi Premium','Material berstandar SNI dan internasional. Garansi struktur 10 tahun dengan teknisi bersertifikat.'],['🤝','After Sales Terbaik','Pendampingan KPR, balik nama, dan konsultasi renovasi 2 tahun penuh setelah serah terima kunci.']],
-    3:[['🩺','Dokter Tersertifikasi','Seluruh dokter tersertifikasi nasional BPOM & Kemenkes dengan pengalaman klinis 5+ tahun.'],['🔬','Teknologi Medis Modern','Peralatan terkini tersertifikasi resmi untuk hasil diagnostik akurat dan perawatan optimal.'],['🌸','Perawatan Personal','Program individual sesuai kondisi, kebutuhan, dan target kesehatan spesifik setiap klien.'],['✅','Hasil Terbukti','Lebih dari 5.000 klien puas, tingkat kepuasan 98% berdasarkan survei pasca-perawatan.']],
-    4:[['🚀','Teknologi Stack Terkini','Cloud computing, AI, dan DevOps modern untuk solusi digital yang scalable dan future-proof.'],['🔒','Keamanan Enterprise Grade','Enkripsi end-to-end, penetration testing berkala, kepatuhan penuh terhadap standar ISO 27001.'],['📊','Keputusan Berbasis Data','Dashboard analitik real-time dengan insight mendalam untuk pertumbuhan bisnis yang terukur.'],['🌐','Skalabilitas Global','Infrastruktur cloud elastis, siap mendukung pertumbuhan dari startup hingga enterprise internasional.']],
-    5:[['💡','Solusi Tepat Sasaran','Memahami tantangan UMKM Indonesia, menyediakan solusi praktis yang langsung menghasilkan nilai nyata.'],['📱','Ekosistem Digital Lengkap','Terintegrasi dengan Tokopedia, Shopee, WhatsApp Business, Instagram, dan platform digital populer.'],['🎯','Strategi Terukur','Pemasaran berbasis data dengan targeting presisi untuk memaksimalkan ROI investasi bisnis Anda.'],['💬','Dukungan Tanpa Henti','Tim support 7 hari/minggu via WhatsApp, telepon, email, dan kunjungan langsung.']]
+    1:[['🌿','Bahan Berkualitas','Contoh isi keunggulan. Teks bisa diganti sesuai menu, bahan, dan standar kualitas bisnis Anda.'],['👨‍🍳','Tim Berpengalaman','Contoh isi keunggulan. Ceritakan pengalaman tim/brand dan nilai yang membuat Anda berbeda.'],['⚡','Pelayanan Efisien','Contoh isi keunggulan. Jelaskan alur pemesanan, waktu layanan, dan pengalaman pelanggan.'],['🏆','Brand yang Konsisten','Contoh isi keunggulan. Tampilkan reputasi, highlight produk, atau USP yang bisa dibuktikan.']],
+    2:[['📍','Lokasi & Akses','Contoh isi keunggulan. Sesuaikan dengan area, akses, dan poin nilai properti Anda.'],['📋','Dokumen & Info Jelas','Contoh isi keunggulan. Cantumkan detail legalitas/ketentuan sesuai kondisi sebenarnya.'],['🏗️','Kualitas Konstruksi','Contoh isi keunggulan. Jelaskan material, spesifikasi, dan standar pengerjaan secara realistis.'],['🤝','Pendampingan Proses','Contoh isi keunggulan. Jelaskan proses penawaran, survei, dan bantuan administrasi sesuai layanan Anda.']],
+    3:[['🩺','Tenaga Profesional','Contoh isi keunggulan. Cantumkan kredensial yang benar dan bisa diverifikasi.'],['🔬','Peralatan & Metode','Contoh isi keunggulan. Jelaskan teknologi/metode sesuai layanan yang benar-benar tersedia.'],['🌸','Perawatan Personal','Contoh isi keunggulan. Jelaskan pendekatan konsultasi, treatment, dan tujuan pelanggan.'],['✅','Fokus pada Hasil','Contoh isi keunggulan. Sertakan klaim yang bisa dibuktikan atau gunakan bahasa yang aman.']],
+    4:[['🚀','Solusi Sesuai Kebutuhan','Contoh isi keunggulan. Tekankan hasil bisnis dan alur kerja yang dibangun.'],['🔒','Keamanan & Akses','Contoh isi keunggulan. Jelaskan kontrol akses, keamanan dasar, dan best practice.'],['📊','Data yang Mudah Dibaca','Contoh isi keunggulan. Jelaskan dashboard, laporan, dan export sesuai kebutuhan.'],['🌐','Siap Dikembangkan','Contoh isi keunggulan. Aplikasi bisa ditambah modul baru saat kebutuhan bertumbuh.']],
+    5:[['💡','Ringkas & Jelas','Contoh isi keunggulan. Teks dibuat fokus ke kebutuhan customer dan CTA yang jelas.'],['📱','Mobile Friendly','Contoh isi keunggulan. Tampilkan benefit UX, kecepatan, dan navigasi yang nyaman.'],['🎯','Konversi Lebih Baik','Contoh isi keunggulan. Fokus pada struktur konten yang membantu pengunjung mengambil keputusan.'],['💬','Support yang Realistis','Contoh isi keunggulan. Jelaskan jam operasional dan kanal support sesuai yang benar-benar Anda sediakan.']]
   };
   var fs=feats[t.cat]||feats[5];
   return '<section class="why-us" style="padding:5rem 5%;background:'+sbg+'"><div style="max-width:1200px;margin:0 auto"><div style="text-align:center;margin-bottom:3.5rem"><div style="display:inline-block;background:'+p+'22;color:'+p+';border:1px solid '+p+'44;border-radius:100px;padding:.3rem 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem">Keunggulan Kami</div><h2 style="font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;color:'+tc+';margin:0 0 .6rem;line-height:1.25">Mengapa Memilih <span style="color:'+p+'">'+bn+'?</span></h2><p style="color:'+sc+';font-size:.9rem;max-width:480px;margin:0 auto;line-height:1.65">Lebih dari sekadar layanan — pengalaman yang melampaui ekspektasi dengan hasil nyata dan terukur.</p></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem">'+fs.map(function(f){return '<div style="background:'+cbg+';border:1px solid '+bdr+';border-radius:16px;padding:1.8rem 1.6rem"><div style="font-size:1.8rem;margin-bottom:1rem">'+f[0]+'</div><h3 style="font-size:.95rem;font-weight:700;color:'+tc+';margin:0 0 .5rem">'+f[1]+'</h3><p style="font-size:.83rem;color:'+sc+';line-height:1.65;margin:0">'+f[2]+'</p></div>';}).join('')+'</div></div></section>';
@@ -480,9 +480,9 @@ section.gallery{display:none}
     <h1>${t.headline.replace('Kemewahan','<em>Kemewahan</em>')}</h1>
     <p class="hero-sub">${t.sub}</p>
     <div class="hero-stats">
-      <div><span class="hero-stat-num">500+</span><span class="hero-stat-lbl">Unit Terjual</span></div>
-      <div><span class="hero-stat-num">98%</span><span class="hero-stat-lbl">Kepuasan Klien</span></div>
-      <div><span class="hero-stat-num">15+</span><span class="hero-stat-lbl">Tahun Pengalaman</span></div>
+      <div><span class="hero-stat-num">—</span><span class="hero-stat-lbl">Diisi sesuai data</span></div>
+      <div><span class="hero-stat-num">—</span><span class="hero-stat-lbl">Diisi sesuai data</span></div>
+      <div><span class="hero-stat-num">—</span><span class="hero-stat-lbl">Diisi sesuai data</span></div>
     </div>
     <div class="hero-btns">
       <a href="https://wa.me/${wa}" class="btn-champagne">Konsultasi Gratis</a>
@@ -679,7 +679,7 @@ section.gallery{display:none}
     <div class="hero-right">
       <div class="hero-img-wrap"><img src="assets/foto-produk-1.png" alt="clinic"></div>
       <div class="hero-float-card"><div class="hero-float-num">5K+</div><div class="hero-float-lbl">Klien Puas</div></div>
-      <div class="hero-float-card2" style="font-size:.75rem;color:rgba(224,249,255,.6)">⭐ 4.9/5<br><span style="font-size:.65rem;color:rgba(224,249,255,.3)">Rating Klien</span></div>
+      <div class="hero-float-card2" style="font-size:.75rem;color:rgba(224,249,255,.6)">⭐ —<br><span style="font-size:.65rem;color:rgba(224,249,255,.3)">Diisi sesuai data</span></div>
     </div>
   </div>
 </section>
@@ -865,7 +865,7 @@ section.gallery{display:none}
   <div class="hero-glow-br"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-tag"><span class="hero-tag-dot"></span>Digital Agency · Est. 2018</div>
+      <div class="hero-tag"><span class="hero-tag-dot"></span>Digital Agency</div>
       <h1>Kami Membangun<br><span class="neon">Masa Depan</span><br>Digital Anda</h1>
       <p class="hero-sub">${t.sub}</p>
       <div class="hero-btns">
@@ -873,9 +873,9 @@ section.gallery{display:none}
         <a href="#services" class="btn-outline">Lihat Layanan</a>
       </div>
       <div class="hero-metrics">
-        <div class="hero-metric"><div class="hero-metric-num">150+</div><div class="hero-metric-lbl">Project Selesai</div></div>
-        <div class="hero-metric"><div class="hero-metric-num">98%</div><div class="hero-metric-lbl">On-Time Delivery</div></div>
-        <div class="hero-metric"><div class="hero-metric-num">5★</div><div class="hero-metric-lbl">Rating Klien</div></div>
+        <div class="hero-metric"><div class="hero-metric-num">—</div><div class="hero-metric-lbl">Diisi sesuai data</div></div>
+        <div class="hero-metric"><div class="hero-metric-num">—</div><div class="hero-metric-lbl">Diisi sesuai data</div></div>
+        <div class="hero-metric"><div class="hero-metric-num">—</div><div class="hero-metric-lbl">Diisi sesuai data</div></div>
       </div>
     </div>
     <div class="hero-right">
@@ -886,7 +886,7 @@ section.gallery{display:none}
         <div class="terminal-line" style="color:#86EFAC">✓ Tech stack configured</div>
         <div class="terminal-line" style="color:#86EFAC">✓ AI modules loaded</div>
         <div class="terminal-line"><span class="cmd">$ </span><span class="str">deploy</span> <span class="val">--env=production</span></div>
-        <div class="terminal-line" style="color:${a}">⚡ Build: 1.2s · Perf: 99/100</div>
+        <div class="terminal-line" style="color:${a}">⚡ Build: cepat · Perf: optimal</div>
         <div class="terminal-line"><span class="cmd">$ </span><span class="cmd">_</span><span class="terminal-cursor"></span></div>
       </div>
     </div>
@@ -899,7 +899,7 @@ section.gallery{display:none}
     <h2 class="sec-h2">Solusi Digital<br><span>End-to-End</span></h2>
   </div>
   <div class="services-grid">
-    ${mn.slice(0,4).map(function(m,i){var icons=['🌐','🤖','☁️','🎨'];var nums=['01','02','03','04'];var descs=['Web & mobile app dengan performance score 95+. React, Next.js, Flutter. Scalable dari hari pertama.','Machine learning, NLP, dan automation pipeline. Solusi AI custom untuk kebutuhan bisnis spesifik Anda.','AWS, GCP, Azure architecture. CI/CD pipeline, containerization, monitoring 24/7 real-time.','UX research, design system, prototyping. Desain yang mengkonversi dan mencerminkan brand premium.'];return '<div class="menu-item"><div class="svc-num">'+nums[i%4]+'</div><div class="svc-icon-box">'+icons[i%4]+'</div><h3 class="svc-name">'+m+'</h3><p class="svc-desc">'+descs[i%4]+'</p><span class="svc-link">Pelajari lebih →</span></div>';}).join('')}
+    ${mn.slice(0,4).map(function(m,i){var icons=['🌐','🤖','☁️','🎨'];var nums=['01','02','03','04'];var descs=['Web app yang fokus ke kebutuhan bisnis: UI rapi, struktur jelas, dan siap dikembangkan.','Automasi dan integrasi sesuai kebutuhan: form, CRM, notifikasi, atau workflow sederhana.','Infrastruktur menyesuaikan budget dan skala: shared hosting sampai VPS, sesuai kebutuhan.','Desain berbasis tujuan: navigasi jelas, CTA rapi, dan konsisten dengan brand.'];return '<div class="menu-item"><div class="svc-num">'+nums[i%4]+'</div><div class="svc-icon-box">'+icons[i%4]+'</div><h3 class="svc-name">'+m+'</h3><p class="svc-desc">'+descs[i%4]+'</p><span class="svc-link">Pelajari lebih →</span></div>';}).join('')}
   </div>
 </section>
 
@@ -1072,16 +1072,16 @@ section.gallery{display:none}
         <a href="#services" class="btn-border">Lihat Layanan</a>
       </div>
       <div class="hero-proof">
-        <div class="hero-proof-item"><div class="hero-proof-num"><span>500+</span></div><div class="hero-proof-lbl">Klien Aktif</div></div>
-        <div class="hero-proof-item"><div class="hero-proof-num"><span>8M+</span></div><div class="hero-proof-lbl">Revenue Generated</div></div>
-        <div class="hero-proof-item"><div class="hero-proof-num"><span>4.9★</span></div><div class="hero-proof-lbl">Rating Rata-rata</div></div>
+        <div class="hero-proof-item"><div class="hero-proof-num"><span>—</span></div><div class="hero-proof-lbl">Diisi sesuai data</div></div>
+        <div class="hero-proof-item"><div class="hero-proof-num"><span>—</span></div><div class="hero-proof-lbl">Diisi sesuai data</div></div>
+        <div class="hero-proof-item"><div class="hero-proof-num"><span>—</span></div><div class="hero-proof-lbl">Diisi sesuai data</div></div>
       </div>
     </div>
     <div class="hero-right">
       <div class="hero-img-frame"><img src="assets/foto-produk-1.png" alt="business"></div>
       <div class="hero-card-float">
         <div class="hero-card-title">Business Growth</div>
-        <div class="hero-card-sub">Q4 2025 · ROI +240%</div>
+      <div class="hero-card-sub">Contoh data ringkas</div>
         <div class="hero-card-bar"><div class="hero-card-fill"></div></div>
       </div>
     </div>
@@ -1101,23 +1101,23 @@ section.gallery{display:none}
 <section id="about" class="about-section">
   <div class="about-img-stack">
     <div class="about-img-main"><img src="assets/foto-produk-2.png" alt="team"></div>
-    <div class="about-stat-card"><div class="about-stat-num">500+</div><div class="about-stat-lbl">Bisnis Sukses</div></div>
+    <div class="about-stat-card"><div class="about-stat-num">—</div><div class="about-stat-lbl">Diisi sesuai data</div></div>
   </div>
   <div>
     <div class="sec-eyebrow">Tentang Kami</div>
     <h2 class="sec-h3">Partner Bisnis<br>yang <span>Anda Percaya</span></h2>
     <p style="font-size:.88rem;color:rgba(212,212,216,.4);line-height:1.85;margin:1rem 0 2rem;font-weight:300">${t.sub}</p>
     <div class="about-feats">
-      <div class="about-feat-item"><span class="about-feat-icon">💡</span><div><div class="about-feat-title">Solusi Tepat Sasaran</div><p class="about-feat-txt">Kami memahami tantangan UMKM dan bisnis Indonesia. Solusi bukan teori — langsung menghasilkan.</p></div></div>
-      <div class="about-feat-item"><span class="about-feat-icon">📱</span><div><div class="about-feat-title">Ekosistem Digital Lengkap</div><p class="about-feat-txt">Terintegrasi dengan semua platform digital populer Indonesia. Satu atap, satu solusi.</p></div></div>
-      <div class="about-feat-item"><span class="about-feat-icon">💬</span><div><div class="about-feat-title">Dukungan 7 Hari Penuh</div><p class="about-feat-txt">Tim support dedicated via WhatsApp, telepon, email, dan kunjungan langsung ke bisnis Anda.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">💡</span><div><div class="about-feat-title">Scope yang Jelas</div><p class="about-feat-txt">Fokus pada kebutuhan inti: struktur konten, CTA, dan tujuan bisnis yang bisa diukur.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">📱</span><div><div class="about-feat-title">Pengalaman Pengguna</div><p class="about-feat-txt">Tampilan rapi, mobile-friendly, dan mudah dipahami agar pengunjung cepat mengambil keputusan.</p></div></div>
+      <div class="about-feat-item"><span class="about-feat-icon">💬</span><div><div class="about-feat-title">Support yang Terukur</div><p class="about-feat-txt">Kanal komunikasi jelas (WhatsApp/email) dengan jam layanan yang disepakati di awal.</p></div></div>
     </div>
   </div>
 </section>
 
 <section id="testi" class="testi-section"><div class="testi-inner">
   <div class="sec-eyebrow">Klien Kami</div>
-  <h2 class="sec-h3">500+ Bisnis <span>Telah Berkembang</span><br>Bersama Kami</h2>
+  <h2 class="sec-h3">Bisnis dari Berbagai <span>Industri</span><br>Pernah Bekerja Sama</h2>
   <div class="testi-grid">${testiHTML()}</div>
 </div></section>
 
