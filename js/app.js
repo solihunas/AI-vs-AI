@@ -97,7 +97,7 @@
         <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(255,255,255,.018) 80px,rgba(255,255,255,.018) 81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.018) 80px,rgba(255,255,255,.018) 81px)"></div>
         <div style="height:72px;background:rgba(26,18,8,.94);border-bottom:1px solid ${p}22;display:flex;align-items:center;padding:0 60px;gap:14px;position:relative;z-index:1;flex-shrink:0">
           <div style="width:11px;height:11px;border-radius:50%;background:#FF5F57"></div><div style="width:11px;height:11px;border-radius:50%;background:#FFBD2E"></div><div style="width:11px;height:11px;border-radius:50%;background:#28CA41"></div>
-          <img src="assets/logo-placeholder.png" style="height:24px;filter:brightness(0) invert(1);opacity:.7;margin-left:22px">
+          <img src="assets/websiteku-logo.png" style="height:24px;opacity:.78;margin-left:22px">
           <div style="display:flex;gap:28px;margin-left:auto;align-items:center">
             <span style="font-size:12px;color:${p}55;letter-spacing:.18em;text-transform:uppercase">Menu</span>
             <span style="font-size:12px;color:${p}55;letter-spacing:.18em;text-transform:uppercase">Tentang</span>
@@ -123,7 +123,7 @@
         <div style="position:absolute;top:-10%;right:-15%;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,${p}12 0%,transparent 65%)"></div>
         <div style="height:70px;background:rgba(26,29,38,.94);border-bottom:1px solid ${p}15;display:flex;align-items:center;padding:0 60px;gap:14px;position:relative;z-index:1">
           <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div><div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E"></div><div style="width:10px;height:10px;border-radius:50%;background:#28CA41"></div>
-          <img src="assets/logo-placeholder.png" style="height:22px;filter:brightness(0) invert(1);opacity:.7;margin-left:20px">
+          <img src="assets/websiteku-logo.png" style="height:22px;opacity:.78;margin-left:20px">
           <div style="display:flex;gap:28px;margin-left:auto;align-items:center">
             <span style="font-size:12px;color:${p}55;letter-spacing:.16em;text-transform:uppercase">Properti</span>
             <span style="font-size:12px;color:${p}55;letter-spacing:.16em;text-transform:uppercase">Tentang</span>
@@ -161,7 +161,7 @@
         <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(0,197,215,.025) 60px,rgba(0,197,215,.025) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,197,215,.025) 60px,rgba(0,197,215,.025) 61px)"></div>
         <div style="height:70px;background:rgba(5,10,26,.88);border-bottom:1px solid ${p}10;display:flex;align-items:center;padding:0 60px;gap:14px;position:relative;z-index:1">
           <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div><div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E"></div><div style="width:10px;height:10px;border-radius:50%;background:#28CA41"></div>
-          <img src="assets/logo-placeholder.png" style="height:22px;filter:brightness(0) invert(1);opacity:.8;margin-left:20px">
+          <img src="assets/websiteku-logo.png" style="height:22px;opacity:.82;margin-left:20px">
           <div style="display:flex;gap:26px;margin-left:auto;align-items:center">
             <span style="font-size:12px;color:rgba(224,249,255,.38);letter-spacing:.14em;text-transform:uppercase">Layanan</span>
             <span style="font-size:12px;color:rgba(224,249,255,.38);letter-spacing:.14em;text-transform:uppercase">Dokter</span>
@@ -194,7 +194,7 @@
         <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(34,211,238,.03) 40px,rgba(34,211,238,.03) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(34,211,238,.03) 40px,rgba(34,211,238,.03) 41px)"></div>
         <div style="height:70px;background:rgba(3,7,17,.92);border-bottom:1px solid ${p}10;display:flex;align-items:center;padding:0 60px;gap:14px;position:relative;z-index:1">
           <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div><div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E"></div><div style="width:10px;height:10px;border-radius:50%;background:#28CA41"></div>
-          <img src="assets/logo-placeholder.png" style="height:22px;filter:brightness(0) invert(1);margin-left:20px">
+          <img src="assets/websiteku-logo.png" style="height:22px;opacity:.82;margin-left:20px">
           <div style="display:flex;gap:28px;margin-left:auto;align-items:center">
             <span style="font-size:12px;color:rgba(203,213,225,.38);letter-spacing:.14em;text-transform:uppercase">Layanan</span>
             <span style="font-size:12px;color:rgba(203,213,225,.38);letter-spacing:.14em;text-transform:uppercase">Klien</span>
@@ -240,7 +240,7 @@
         <div style="position:absolute;top:20%;right:25%;width:700px;height:500px;background:radial-gradient(ellipse,${p}14 0%,transparent 65%)"></div>
         <div style="height:70px;background:rgba(6,6,9,.94);border-bottom:1px solid rgba(139,92,246,.1);display:flex;align-items:center;padding:0 60px;gap:14px;position:relative;z-index:1">
           <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div><div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E"></div><div style="width:10px;height:10px;border-radius:50%;background:#28CA41"></div>
-          <img src="assets/logo-placeholder.png" style="height:22px;filter:brightness(0) invert(1);margin-left:20px">
+          <img src="assets/websiteku-logo.png" style="height:22px;opacity:.82;margin-left:20px">
           <div style="display:flex;gap:28px;margin-left:auto;align-items:center">
             <span style="font-size:12px;color:rgba(212,212,216,.32);letter-spacing:.14em;text-transform:uppercase">Layanan</span>
             <span style="font-size:12px;color:rgba(212,212,216,.32);letter-spacing:.14em;text-transform:uppercase">Tentang</span>
